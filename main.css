@@ -15,6 +15,10 @@ span.name {
 }
 
 .popover .title {
+	border-bottom: 1px solid lightgray;
+}
+
+.popover .title {
 	width: 99.5%;
 }
 
@@ -25,6 +29,7 @@ span.name {
 
 .body {
 	float: left;
+	background-color: #fcfcfc;
 }
 
 #cb-class-info {
