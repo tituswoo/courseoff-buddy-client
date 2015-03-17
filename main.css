@@ -3,5 +3,33 @@ span.name {
 }
 
 .course-addon {
+	margin-top: 5px;
 	color: gray;
+	border:1px solid lightgray;
+	width: 100%;
+}
+
+.popover .popover {
+	overflow: hidden;
+	width: 500px;
+}
+
+.popover .title {
+	width: 99.5%;
+}
+
+.tip-inner, .popover {
+	width: 500px !important;
+	max-width: 500px !important;
+}
+
+.body {
+	float: left;
+}
+
+#cb-class-info {
+	float: left;
+	padding: 10px 15px;
+	border-left: 1px solid lightgray;
+	min-height: 295px;
 }
