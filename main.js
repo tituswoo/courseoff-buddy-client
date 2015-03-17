@@ -20,16 +20,38 @@ Events.prototype.onPopupAdded = function (callback) {
 	});
 };
 
+Events.prototype.onCourseAdded = function (callback) {
+	this.onPageLoaded(function () {
+		$('.course-list').observe('childList', '.course-info-container', function(record) {
+			if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
+		});
+	});	
+};
+
+Events.prototype.onCourseRemoved = function (callback) {
+	this.onPageLoaded(function () {
+		$('.course-list').observe('childList', '.course-info-container', function(record) {
+			if (record.removedNodes[0] != null) callback(record.removedNodes[0]);
+		});
+	});
+}
+
 var event = new Events();
 event.onPageLoaded(addEnhancements);
+event.onCourseAdded(function () {
+	console.log('course added');
+});
+event.onCourseRemoved(function () {
+	console.log('course removed');
+});
 var courseName = '';
 
 function addEnhancements() {
 	console.log('Page finished loading!');
 
-	$('.course-list .course-info-container').each(function () {
-		var courseName = $(this).find('.header > .name').text();
-	});
+	// $('.course-list .course-info-container').each(function () {
+	// 	var courseName = $(this).find('.header > .name').text();
+	// });
 
 	$('.course-box').hover(function () {
 		courseName = $(this).find('.course-content').html();
@@ -37,12 +59,23 @@ function addEnhancements() {
 
 	event.onPopupAdded(function (context) {
 		$(context).find('#cb-class-info').remove();
-		$(context).find('.body').after('<div id="cb-class-info"><h5>HI THERE</h5><p>Stuff</p></div>');
-		console.log(context.html());
+
+		console.log(courseName);
+
+		retrieve('search', {query: courseName}, function (details) {
+			var container = $('<div id="cb-class-info" />');
+			container.append('<h5>HELLO THERE FRIEND</h5>');
+			container.append('');
+		});
 	});
 }
 
-
+function retrieve(command, params, callback) {
+	chrome.runtime.sendMessage({
+		command: command,
+		params: params
+	}, callback);
+}
 
 // 	console.log($('.course-box').html());
 
@@ -140,13 +173,6 @@ function addEnhancements() {
 // 			course.find('.header').append(table);
 // 		});
 // 	});
-// }
-
-// function retrieve(command, params, callback) {
-// 	chrome.runtime.sendMessage({
-// 		command: command,
-// 		params: params
-// 	}, callback);
 // }
 
 // function courseClicked(course) {
