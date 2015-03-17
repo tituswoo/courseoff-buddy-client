@@ -19,7 +19,9 @@ span.name {
 }
 
 .popover .title {
+	background-color: #e5e3e3;
 	width: 99.5%;
+	border-radius: 4px 4px 0 0;
 }
 
 .tip-inner, .popover {
@@ -30,6 +32,7 @@ span.name {
 .body {
 	float: left;
 	background-color: #fcfcfc;
+	border-right: 1px solid lightgray;
 }
 
 #cb-class-info {
