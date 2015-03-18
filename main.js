@@ -37,14 +37,56 @@ Events.prototype.onCourseRemoved = function (callback) {
 }
 
 var event = new Events();
+var store = new HashMap();
+var courses = [];
+
 event.onPageLoaded(addEnhancements);
-event.onCourseAdded(function () {
-	console.log('course added');
+
+event.onCourseAdded(function (context) {
+	var courseTitle = $(context).find('.name').text();
+	console.log(courseTitle);
+	retrieve('search', {query: courseTitle}, function (results) {
+		if (results.status === 404) {
+			console.log('Nothing found for ' + courseTitle);
+		} else {
+			var id = results[0].id;
+			console.log(id);
+			retrieve('course', {id: id}, function (course) {
+				console.log(course);
+				courses.push(course);
+				console.log(courses);
+			});
+		}
+	});
 });
-event.onCourseRemoved(function () {
-	console.log('course removed');
+
+event.onCourseRemoved(function (context) {
+	var html = $(context).find('.name').text();
+	console.log(html);
 });
-var courseName = '';
+
+function HashMap() {
+	var data = [];
+	this.add = function(obj) {
+		if (!this.exists(obj.key)) {
+			data.push(obj);
+		} else {
+			console.log('Object with key [' + obj.key + '] already exists.');
+		}
+		console.log('everything in the store:');
+		console.log(data);
+	};
+
+	this.exists = function(key) {
+		data.map(function (data) {
+			if (data.key === key) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+	}
+}
 
 function addEnhancements() {
 	console.log('Page finished loading!');
@@ -59,8 +101,6 @@ function addEnhancements() {
 
 	event.onPopupAdded(function (context) {
 		$(context).find('#cb-class-info').remove();
-
-		console.log(courseName);
 
 		retrieve('search', {query: courseName}, function (details) {
 			var container = $('<div id="cb-class-info" />');
