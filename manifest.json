@@ -25,6 +25,8 @@
 			"js": [
 				"jquery-1.11.2.min.js",
 				"jquery-observe.js",
+				"Events.js",
+				"utilities.js",
 				"main.js"
 			]
 		}

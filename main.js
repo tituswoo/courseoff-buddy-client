@@ -1,112 +1,68 @@
-function Events() {}
-
-Events.prototype.onPageLoaded = function (callback) {
-	var checkInterval = setInterval(function () {
-		console.log('Waiting for page to finish loading...');
-		if ($('.course-info-container').html() != undefined) {
-			clearInterval(checkInterval);
-			callback();
-		}
-	}, 400);
-};
-
-Events.prototype.onPopupAdded = function (callback) {
-	$('body').observe('childList', '.popover.tip', function(record) {
-		if (record.addedNodes[0] != null) {
-			var context = $(record.addedNodes[0]);
-			callback(context);
-		} else {
-		}
-	});
-};
-
-Events.prototype.onCourseAdded = function (callback) {
-	this.onPageLoaded(function () {
-		$('.course-list').observe('childList', '.course-info-container', function(record) {
-			if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
-		});
-	});	
-};
-
-Events.prototype.onCourseRemoved = function (callback) {
-	this.onPageLoaded(function () {
-		$('.course-list').observe('childList', '.course-info-container', function(record) {
-			if (record.removedNodes[0] != null) callback(record.removedNodes[0]);
-		});
-	});
-}
-
 var event = new Events();
-var store = new HashMap();
-var courses = [];
+var courses = new ArrayList();
+var currentCourse = '';
 
-event.onPageLoaded(addEnhancements);
+event.onPageLoaded(function () {
+	// retrieve all coures information and store it in an array list.
+	$('.course-list > .course-info-container').each(function () {
+		var courseTitle = $(this).find('.name').text();
+		downloadCourseStats(courseTitle);
+	});
+
+	// keep track of what course is being hovered over in the  calendar view
+	$('.calendar .course-box').mouseover(function () {
+		currentCourse = $(this).find('.course-content').html();
+		console.log(currentCourse);
+	});
+
+	// augment class popups with additional information.
+	event.onPopupAdded(function (context) {
+		// remove whatever was inserted in the popup before.
+		$(context).find('#cb-class-info').remove();
+
+
+
+		/*retrieve('search', {query: courseName}, function (details) {
+			var container = $('<div id="cb-class-info" />');
+			container.append('<h5>HELLO THERE FRIEND</h5>');
+			container.append('');
+		});*/
+	});
+});
 
 event.onCourseAdded(function (context) {
 	var courseTitle = $(context).find('.name').text();
-	console.log(courseTitle);
+	downloadCourseStats(courseTitle);
+});
+
+event.onCourseRemoved(function (context) {
+	console.log('course removed');
+});
+
+event.onCoursePinned(function (context) {
+	console.log('course pinned');
+	$(context).on('mouseenter', function () {
+		var html = $(this).find('.course-content').html();
+		console.log(html);
+	});
+});
+
+event.onCourseUnpinned(function (context) {
+	console.log('course removed');
+	$(context).off();
+});
+
+function downloadCourseStats(courseTitle) {
 	retrieve('search', {query: courseTitle}, function (results) {
 		if (results.status === 404) {
 			console.log('Nothing found for ' + courseTitle);
 		} else {
 			var id = results[0].id;
-			console.log(id);
 			retrieve('course', {id: id}, function (course) {
-				console.log(course);
-				courses.push(course);
-				console.log(courses);
+				courses.add(course.title, course);
+				console.log(courses.getData());
 			});
 		}
-	});
-});
-
-event.onCourseRemoved(function (context) {
-	var html = $(context).find('.name').text();
-	console.log(html);
-});
-
-function HashMap() {
-	var data = [];
-	this.add = function(obj) {
-		if (!this.exists(obj.key)) {
-			data.push(obj);
-		} else {
-			console.log('Object with key [' + obj.key + '] already exists.');
-		}
-		console.log('everything in the store:');
-		console.log(data);
-	};
-
-	this.exists = function(key) {
-		data.map(function (data) {
-			if (data.key === key) {
-				return true;
-			} else {
-				return false;
-			}
-		});
-	}
-}
-
-function addEnhancements() {
-	console.log('Page finished loading!');
-
-	// $('.course-list .course-info-container').each(function () {
-	// 	var courseName = $(this).find('.header > .name').text();
-	// });
-
-	$('.course-box').hover(function () {
-		courseName = $(this).find('.course-content').html();
-	});
-
-	event.onPopupAdded(function (context) {
-		$(context).find('#cb-class-info').remove();
-
-		retrieve('search', {query: courseName}, function (details) {
-			var container = $('<div id="cb-class-info" />');
-			container.append('<h5>HELLO THERE FRIEND</h5>');
-			container.append('');
-		});
 	});
 }
 
