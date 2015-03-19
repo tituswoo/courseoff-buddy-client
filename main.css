@@ -3,7 +3,7 @@ span.name {
 }
 
 .average-marks-table {
-	color: gray;
+	color: black;
 }
 
 .average-marks-table tr {
@@ -11,6 +11,7 @@ span.name {
 }
 
 .average-marks-table th {
+	color: gray;
 	padding-right: 10px;
 }
 

@@ -60,7 +60,7 @@ event.onCourseRemoved(function (context) {
 
 event.onCoursePinned(function (context) {
 	// console.log('course pinned');
-	$(context).on('mouseenter', function () {
+	$(context).on('hover', function () {
 		var course = $(this).find('.course-content').html();
 		currentCourse = course.replace(' - ', '');
 		console.log(courses.get(currentCourse));
@@ -92,68 +92,6 @@ function retrieve(command, params, callback) {
 		params: params
 	}, callback);
 }
-
-// 	console.log($('.course-box').html());
-
-// 	$('body').observe('childList', '.popover.tip', function(record) {
-// 		if (record.addedNodes[0] != null) {
-// 			// the pop up was added
-// 			// console.log(record.addedNodes[0]);
-// 			var context = $(record.addedNodes[0]);
-// 			var text = $(record.addedNodes[0]).find('.popover').html();
-// 			//console.log(text);
-// 		} else {
-// 			// the pop up was removed
-// 			// console.log(record.removedNodes[0]);
-// 		}
-// 	});
-// });
-
-// $(document).ready(function () {
-// 	initialize();
-// });
-
-// function initialize() {
-	
-// 	addAverageClassRanks();
-// 	addEventListeners();
-// }
-
-// function addEventListeners() {
-// 	courseAddedFromUIListener();
-// 	// scheduleViewSwitchedListener();
-// }
-
-// function addAverageClassRanks() {
-// 	$('.course-list .course-info-container .header').each(function () {
-// 		addAverageClassRank($(this).parent());
-// 	});	
-// }
-
-// function courseAddedFromUIListener() {
-// 	$('.course-list').observe('childList', '.course-info-container', function (record) {
-// 		if (record.addedNodes.length > 0) {
-// 			// a course was added!
-// 			var addedCourse = $(record.addedNodes[0]);
-// 			addAverageClassRank(addedCourse);
-// 			console.log('course was added');
-// 		}
-// 	});
-// }
-
-// function workspaceChangedListener() {
-// 	$('#course-list').observe('childList', '.course-info-container', function (record) {
-// 		console.log('course list changed');
-// 	});
-// }
-
-// function scheduleViewSwitchedListener() {
-// 	$('.dropdown-menu a').click(function () {
-// 		setTimeout(function () {
-// 			courseAddedFromUIListener();
-// 		}, 400);		
-// 	});
-// }
 
 function makeAverageMarksTable(averages) {		
 	// table to hold averageMarks
