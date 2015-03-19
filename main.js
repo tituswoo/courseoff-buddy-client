@@ -20,7 +20,14 @@ event.onResourcesLoaded(courses, function () {
 		// remove whatever was inserted in the popup before.
 		$(context).find('#cb-class-info').remove();
 
+		// var profName = $(context).find('[data-visible="instr"] em').html();
+		// console.log(profName);
+		// retrieve('search', {query: profName}, function (results) {
+		// 	console.log(results);
+		// });
+
 		var course = courses.get(currentCourse).value;
+		
 		var body = $(context).find('.popover');
 		var container = $('<div/>').attr('id', 'cb-class-info');
 
