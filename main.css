@@ -31,6 +31,10 @@ span.name {
 	background-color: lightgray;
 }
 
+.course-table-container .average-marks-table th {
+	font-size: 0.86em;
+}
+
 .popover .popover {
 	overflow: hidden;
 	width: 500px;

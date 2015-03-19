@@ -20,10 +20,13 @@ event.onPageLoaded(function () {
 	if (coursesCount > 0) {
 		$('.course-list > .course-info-container').each(function () {
 			var courseTitle = $(this).find('.name').text();
+			var context = $(this);
 			downloadCourseStats(courseTitle, function (course) {
 				if (course) {
-					var table = makeAverageMarksTable(course.averageMarks);
-					table.insertBefore($(this).find('.table'));
+					var color = context.css('border-left-color');
+					color = RGBtoRGBA(color, '0.15');
+					var table = makeAverageMarksTable(course.averageMarks, color).hide();
+					table.insertBefore(context.find('.table')).fadeIn();
 				}				
 
 				if (coursesCount === counter) {
@@ -86,11 +89,8 @@ event.onCourseAdded(function (context) {
 	downloadCourseStats(courseTitle, function (course) {
 		if (course) {
 			var color = $(context).css('border-left-color');
-			var opacity = '0.15';
-			color = color.replace('rgb', 'rgba');
-			color = color.substr(0, color.indexOf(')')) + ',' + opacity + ')';
-			console.log(color);
-			var table = makeAverageMarksTable(course.averageMarks, String(color)).hide();
+			color = RGBtoRGBA(color, '0.15');
+			var table = makeAverageMarksTable(course.averageMarks, color).hide();
 			table.insertBefore($(context).find('.course-table-container .table')).fadeIn();
 		}
 	});	

@@ -134,3 +134,10 @@ function LoadingScreen(element) {
 function numCourses() {
 	return $('.course-list > .course-info-container').size();
 }
+
+function RGBtoRGBA(rgb, opacity) {
+	rgb = String(rgb);
+	rgb = rgb.replace('rgb', 'rgba');
+	rgba = rgb.substr(0, rgb.indexOf(')')) + ',' + opacity + ')';
+	return rgba;
+}
