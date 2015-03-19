@@ -2,11 +2,7 @@ var event = new Events();
 var courses = new ArrayList();
 var professors = new ArrayList();
 var currentCourse = '';
-var loadingScreen = new LoadingScreen();
-
-if (numCourses() > 0) {
-	loadingScreen.show();
-}
+var loadingScreen = new LoadingScreen($('.calendar-panel'));
 
 $('body').on('mouseenter', '.course-box', function () {
 	var course = $(this).find('.course-content').html();
@@ -14,6 +10,10 @@ $('body').on('mouseenter', '.course-box', function () {
 });
 
 event.onPageLoaded(function () {
+	if (numCourses() > 0) {
+		loadingScreen.show();
+	}
+
 	var coursesCount = numCourses();
 	var counter = 1;
 

@@ -1,3 +1,8 @@
+.calendar-panel {
+	/* allow loading panel to fill up the calendar*/
+	position: relative;
+}
+
 span.name {
 	font-weight: bold;
 }
@@ -56,5 +61,4 @@ span.name {
 	left: 0;
 	z-index: 9999;
 	text-align: center;
-	padding-top: 40%;
 }

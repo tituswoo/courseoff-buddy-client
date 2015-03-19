@@ -102,15 +102,17 @@ function retrieve(command, params, callback) {
 	}, callback);
 }
 
-function LoadingScreen() {
+function LoadingScreen(element) {
 	var id = 'loading-screen';
 
-	var overlay = $('<div/>').attr('id', id);
+	var overlay = $('<div/>').attr('id', id).css({
+		paddingTop: (element.height() / 2) - 50
+	});
 	overlay.append($('<h2/>').html('Loading enhancements...'));
 	overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/spinner.gif')));
 
 	this.show = function () {
-		$('body').append(overlay);
+		overlay.appendTo(element);
 	};
 
 	this.hide = function () {
