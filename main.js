@@ -2,6 +2,12 @@ var event = new Events();
 var courses = new ArrayList();
 var currentCourse = '';
 
+$('body').on('mouseenter', '.course-box', function () {
+	var course = $(this).find('.course-content').html();
+	currentCourse = course.replace(' - ', '');
+	console.log('from mouseneter:' + currentCourse);
+});
+
 event.onPageLoaded(function () {
 	$('.course-list > .course-info-container').each(function () {
 		var courseTitle = $(this).find('.name').text();
@@ -10,18 +16,15 @@ event.onPageLoaded(function () {
 });
 
 event.onResourcesLoaded(courses, function () {
-	console.log('all assets finished loading successfully');
+	console.log('All assets finished loading successfully.');
 
 	// add listeners for when mouse is hovered over the calendar tiles.
-	$('body').on('mouseover', '.course-cal.pinned', function () {
-		var course = $(this).find('.course-content').html();
-		currentCourse = course.replace(' - ', '');
-	});
+	
 
 	// augment class popups with additional information.
 	event.onPopupAdded(function (context) {
 		// remove whatever was inserted in the popup before.
-		console.log(currentCourse);
+		console.log('current course: ' + currentCourse);
 		$(context).find('#cb-class-info').remove();
 
 		var course = courses.get(currentCourse).value;

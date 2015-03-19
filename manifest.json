@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 
 	"name": "Course Buddy",
-	"description": "This extension shows a Google Image search result for the current page",
+	"description": "Give Courseoff superpowers!",
 	"version": "1.0",
 
 	"page_action": {

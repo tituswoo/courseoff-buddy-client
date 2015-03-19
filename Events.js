@@ -14,7 +14,12 @@ Events.prototype.onPopupAdded = function (callback) {
 	$('body').observe('childList', '.popover.tip', function(record) {
 		if (record.addedNodes[0] != null) {
 			var context = $(record.addedNodes[0]);
-			callback(context);
+			// need set timeout so so that it waits for
+			// the "current course" to be updated.
+			// hacky, but works.
+			setTimeout(function () {
+				callback(context);
+			}, 10);			
 		} else {
 		}
 	});
@@ -22,9 +27,11 @@ Events.prototype.onPopupAdded = function (callback) {
 
 Events.prototype.onCourseAdded = function (callback) {
 	this.onPageLoaded(function () {
-		$('.course-list').observe('childList', '.course-info-container', function(record) {
-			if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
-		});
+		//setTimeout(function () {
+			$('.course-list').observe('childList', '.course-info-container', function(record) {
+				if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
+			});
+		//}, 200);
 	});	
 };
 
