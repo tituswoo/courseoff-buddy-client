@@ -1,6 +1,12 @@
 var event = new Events();
 var courses = new ArrayList();
+var professors = new ArrayList();
 var currentCourse = '';
+var loadingScreen = new LoadingScreen();
+
+if (numCourses() > 0) {
+	loadingScreen.show();
+}
 
 $('body').on('mouseenter', '.course-box', function () {
 	var course = $(this).find('.course-content').html();
@@ -8,10 +14,21 @@ $('body').on('mouseenter', '.course-box', function () {
 });
 
 event.onPageLoaded(function () {
-	$('.course-list > .course-info-container').each(function () {
-		var courseTitle = $(this).find('.name').text();
-		downloadCourseStats(courseTitle);
-	});
+	var coursesCount = numCourses();
+	var counter = 1;
+
+	if (coursesCount > 0) {
+		$('.course-list > .course-info-container').each(function () {
+			var courseTitle = $(this).find('.name').text();
+			downloadCourseStats(courseTitle, function () {
+				if (coursesCount === counter) {
+					loadingScreen.hide();
+				} else {
+					counter += 1;
+				}
+			});
+		});
+	}
 });
 
 event.onResourcesLoaded(courses, function () {
@@ -21,13 +38,19 @@ event.onResourcesLoaded(courses, function () {
 		$(context).find('#cb-class-info').remove();
 
 		var profName = $(context).find('[data-visible="instr"] em').html();
-		getProfessorStats(profName, function (data) {
-			var professorData = data;
-			// display the professor stats in the box here.
-		});
+		if (professors.get(profName)) {
+			console.log('professor was stored already.');
+		} else {
+			console.log('professor not stored locally. Retrieve!');
+			getProfessorStats(profName, function (data) {
+				var professorData = data;
+				professors.add(profName, data);
+				console.log(professors.get(profName));
+				// display the professor stats in the box here.
+			});
+		}
 
-		var course = courses.get(currentCourse).value;
-		
+		var course = courses.get(currentCourse).value;		
 		var body = $(context).find('.popover');
 		var container = $('<div/>').attr('id', 'cb-class-info');
 

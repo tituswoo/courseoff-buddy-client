@@ -20,7 +20,7 @@
 	],
 	"content_scripts": [
 		{
-			"matches": ["https://gatech.courseoff.com/workspace/*"],
+			"matches": ["https://gatech.courseoff.com/*"],
 			"css": ["main.css"],
 			"js": [
 				"jquery-1.11.2.min.js",
@@ -34,5 +34,8 @@
 	"background": {
 		"scripts": ["jquery-1.11.2.min.js", "background.js"],
 		"persistent": false
-	}
+	},
+	"web_accessible_resources": [
+		"images/*"
+	]
 }

@@ -41,16 +41,16 @@ var ArrayList = (function () {
 	return ArrayList;
 })();
 
-function downloadCourseStats(courseTitle) {
+function downloadCourseStats(courseTitle, callback) {
 	retrieve('search', {query: courseTitle}, function (results) {
 		if (results.status === 404) {
-			// console.log('Nothing found for ' + courseTitle);
 			courses.add(false); // needed to make sure onResourcesLoaded works.
+			if (callback) callback(false);
 		} else {
 			var id = results[0].id;
 			retrieve('course', {id: id}, function (course) {
 				courses.add(course.title.replace(' ', ''), course);
-				// console.log(courses.getData());
+				if (callback) callback(course);
 			});
 		}
 	});
@@ -58,10 +58,14 @@ function downloadCourseStats(courseTitle) {
 
 function getProfessorStats(profName, callback) {
 	retrieve('search', {query: profName}, function (results) {
-		var profID = results[0].id;
-		retrieve('prof', {id: profID}, function (data) {
-			callback(data);
-		});
+		if (results.status != '404') {
+			var profID = results[0].id;
+			retrieve('prof', {id: profID}, function (data) {
+				callback(data);
+			});
+		} else {
+			callback(false);
+		}
 	});
 }
 
@@ -96,4 +100,26 @@ function retrieve(command, params, callback) {
 		command: command,
 		params: params
 	}, callback);
+}
+
+function LoadingScreen() {
+	var id = 'loading-screen';
+
+	var overlay = $('<div/>').attr('id', id);
+	overlay.append($('<h2/>').html('Loading enhancements...'));
+	overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/spinner.gif')));
+
+	this.show = function () {
+		$('body').append(overlay);
+	};
+
+	this.hide = function () {
+		$('#' + id).fadeOut(500, function () {
+			$(this).remove();
+		})
+	};
+}
+
+function numCourses() {
+	return $('.course-list > .course-info-container').size();
 }
