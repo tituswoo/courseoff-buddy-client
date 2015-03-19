@@ -38,10 +38,13 @@ event.onPageLoaded(function () {
 
 		var body = $(context).find('.popover');
 
-		// Insert the stuff into the page:
-		var container = $('<div id="cb-class-info" />');
-		container.append('<h5>Average Marks</h5>');
+		// insert stuff onto the page:
+		var container = $('<div/>').attr('id', 'cb-class-info');
+		container.append($('<h5/>').html('Average Marks'));
 		container.append(gradeTable);
+
+		container.append($('<h5/>').html('Description'));
+		container.append($('<p/>').html(course.details.description));
 		container.appendTo(body);
 	});
 });
