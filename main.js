@@ -16,10 +16,7 @@ event.onPageLoaded(function () {
 });
 
 event.onResourcesLoaded(courses, function () {
-	console.log('All assets finished loading successfully.');
-
-	// add listeners for when mouse is hovered over the calendar tiles.
-	
+	console.log('All assets finished loading successfully.');	
 
 	// augment class popups with additional information.
 	event.onPopupAdded(function (context) {

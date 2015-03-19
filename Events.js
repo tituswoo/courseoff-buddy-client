@@ -27,11 +27,9 @@ Events.prototype.onPopupAdded = function (callback) {
 
 Events.prototype.onCourseAdded = function (callback) {
 	this.onPageLoaded(function () {
-		//setTimeout(function () {
-			$('.course-list').observe('childList', '.course-info-container', function(record) {
-				if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
-			});
-		//}, 200);
+		$('.course-list').observe('childList', '.course-info-container', function(record) {
+			if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
+		});
 	});	
 };
 
