@@ -90,8 +90,8 @@ event.onCourseAdded(function (context) {
 			color = color.replace('rgb', 'rgba');
 			color = color.substr(0, color.indexOf(')')) + ',' + opacity + ')';
 			console.log(color);
-			var table = makeAverageMarksTable(course.averageMarks, String(color));
-			table.insertBefore($(context).find('.course-table-container .table'));
+			var table = makeAverageMarksTable(course.averageMarks, String(color)).hide();
+			table.insertBefore($(context).find('.course-table-container .table')).fadeIn();
 		}
 	});	
 });

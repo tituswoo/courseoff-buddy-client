@@ -53,6 +53,7 @@ function downloadCourseStats(courseTitle, callback) {
 					courses.add(course.title.replace(' ', ''), course);
 					if (callback) callback(course);
 				} else {
+					courses.add(false);
 					if (callback) callback(false);
 				}
 			});
@@ -77,7 +78,9 @@ function makeAverageMarksTable(averages, color) {
 	// table to hold averageMarks
 	color = color || 'white';
 	var table = $('<table/>').addClass('average-marks-table');
-	table.css({backgroundColor: color});
+	table.css({
+		backgroundColor: color
+	});
 	// header section
 	var header = $('<tr/>');
 	$('<th/>').text('GPA').appendTo(header);
