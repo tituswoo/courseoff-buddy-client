@@ -113,15 +113,15 @@ function makeProfessorPillbox(professor) {
 	var rmpBox = $('<div/>').addClass('rmp-box');
 
 	var clarity = $('<div/>').html('clarity');
-	rmp.clarity = rmp.clarity || '-';
+	rmp.clarity = rmp.clarity || '?';
 	clarity.append($('<span/>').html(rmp.clarity));
 
 	var easiness = $('<div/>').html('easiness');
-	rmp.easiness = rmp.easiness || '-';
+	rmp.easiness = rmp.easiness || '?';
 	easiness.append($('<span/>').html(rmp.easiness));
 
 	var helpfulness = $('<div/>').html('helpfulness');
-	rmp.helpfulness = rmp.helpfulness || '-';
+	rmp.helpfulness = rmp.helpfulness || '?';
 	helpfulness.append($('<span/>').html(rmp.helpfulness));
 
 	clarity.appendTo(rmpBox);
