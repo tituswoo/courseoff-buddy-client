@@ -19,7 +19,6 @@ event.onPageLoaded(function () {
 	$('.course-cal.pinned').mouseover(function () {
 		var course = $(this).find('.course-content').html();
 		currentCourse = course.replace(' - ', '');
-		console.log(courses.get(currentCourse));
 	});
 
 	// augment class popups with additional information.
@@ -33,7 +32,17 @@ event.onPageLoaded(function () {
 			container.append('');
 		});*/
 
-		
+		var course = courses.get(currentCourse).value;
+
+		var gradeTable = makeAverageMarksTable(course.averageMarks);
+
+		var body = $(context).find('.popover');
+
+		// Insert the stuff into the page:
+		var container = $('<div id="cb-class-info" />');
+		container.append('<h5>Average Marks</h5>');
+		container.append(gradeTable);
+		container.appendTo(body);
 	});
 });
 
@@ -143,62 +152,28 @@ function retrieve(command, params, callback) {
 // 	});
 // }
 
-// function addAverageClassRank(course) {
-// 	var courseName = course.find('.name').text();
-// 	retrieve('search', {query: courseName}, function (data) {
-// 		var courseID = data[0].id;
-// 		retrieve('course', {id: courseID}, function (data) {
-// 			var averages = data.averageMarks;
-			
-// 			// table to hold averageMarks
-// 			var table = $('<table/>').addClass('course-addon');
+function makeAverageMarksTable(averages) {		
+	// table to hold averageMarks
+	var table = $('<table/>').addClass('average-marks-table');
+	// header section
+	var header = $('<tr/>');
+	$('<th/>').text('GPA').appendTo(header);
+	$('<th/>').text('A%').appendTo(header);
+	$('<th/>').text('B%').appendTo(header);
+	$('<th/>').text('C%').appendTo(header);
+	$('<th/>').text('D%').appendTo(header);
+	$('<th/>').text('F%').appendTo(header);
+	// content section
+	var body = $('<tr/>');
+	$('<td/>').text(averages.gpa).appendTo(body);
+	$('<td/>').text(averages.a).appendTo(body);
+	$('<td/>').text(averages.b).appendTo(body);
+	$('<td/>').text(averages.c).appendTo(body);
+	$('<td/>').text(averages.d).appendTo(body);
+	$('<td/>').text(averages.f).appendTo(body);
+	// put everything into the table
+	header.appendTo(table);
+	body.appendTo(table);
 
-// 			// header section
-// 			var header = $('<tr/>');
-// 			$('<th/>').text('GPA').appendTo(header);
-// 			$('<th/>').text('A%').appendTo(header);
-// 			$('<th/>').text('B%').appendTo(header);
-// 			$('<th/>').text('C%').appendTo(header);
-// 			$('<th/>').text('D%').appendTo(header);
-// 			$('<th/>').text('F%').appendTo(header);
-
-// 			// content section
-// 			var body = $('<tr/>');
-// 			$('<td/>').text(averages.gpa).appendTo(body);
-// 			$('<td/>').text(averages.a).appendTo(body);
-// 			$('<td/>').text(averages.b).appendTo(body);
-// 			$('<td/>').text(averages.c).appendTo(body);
-// 			$('<td/>').text(averages.d).appendTo(body);
-// 			$('<td/>').text(averages.f).appendTo(body);
-
-// 			// put everything into the table
-// 			header.appendTo(table);
-// 			body.appendTo(table);
-// 			course.find('.header').append(table);
-// 		});
-// 	});
-// }
-
-// function courseClicked(course) {
-// 	// console.log($(course).find('.header').append("<p>HELLO</p>"));
-// 	// $(course).find('tbody td.instructor').each(function () {
-// 	// 	var profName = $(this).text();
-		
-// 	// 	chrome.runtime.sendMessage({
-// 	// 		command: 'search',
-// 	// 		params: {
-// 	// 			query: profName
-// 	// 		}
-// 	// 	}, function (data) {
-// 	// 		var profID = data[0].id;
-// 	// 		chrome.runtime.sendMessage({
-// 	// 			command: 'prof',
-// 	// 			params: {
-// 	// 				id: profID
-// 	// 			}
-// 	// 		}, function (data) {
-				
-// 	// 		});
-// 	// 	});
-// 	// });
-// }
+	return table;
+}

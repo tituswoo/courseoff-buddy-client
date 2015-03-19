@@ -2,11 +2,14 @@ span.name {
 	font-weight: bold;
 }
 
-.course-addon {
-	margin-top: 5px;
+.average-marks-table {
 	color: gray;
-	border:1px solid lightgray;
-	width: 100%;
+	/*border:1px solid lightgray;*/
+	width: 200px;
+}
+
+.average-marks-table tr {
+	padding: 3px;
 }
 
 .popover .popover {
@@ -38,6 +41,5 @@ span.name {
 #cb-class-info {
 	float: left;
 	padding: 10px 15px;
-	border-left: 1px solid lightgray;
 	min-height: 295px;
 }
