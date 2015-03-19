@@ -13,7 +13,7 @@ Events.prototype.onPopupAdded = function (callback) {
 	$('body').observe('childList', '.popover.tip', function(record) {
 		if (record.addedNodes[0] != null) {
 			var context = $(record.addedNodes[0]);
-			// need set timeout so so that it waits for
+			// need to set timeout so that it waits for
 			// the "current course" to be updated.
 			// hacky, but works.
 			setTimeout(function () {

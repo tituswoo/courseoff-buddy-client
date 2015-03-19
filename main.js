@@ -20,7 +20,12 @@ event.onPageLoaded(function () {
 	if (coursesCount > 0) {
 		$('.course-list > .course-info-container').each(function () {
 			var courseTitle = $(this).find('.name').text();
-			downloadCourseStats(courseTitle, function () {
+			downloadCourseStats(courseTitle, function (course) {
+				if (course) {
+					var table = makeAverageMarksTable(course.averageMarks);
+					table.insertBefore($(this).find('.table'));
+				}				
+
 				if (coursesCount === counter) {
 					loadingScreen.hide();
 				} else {
@@ -67,8 +72,8 @@ event.onResourcesLoaded(courses, function () {
 		if (course && course.details.description) {
 			container.append($('<p/>').html(course.details.description));
 		} else {
-			var error = "Couldn't load description because the Gatech server is temporarily unavailable; ";
-			error += "this seems to happens a lot! There's also a small chance that the course just doesn't exist in the database.";
+			var error = "Couldn't load the description because the Gatech server is temporarily unavailable; ";
+			error += "this seems to happens a lot! It's also possible that the course doesn't exist in the database.";
 			container.append($('<p/>').html(error));
 		}		
 
@@ -78,6 +83,16 @@ event.onResourcesLoaded(courses, function () {
 
 event.onCourseAdded(function (context) {
 	var courseTitle = $(context).find('.name').text();
-	downloadCourseStats(courseTitle);
+	downloadCourseStats(courseTitle, function (course) {
+		if (course) {
+			var color = $(context).css('border-left-color');
+			var opacity = '0.15';
+			color = color.replace('rgb', 'rgba');
+			color = color.substr(0, color.indexOf(')')) + ',' + opacity + ')';
+			console.log(color);
+			var table = makeAverageMarksTable(course.averageMarks, String(color));
+			table.insertBefore($(context).find('.course-table-container .table'));
+		}
+	});	
 });
 

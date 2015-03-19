@@ -49,8 +49,12 @@ function downloadCourseStats(courseTitle, callback) {
 		} else {
 			var id = results[0].id;
 			retrieve('course', {id: id}, function (course) {
-				courses.add(course.title.replace(' ', ''), course);
-				if (callback) callback(course);
+				if (course.status != '404') {
+					courses.add(course.title.replace(' ', ''), course);
+					if (callback) callback(course);
+				} else {
+					if (callback) callback(false);
+				}
 			});
 		}
 	});
@@ -69,9 +73,11 @@ function getProfessorStats(profName, callback) {
 	});
 }
 
-function makeAverageMarksTable(averages) {		
+function makeAverageMarksTable(averages, color) {		
 	// table to hold averageMarks
+	color = color || 'white';
 	var table = $('<table/>').addClass('average-marks-table');
+	table.css({backgroundColor: color});
 	// header section
 	var header = $('<tr/>');
 	$('<th/>').text('GPA').appendTo(header);

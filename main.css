@@ -17,7 +17,18 @@ span.name {
 
 .average-marks-table th {
 	color: gray;
-	padding-right: 10px;
+	padding: 0 5px;
+}
+
+.average-marks-table td {
+	padding: 0 5px;
+}
+
+.course-table-container .average-marks-table {
+	border-top: 1px solid #ddd;
+	margin-bottom: 5px;
+	width: 100%;
+	background-color: lightgray;
 }
 
 .popover .popover {
