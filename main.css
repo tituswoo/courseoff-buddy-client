@@ -35,6 +35,11 @@ span.name {
 	font-size: 0.86em;
 }
 
+.popover .average-marks-table th, .popover .average-marks-table td {
+	padding-left: 0;
+	padding-right: 10px;
+}
+
 .popover .popover {
 	overflow: hidden;
 	width: 500px;
@@ -57,6 +62,8 @@ span.name {
 	background-color: #fcfcfc;
 	border-right: 1px solid lightgray;
 	max-width: 180px;
+	min-height: 340px;
+	border-radius: 0 0 0 4px;
 }
 
 #cb-class-info {
@@ -76,4 +83,30 @@ span.name {
 	left: 0;
 	z-index: 9999;
 	text-align: center;
+}
+
+hr {
+	margin: 5px 0 !important;
+	border-top: 1px solid lightgray !important;
+}
+
+/* Professor Pillbox */
+
+.professor-pillbox .rmp-box > div {
+	display: inline-block;
+	margin-right: 5px;
+	background-color: lightgray;
+	padding: 3px 0 0 3px;
+	text-transform: uppercase;
+	font-size: 0.7em;
+	overflow: hidden;
+}
+
+.professor-pillbox .rmp-box > div > span {
+	font-weight: bold;
+	margin-left: 3px;
+	background-color: gray;
+	padding: 4px;
+	color: white;
+	font-size: 1.2em;
 }

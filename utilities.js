@@ -75,8 +75,8 @@ function getProfessorStats(profName, callback) {
 }
 
 function makeAverageMarksTable(averages, color) {		
-	// table to hold averageMarks
 	color = color || 'white';
+	// table to hold averageMarks
 	var table = $('<table/>').addClass('average-marks-table');
 	table.css({
 		backgroundColor: color
@@ -102,6 +102,32 @@ function makeAverageMarksTable(averages, color) {
 	body.appendTo(table);
 
 	return table;
+}
+
+function makeProfessorPillbox(professor) {
+	var container = $('<div/>').addClass('professor-pillbox');
+	var averageMarksTable = makeAverageMarksTable(professor.averageMarks);
+	var rmp = professor.rateMyProfessors;
+
+
+	var rmpBox = $('<div/>').addClass('rmp-box');
+
+	var clarity = $('<div/>').html('clarity');
+	clarity.append($('<span/>').html(rmp.clarity));
+
+	var easiness = $('<div/>').html('easiness');
+	easiness.append($('<span/>').html(rmp.easiness));
+
+	var helpfulness = $('<div/>').html('helpfulness');
+	helpfulness.append($('<span/>').html(rmp.helpfulness));
+
+	clarity.appendTo(rmpBox);
+	easiness.appendTo(rmpBox);
+	helpfulness.appendTo(rmpBox);
+
+	container.append(rmpBox);
+	container.append(averageMarksTable);
+	return container;
 }
 
 function retrieve(command, params, callback) {

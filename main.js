@@ -11,6 +11,7 @@ $('body').on('mouseenter', '.course-box', function () {
 
 event.onPageLoaded(function () {
 	if (numCourses() > 0) {
+		console.log('showing the loading screen');
 		loadingScreen.show();
 	}
 
@@ -45,25 +46,12 @@ event.onResourcesLoaded(courses, function () {
 		// remove whatever was inserted in the popup before.
 		$(context).find('#cb-class-info').remove();
 
-		var profName = $(context).find('[data-visible="instr"] em').html();
-		if (professors.get(profName)) {
-			console.log('professor was stored already.');
-		} else {
-			console.log('professor not stored locally. Retrieve!');
-			getProfessorStats(profName, function (data) {
-				var professorData = data;
-				professors.add(profName, data);
-				console.log(professors.get(profName));
-				// display the professor stats in the box here.
-			});
-		}
-
 		var course = courses.get(currentCourse).value;		
 		var body = $(context).find('.popover');
 		var container = $('<div/>').attr('id', 'cb-class-info');
 
 		// insert stuff onto the page:
-		container.append($('<h5/>').html('Average Marks'));
+		container.append($('<h5/>').html('Course Averages'));
 		if (course && typeof course != 'undefined') {
 			var gradeTable = makeAverageMarksTable(course.averageMarks);
 			container.append(gradeTable);
@@ -78,7 +66,31 @@ event.onResourcesLoaded(courses, function () {
 			var error = "Couldn't load the description because the Gatech server is temporarily unavailable; ";
 			error += "this seems to happens a lot! It's also possible that the course doesn't exist in the database.";
 			container.append($('<p/>').html(error));
-		}		
+		}
+
+		// instructor information
+		
+
+		container.append($('<hr/>'));
+		var profName = $(context).find('[data-visible="instr"] em').html();
+		container.append($('<h5/>').html(profName));
+
+		if (professors.get(profName)) {
+			console.log('professor was stored already.');
+			console.log(professors.get(profName));
+			var pillbox = makeProfessorPillbox(professors.get(profName).value);
+			container.append(pillbox);
+		} else {
+			console.log('professor not stored locally. Retrieve!');
+			getProfessorStats(profName, function (data) {
+				var professorData = data;
+				professors.add(profName, data);
+				console.log(professors.get(profName));
+				// display the professor stats in the box here.
+				var pillbox = makeProfessorPillbox(professorData);
+				container.append(pillbox);
+			});
+		}
 
 		container.appendTo(body);
 	});
