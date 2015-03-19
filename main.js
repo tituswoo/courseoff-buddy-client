@@ -11,8 +11,15 @@ event.onPageLoaded(function () {
 
 	// keep track of what course is being hovered over in the  calendar view
 	$('.calendar .course-box').mouseover(function () {
-		currentCourse = $(this).find('.course-content').html();
+		currentCourse = $(this).find('.course-content').html().replace(' - ', '');
 		console.log(currentCourse);
+	});
+
+	// add listeners for when mouse is hovered over the calendar tiles.
+	$('.course-cal.pinned').mouseover(function () {
+		var course = $(this).find('.course-content').html();
+		currentCourse = course.replace(' - ', '');
+		console.log(courses.get(currentCourse));
 	});
 
 	// augment class popups with additional information.
@@ -20,13 +27,13 @@ event.onPageLoaded(function () {
 		// remove whatever was inserted in the popup before.
 		$(context).find('#cb-class-info').remove();
 
-
-
 		/*retrieve('search', {query: courseName}, function (details) {
 			var container = $('<div id="cb-class-info" />');
 			container.append('<h5>HELLO THERE FRIEND</h5>');
 			container.append('');
 		});*/
+
+		
 	});
 });
 
@@ -36,19 +43,20 @@ event.onCourseAdded(function (context) {
 });
 
 event.onCourseRemoved(function (context) {
-	console.log('course removed');
+	// console.log('course removed');
 });
 
 event.onCoursePinned(function (context) {
-	console.log('course pinned');
+	// console.log('course pinned');
 	$(context).on('mouseenter', function () {
-		var html = $(this).find('.course-content').html();
-		console.log(html);
+		var course = $(this).find('.course-content').html();
+		currentCourse = course.replace(' - ', '');
+		console.log(courses.get(currentCourse));
 	});
 });
 
 event.onCourseUnpinned(function (context) {
-	console.log('course removed');
+	// console.log('course removed');
 	$(context).off();
 });
 
@@ -59,7 +67,7 @@ function downloadCourseStats(courseTitle) {
 		} else {
 			var id = results[0].id;
 			retrieve('course', {id: id}, function (course) {
-				courses.add(course.title, course);
+				courses.add(course.title.replace(' ', ''), course);
 				console.log(courses.getData());
 			});
 		}
