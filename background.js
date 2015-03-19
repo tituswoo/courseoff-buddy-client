@@ -26,3 +26,10 @@ chrome.runtime.onMessage.addListener(
 		// see: http://stackoverflow.com/questions/20077487/chrome-extension-message-passing-response-not-sent
 		return true;
 	});
+
+chrome.runtime.onMessage.addListener(function (message, sender) {
+	if (message && message.type === 'showPageAction') {
+		var tab = sender.tab;
+		chrome.pageAction.show(tab.id);
+	}
+});

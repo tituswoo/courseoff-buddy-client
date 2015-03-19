@@ -1,3 +1,5 @@
+chrome.extension.sendMessage({type: 'showPageAction'});
+
 var event = new Events();
 var courses = new ArrayList();
 var professors = new ArrayList();
