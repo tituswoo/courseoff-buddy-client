@@ -44,15 +44,24 @@ var ArrayList = (function () {
 function downloadCourseStats(courseTitle) {
 	retrieve('search', {query: courseTitle}, function (results) {
 		if (results.status === 404) {
-			console.log('Nothing found for ' + courseTitle);
+			// console.log('Nothing found for ' + courseTitle);
 			courses.add(false); // needed to make sure onResourcesLoaded works.
 		} else {
 			var id = results[0].id;
 			retrieve('course', {id: id}, function (course) {
 				courses.add(course.title.replace(' ', ''), course);
-				console.log(courses.getData());
+				// console.log(courses.getData());
 			});
 		}
+	});
+}
+
+function getProfessorStats(profName, callback) {
+	retrieve('search', {query: profName}, function (results) {
+		var profID = results[0].id;
+		retrieve('prof', {id: profID}, function (data) {
+			callback(data);
+		});
 	});
 }
 
