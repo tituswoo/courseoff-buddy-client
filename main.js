@@ -11,24 +11,17 @@ event.onPageLoaded(function () {
 
 event.onResourcesLoaded(courses, function () {
 	console.log('all assets finished loading successfully');
-	// retrieve all coures information and store it in an array list.
-
-	// keep track of what course is being hovered over in the  calendar view
-	/*$('.calendar .course-box').mouseover(function () {
-		currentCourse = $(this).find('.course-content').html().replace(' - ', '');
-		console.log(currentCourse);
-	});*/
 
 	// add listeners for when mouse is hovered over the calendar tiles.
-	$('.course-cal.pinned').mouseover(function () {
+	$('body').on('mouseover', '.course-cal.pinned', function () {
 		var course = $(this).find('.course-content').html();
 		currentCourse = course.replace(' - ', '');
-		console.log(currentCourse);
 	});
 
 	// augment class popups with additional information.
 	event.onPopupAdded(function (context) {
 		// remove whatever was inserted in the popup before.
+		console.log(currentCourse);
 		$(context).find('#cb-class-info').remove();
 
 		var course = courses.get(currentCourse).value;
@@ -60,18 +53,6 @@ event.onResourcesLoaded(courses, function () {
 event.onCourseAdded(function (context) {
 	var courseTitle = $(context).find('.name').text();
 	downloadCourseStats(courseTitle);
-});
-
-event.onCoursePinned(function (context) {
-	$(context).on('hover', function () {
-		var course = $(this).find('.course-content').html();
-		currentCourse = course.replace(' - ', '');
-		console.log(courses.get(currentCourse));
-	});
-});
-
-event.onCourseUnpinned(function (context) {
-	$(context).off(); // remove all event handlers.
 });
 
 function downloadCourseStats(courseTitle) {

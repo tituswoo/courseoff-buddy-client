@@ -27,7 +27,7 @@ span.name {
 	border-radius: 4px 4px 0 0;
 }
 
-.tip-inner, .popover {
+.popover .tip-inner, .popover {
 	width: 500px !important;
 	max-width: 500px !important;
 }
