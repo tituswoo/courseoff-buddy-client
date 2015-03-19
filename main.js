@@ -5,7 +5,6 @@ var currentCourse = '';
 $('body').on('mouseenter', '.course-box', function () {
 	var course = $(this).find('.course-content').html();
 	currentCourse = course.replace(' - ', '');
-	console.log('from mouseneter:' + currentCourse);
 });
 
 event.onPageLoaded(function () {
@@ -16,12 +15,9 @@ event.onPageLoaded(function () {
 });
 
 event.onResourcesLoaded(courses, function () {
-	console.log('All assets finished loading successfully.');	
-
 	// augment class popups with additional information.
 	event.onPopupAdded(function (context) {
 		// remove whatever was inserted in the popup before.
-		console.log('current course: ' + currentCourse);
 		$(context).find('#cb-class-info').remove();
 
 		var course = courses.get(currentCourse).value;
@@ -55,50 +51,3 @@ event.onCourseAdded(function (context) {
 	downloadCourseStats(courseTitle);
 });
 
-function downloadCourseStats(courseTitle) {
-	retrieve('search', {query: courseTitle}, function (results) {
-		if (results.status === 404) {
-			console.log('Nothing found for ' + courseTitle);
-			courses.add(false); // needed to make sure onResourcesLoaded works.
-		} else {
-			var id = results[0].id;
-			retrieve('course', {id: id}, function (course) {
-				courses.add(course.title.replace(' ', ''), course);
-				console.log(courses.getData());
-			});
-		}
-	});
-}
-
-function makeAverageMarksTable(averages) {		
-	// table to hold averageMarks
-	var table = $('<table/>').addClass('average-marks-table');
-	// header section
-	var header = $('<tr/>');
-	$('<th/>').text('GPA').appendTo(header);
-	$('<th/>').text('A%').appendTo(header);
-	$('<th/>').text('B%').appendTo(header);
-	$('<th/>').text('C%').appendTo(header);
-	$('<th/>').text('D%').appendTo(header);
-	$('<th/>').text('F%').appendTo(header);
-	// content section
-	var body = $('<tr/>');
-	$('<td/>').text(averages.gpa).appendTo(body);
-	$('<td/>').text(averages.a).appendTo(body);
-	$('<td/>').text(averages.b).appendTo(body);
-	$('<td/>').text(averages.c).appendTo(body);
-	$('<td/>').text(averages.d).appendTo(body);
-	$('<td/>').text(averages.f).appendTo(body);
-	// put everything into the table
-	header.appendTo(table);
-	body.appendTo(table);
-
-	return table;
-}
-
-function retrieve(command, params, callback) {
-	chrome.runtime.sendMessage({
-		command: command,
-		params: params
-	}, callback);
-}
