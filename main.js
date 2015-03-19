@@ -11,7 +11,6 @@ $('body').on('mouseenter', '.course-box', function () {
 
 event.onPageLoaded(function () {
 	if (numCourses() > 0) {
-		console.log('showing the loading screen');
 		loadingScreen.show();
 	}
 
@@ -68,27 +67,25 @@ event.onResourcesLoaded(courses, function () {
 			container.append($('<p/>').html(error));
 		}
 
-		// instructor information
-		
-
+		// instructor information	
 		container.append($('<hr/>'));
 		var profName = $(context).find('[data-visible="instr"] em').html();
 		container.append($('<h5/>').html(profName));
 
 		if (professors.get(profName)) {
-			console.log('professor was stored already.');
-			console.log(professors.get(profName));
 			var pillbox = makeProfessorPillbox(professors.get(profName).value);
 			container.append(pillbox);
 		} else {
-			console.log('professor not stored locally. Retrieve!');
+			var loading = '<p id="prof-spinner"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
+			container.append(loading);
+
 			getProfessorStats(profName, function (data) {
 				var professorData = data;
 				professors.add(profName, data);
-				console.log(professors.get(profName));
 				// display the professor stats in the box here.
+				$('#prof-spinner').remove();
 				var pillbox = makeProfessorPillbox(professorData);
-				container.append(pillbox);
+				container.append(pillbox.fadeIn());
 			});
 		}
 
