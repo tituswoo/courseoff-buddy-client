@@ -3,22 +3,27 @@ var courses = new ArrayList();
 var currentCourse = '';
 
 event.onPageLoaded(function () {
-	// retrieve all coures information and store it in an array list.
 	$('.course-list > .course-info-container').each(function () {
 		var courseTitle = $(this).find('.name').text();
 		downloadCourseStats(courseTitle);
 	});
+});
+
+event.onResourcesLoaded(courses, function () {
+	console.log('all assets finished loading successfully');
+	// retrieve all coures information and store it in an array list.
 
 	// keep track of what course is being hovered over in the  calendar view
-	$('.calendar .course-box').mouseover(function () {
+	/*$('.calendar .course-box').mouseover(function () {
 		currentCourse = $(this).find('.course-content').html().replace(' - ', '');
 		console.log(currentCourse);
-	});
+	});*/
 
 	// add listeners for when mouse is hovered over the calendar tiles.
 	$('.course-cal.pinned').mouseover(function () {
 		var course = $(this).find('.course-content').html();
 		currentCourse = course.replace(' - ', '');
+		console.log(currentCourse);
 	});
 
 	// augment class popups with additional information.
@@ -26,25 +31,28 @@ event.onPageLoaded(function () {
 		// remove whatever was inserted in the popup before.
 		$(context).find('#cb-class-info').remove();
 
-		/*retrieve('search', {query: courseName}, function (details) {
-			var container = $('<div id="cb-class-info" />');
-			container.append('<h5>HELLO THERE FRIEND</h5>');
-			container.append('');
-		});*/
-
 		var course = courses.get(currentCourse).value;
-
-		var gradeTable = makeAverageMarksTable(course.averageMarks);
-
 		var body = $(context).find('.popover');
+		var container = $('<div/>').attr('id', 'cb-class-info');
 
 		// insert stuff onto the page:
-		var container = $('<div/>').attr('id', 'cb-class-info');
 		container.append($('<h5/>').html('Average Marks'));
-		container.append(gradeTable);
+		if (course && typeof course != 'undefined') {
+			var gradeTable = makeAverageMarksTable(course.averageMarks);
+			container.append(gradeTable);
+		} else {
+			container.append('<p>Sorry, no statistics are available for this course.</p>')
+		}
 
-		container.append($('<h5/>').html('Description'));
-		container.append($('<p/>').html(course.details.description));
+		container.append($('<h5/>').html('Course Description'));
+		if (course && course.details.description) {
+			container.append($('<p/>').html(course.details.description));
+		} else {
+			var error = "Couldn't load description because the Gatech server is temporarily unavailable; ";
+			error += "this seems to happens a lot! There's also a small chance that the course just doesn't exist in the database.";
+			container.append($('<p/>').html(error));
+		}		
+
 		container.appendTo(body);
 	});
 });
@@ -54,12 +62,7 @@ event.onCourseAdded(function (context) {
 	downloadCourseStats(courseTitle);
 });
 
-event.onCourseRemoved(function (context) {
-	// console.log('course removed');
-});
-
 event.onCoursePinned(function (context) {
-	// console.log('course pinned');
 	$(context).on('hover', function () {
 		var course = $(this).find('.course-content').html();
 		currentCourse = course.replace(' - ', '');
@@ -68,14 +71,14 @@ event.onCoursePinned(function (context) {
 });
 
 event.onCourseUnpinned(function (context) {
-	// console.log('course removed');
-	$(context).off();
+	$(context).off(); // remove all event handlers.
 });
 
 function downloadCourseStats(courseTitle) {
 	retrieve('search', {query: courseTitle}, function (results) {
 		if (results.status === 404) {
 			console.log('Nothing found for ' + courseTitle);
+			courses.add(false); // needed to make sure onResourcesLoaded works.
 		} else {
 			var id = results[0].id;
 			retrieve('course', {id: id}, function (course) {
@@ -84,13 +87,6 @@ function downloadCourseStats(courseTitle) {
 			});
 		}
 	});
-}
-
-function retrieve(command, params, callback) {
-	chrome.runtime.sendMessage({
-		command: command,
-		params: params
-	}, callback);
 }
 
 function makeAverageMarksTable(averages) {		
@@ -117,4 +113,11 @@ function makeAverageMarksTable(averages) {
 	body.appendTo(table);
 
 	return table;
+}
+
+function retrieve(command, params, callback) {
+	chrome.runtime.sendMessage({
+		command: command,
+		params: params
+	}, callback);
 }

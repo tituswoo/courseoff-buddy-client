@@ -22,6 +22,10 @@ var ArrayList = (function () {
 		return false;
 	};
 
+	ArrayList.prototype.size = function () {
+		return data.length;
+	};
+
 	// helper methods:
 	
 	function exists(key) {

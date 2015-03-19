@@ -57,3 +57,15 @@ Events.prototype.onCourseUnpinned = function (callback) {
 		});
 	});
 };
+
+Events.prototype.onResourcesLoaded = function (courses, callback) {
+	this.onPageLoaded(function () {
+		var numCourses = $('.course-list > .course-info-container').size();
+		var interval = setInterval(function () {
+			if (courses.size() == numCourses) {
+				clearInterval(interval);
+				callback();
+			}
+		}, 150);
+	});
+};
