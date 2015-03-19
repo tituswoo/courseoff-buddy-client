@@ -2,7 +2,6 @@ function Events() {}
 
 Events.prototype.onPageLoaded = function (callback) {
 	var checkInterval = setInterval(function () {
-		console.log('Waiting for page to finish loading...');
 		if ($('.course-info-container').html() != undefined) {
 			clearInterval(checkInterval);
 			callback();

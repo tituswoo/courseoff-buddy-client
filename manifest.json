@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
 
-	"name": "Course Buddy",
-	"description": "Give Courseoff superpowers!",
-	"version": "1.0",
+	"name": "Courseoff Buddy for Georgia Tech",
+	"description": "Pull in useful stats like average grades, professor popularity and difficulty, course descriptions, and more for all your Georgia Tech classes on Courseoff.",
+	"version": "0.1",
 
 	"page_action": {
 		/*"default_icon": {
