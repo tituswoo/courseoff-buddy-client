@@ -55,7 +55,7 @@ event.onResourcesLoaded(courses, function () {
 		container.append($('<h5/>').html('Course Averages'));
 		if (course && typeof course != 'undefined') {
 			var gradeTable = makeAverageMarksTable(course.averageMarks);
-			container.append(gradeTable);
+			if (gradeTable)	container.append(gradeTable);
 		} else {
 			container.append('<p>Sorry, no statistics are available for this course.</p>')
 		}
@@ -64,30 +64,36 @@ event.onResourcesLoaded(courses, function () {
 		if (course && course.details.description) {
 			container.append($('<p/>').html(course.details.description));
 		} else {
-			var error = "Couldn't load the description because the Gatech server is temporarily unavailable; ";
-			error += "this seems to happens a lot! It's also possible that the course doesn't exist in the database.";
+			var error = "No course description was found, or the server is temporarily unavaiable.";
 			container.append($('<p/>').html(error));
 		}
 
 		// instructor information	
 		container.append($('<hr/>'));
+
 		var profName = $(context).find('[data-visible="instr"] em').html();
 		container.append($('<h5/>').html(profName));
 
 		if (professors.get(profName)) {
 			var pillbox = makeProfessorPillbox(professors.get(profName).value);
-			container.append(pillbox);
+			if (pillbox) {
+				container.append(pillbox);
+			} else {
+				container.append($('<p/>').html('No information is available for this instructor.'));
+			}
 		} else {
-			var loading = '<p id="prof-spinner"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
-			container.append(loading);
-
+			var loader = new Loader(container);
+			loader.begin();
 			getProfessorStats(profName, function (data) {
 				var professorData = data;
 				professors.add(profName, data);
-				// display the professor stats in the box here.
-				$('#prof-spinner').remove();
 				var pillbox = makeProfessorPillbox(professorData);
-				container.append(pillbox.fadeIn());
+				if (pillbox) {
+					loader.end();
+					container.append(pillbox.fadeIn());
+				} else {
+					loader.error('No information is available for this instructor.');
+				}
 			});
 		}
 

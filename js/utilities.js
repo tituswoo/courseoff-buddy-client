@@ -91,12 +91,16 @@ function makeAverageMarksTable(averages, color) {
 	$('<th/>').text('F%').appendTo(header);
 	// content section
 	var body = $('<tr/>');
-	$('<td/>').text(averages.gpa).appendTo(body);
-	$('<td/>').text(averages.a).appendTo(body);
-	$('<td/>').text(averages.b).appendTo(body);
-	$('<td/>').text(averages.c).appendTo(body);
-	$('<td/>').text(averages.d).appendTo(body);
-	$('<td/>').text(averages.f).appendTo(body);
+	try {
+		$('<td/>').text(averages.gpa).appendTo(body);
+		$('<td/>').text(averages.a).appendTo(body);
+		$('<td/>').text(averages.b).appendTo(body);
+		$('<td/>').text(averages.c).appendTo(body);
+		$('<td/>').text(averages.d).appendTo(body);
+		$('<td/>').text(averages.f).appendTo(body);
+	} catch (e) {
+		return false;
+	}
 	// put everything into the table
 	header.appendTo(table);
 	body.appendTo(table);
@@ -112,24 +116,28 @@ function makeProfessorPillbox(professor) {
 
 	var rmpBox = $('<div/>').addClass('rmp-box');
 
-	var clarity = $('<div/>').html('clarity');
-	rmp.clarity = rmp.clarity || '?';
-	clarity.append($('<span/>').html(rmp.clarity));
+	try {
+		var clarity = $('<div/>').html('clarity');
+		rmp.clarity = rmp.clarity || '?';
+		clarity.append($('<span/>').html(rmp.clarity));
 
-	var easiness = $('<div/>').html('easiness');
-	rmp.easiness = rmp.easiness || '?';
-	easiness.append($('<span/>').html(rmp.easiness));
+		var easiness = $('<div/>').html('easiness');
+		rmp.easiness = rmp.easiness || '?';
+		easiness.append($('<span/>').html(rmp.easiness));
 
-	var helpfulness = $('<div/>').html('helpfulness');
-	rmp.helpfulness = rmp.helpfulness || '?';
-	helpfulness.append($('<span/>').html(rmp.helpfulness));
+		var helpfulness = $('<div/>').html('helpfulness');
+		rmp.helpfulness = rmp.helpfulness || '?';
+		helpfulness.append($('<span/>').html(rmp.helpfulness));
 
-	clarity.appendTo(rmpBox);
-	easiness.appendTo(rmpBox);
-	helpfulness.appendTo(rmpBox);
+		clarity.appendTo(rmpBox);
+		easiness.appendTo(rmpBox);
+		helpfulness.appendTo(rmpBox);
 
-	container.append(rmpBox);
-	container.append(averageMarksTable);
+		container.append(rmpBox);
+		container.append(averageMarksTable);
+	} catch (e) {
+		return false;
+	}
 	return container;
 }
 
@@ -170,4 +178,24 @@ function RGBtoRGBA(rgb, opacity) {
 	rgb = rgb.replace('rgb', 'rgba');
 	rgba = rgb.substr(0, rgb.indexOf(')')) + ',' + opacity + ')';
 	return rgba;
+}
+
+function Loader(target) {
+	var randID = Math.floor(Math.random() * 10) + new Date().getSeconds();
+	var id = 'ls' + randID;
+	var spinnerHTML = '<p id="'+id+'"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
+
+	this.begin = function () {
+		target.append(spinnerHTML);
+	}
+
+	this.end = function () {
+		$('#'+id).remove();
+	}
+
+	this.error = function (msg) {
+		$('#'+id).fadeOut(function () {
+			$('#'+id).html(msg).fadeIn();
+		});		
+	}
 }
