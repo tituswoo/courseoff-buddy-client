@@ -11,7 +11,7 @@ $(document).ready(function () {
 
   $('body')
     .append($('<p/>')
-    .html('Written with love by <a href="#">Titus K. Woo</a>.')
+    .html('Created with love by <a href="#">Titus Woo</a>.')
     .click(function () {
       chrome.tabs.create({url: 'http://tituswoo.com'});
       return false;

@@ -4,7 +4,7 @@ var event = new Events();
 var courses = new ArrayList();
 var professors = new ArrayList();
 var currentCourse = '';
-var loadingScreen = new LoadingScreen($('.calendar-panel'));
+var loadingScreen = new LoadingScreen($('body'));
 
 $('body').on('mouseenter', '.course-box', function () {
 	var course = $(this).find('.course-content').html();

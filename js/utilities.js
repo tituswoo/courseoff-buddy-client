@@ -141,6 +141,7 @@ function retrieve(command, params, callback) {
 }
 
 function LoadingScreen(element) {
+	console.log('showing loading screen');
 	var id = 'loading-screen';
 
 	var overlay = $('<div/>').attr('id', id).css({

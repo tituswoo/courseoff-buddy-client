@@ -1,3 +1,7 @@
+html, body {
+	height: 100%;
+}
+
 .calendar-panel {
 	/* allow loading panel to fill up the calendar*/
 	position: relative;

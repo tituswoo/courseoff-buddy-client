@@ -34,7 +34,7 @@
 				"js/utilities.js",
 				"js/main.js"
 			],
-			"run_at": "document_start"
+			"run_at": "document_end"
 		}
 	],
 	"background": {
