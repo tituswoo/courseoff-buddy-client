@@ -3,6 +3,7 @@ chrome.extension.sendMessage({type: 'showPageAction'});
 var event = new Events();
 var courses = new ArrayList();
 var professors = new ArrayList();
+var professorsQueue = new ArrayList();
 var currentCourse = '';
 var loadingScreen = new LoadingScreen($('body'));
 
@@ -74,27 +75,30 @@ event.onResourcesLoaded(courses, function () {
 		var profName = $(context).find('[data-visible="instr"] em').html();
 		container.append($('<h5/>').html(profName));
 
+		var notFoundMessage = 'No information is available for this instructor.';
+
 		if (professors.get(profName)) {
 			var pillbox = makeProfessorPillbox(professors.get(profName).value);
 			if (pillbox) {
 				container.append(pillbox);
 			} else {
-				container.append($('<p/>').html('No information is available for this instructor.'));
+				container.append($('<p/>').html(notFoundMessage));
 			}
 		} else {
-			var loader = new Loader(container);
-			loader.begin();
-			getProfessorStats(profName, function (data) {
-				var professorData = data;
+			getProfessorStats(profName, function (data, spinner) {
 				professors.add(profName, data);
-				var pillbox = makeProfessorPillbox(professorData);
-				if (pillbox) {
-					loader.end();
-					container.append(pillbox.fadeIn());
+				if (data) {
+					var pillbox = makeProfessorPillbox(data);
+					if (pillbox) {
+						spinner.end();
+						container.append(pillbox.fadeIn());
+					} else {
+						spinner.error(notFoundMessage);
+					}
 				} else {
-					loader.error('No information is available for this instructor.');
+					spinner.error(notFoundMessage);
 				}
-			});
+			}, new Loader(container));
 		}
 
 		container.appendTo(body);

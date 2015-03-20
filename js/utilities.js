@@ -61,17 +61,31 @@ function downloadCourseStats(courseTitle, callback) {
 	});
 }
 
-function getProfessorStats(profName, callback) {
-	retrieve('search', {query: profName}, function (results) {
-		if (results.status != '404') {
-			var profID = results[0].id;
-			retrieve('prof', {id: profID}, function (data) {
-				callback(data);
-			});
-		} else {
-			callback(false);
-		}
-	});
+// var professorQueue = [];
+function getProfessorStats(profName, callback, spinner) {
+	// var alreadyProcessing = false;
+	// professorQueue.map(function (name) {
+	// 	if (name === profName) {
+	// 		alreadyProcessing = true;
+	// 	}
+	// });
+
+	spinner.begin();
+	// if (!alreadyProcessing) {
+		// professorQueue.push(profName);
+		retrieve('search', {query: profName}, function (results) {
+			if (results.status != '404') {
+				var profID = results[0].id;
+				retrieve('prof', {id: profID}, function (data) {
+					callback(data, spinner);
+				});
+			} else {
+				callback(false, spinner);
+			}
+		});
+	// } else {
+		
+	// }
 }
 
 function makeAverageMarksTable(averages, color) {		
@@ -110,13 +124,11 @@ function makeAverageMarksTable(averages, color) {
 
 function makeProfessorPillbox(professor) {
 	var container = $('<div/>').addClass('professor-pillbox');
-	var averageMarksTable = makeAverageMarksTable(professor.averageMarks);
-	var rmp = professor.rateMyProfessors;
-
-
 	var rmpBox = $('<div/>').addClass('rmp-box');
 
 	try {
+		var rmp = professor.rateMyProfessors;
+		var averageMarksTable = makeAverageMarksTable(professor.averageMarks);
 		var clarity = $('<div/>').html('clarity');
 		rmp.clarity = rmp.clarity || '?';
 		clarity.append($('<span/>').html(rmp.clarity));
@@ -149,7 +161,6 @@ function retrieve(command, params, callback) {
 }
 
 function LoadingScreen(element) {
-	console.log('showing loading screen');
 	var id = 'loading-screen';
 
 	var overlay = $('<div/>').attr('id', id).css({
