@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $('body')
-    .append($('<img width="200"/>')
+    .append($('<img width="300"/>')
     .attr('src', chrome.extension.getURL('/images/course-buddy-banner.jpg')));
   $('body')
     .append($('<p/>')
