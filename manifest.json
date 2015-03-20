@@ -28,17 +28,17 @@
 			"matches": ["https://gatech.courseoff.com/*"],
 			"css": ["main.css"],
 			"js": [
-				"jquery-1.11.2.min.js",
-				"jquery-observe.js",
-				"Events.js",
-				"utilities.js",
-				"main.js"
+				"lib/jquery-1.11.2.min.js",
+				"lib/jquery-observe.js",
+				"js/Events.js",
+				"js/utilities.js",
+				"js/main.js"
 			],
 			"run_at": "document_start"
 		}
 	],
 	"background": {
-		"scripts": ["jquery-1.11.2.min.js", "background.js"],
+		"scripts": ["lib/jquery-1.11.2.min.js", "js/background.js"],
 		"persistent": false
 	},
 	"web_accessible_resources": [

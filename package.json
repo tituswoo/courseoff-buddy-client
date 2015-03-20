@@ -1,0 +1,19 @@
+{
+  "name": "coursebuddy",
+  "version": "0.0.1",
+  "description": "Course buddy for Gatech Courseoff",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:tituswoo/course-buddy-extension.git"
+  },
+  "author": "Titus K. Woo",
+  "license": "4-clause BSD",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-csso": "^1.0.0"
+  }
+}
