@@ -65,7 +65,7 @@ event.onResourcesLoaded(courses, function () {
 		if (course && course.details.description) {
 			container.append($('<p/>').html(course.details.description));
 		} else {
-			var error = "No course description was found, or the server is temporarily unavaiable.";
+			var error = "No course description was found, or the server is temporarily unavailable.";
 			container.append($('<p/>').html(error));
 		}
 
