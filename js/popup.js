@@ -4,7 +4,7 @@ $(document).ready(function () {
     .attr('src', chrome.extension.getURL('/images/course-buddy-banner.jpg')));
   $('body')
     .append($('<p/>')
-    .html("Course Buddy brings Course Critique, Rate My Professors, the Gatech Course Catalog, and more right into Courseoff for all your Georgia Tech classes!"));
+    .html("Courseoff Buddy brings Course Critique, Rate My Professors, the Gatech Course Catalog, and more right into Courseoff for all your Georgia Tech classes!"));
 
   $('body')
     .append('<hr/>');
