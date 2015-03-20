@@ -3,7 +3,7 @@
 
 	"name": "Courseoff Buddy for Georgia Tech",
 	"description": "Pull in useful stats like average grades, professor popularity and difficulty, course descriptions, and more for all your Georgia Tech classes on Courseoff.",
-	"version": "0.1",
+	"version": "0.0.1",
 
 	"icons": {
 		"128": "images/page-action-icon.png",

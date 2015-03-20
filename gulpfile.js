@@ -5,8 +5,7 @@ var copy = require('gulp-copy');
 var minifyHTML = require('gulp-minify-html');
 var del = require('del');
 
-gulp.task('default', ['clean', 'copy', 'css', 'js', 'minify-html'], function () {
-});
+gulp.task('default', ['clean', 'copy', 'css', 'js', 'minify-html'], function () {});
 
 gulp.task('clean', function () {
 	del(['prod']);
