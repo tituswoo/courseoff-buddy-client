@@ -6,7 +6,8 @@
 	"version": "0.1",
 
 	"icons": {
-		"128": "images/course-buddy-icon.png"
+		"128": "images/page-action-icon.png",
+		"32": "images/page-action-icon.png"
 	},
 
 	"page_action": {
