@@ -10,7 +10,6 @@ var loadingScreen = new LoadingScreen($('body'));
 event.onResourcesLoaded(courses, function () {
 	$('.instructor').each(function () {
 		var name = $(this).html();
-		console.log(name);
 		getProfessorStats(name, function (data) {
 			if (data.status != '404') {
 				professors.add(name, data);
@@ -23,7 +22,6 @@ event.onCourseAdded(function (context) {
 	setTimeout(function () {
 		var html = $(context).find('.instructor').each(function () {
 			var name = $(this).html();
-			console.log(name);
 			getProfessorStats(name, function (data) {
 				if (data.status != '404') {
 					professors.add(name, data);
@@ -43,7 +41,6 @@ $('body').on('mouseenter', '.course-box', function () {
 });
 
 $('body').on('mouseenter', '.instructor', function () {
-	console.log('hit');	
 	$(this).tooltipster({
 		onlyOne: true,
 		position: 'left',
