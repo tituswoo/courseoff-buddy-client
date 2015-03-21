@@ -130,7 +130,6 @@ event.onResourcesLoaded(courses, function () {
 
 		var notFoundMessage = 'No information is available for this instructor.';
 
-		console.log('[here2] ' + normalize(profName));
 		if (professors.get(normalize(profName))) {
 			var pillbox = makeProfessorPillbox(professors.get(normalize(profName)).value);
 			if (pillbox) {

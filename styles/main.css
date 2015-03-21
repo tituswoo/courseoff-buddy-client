@@ -15,17 +15,9 @@ span.name {
 	color: black;
 }
 
-.average-marks-table tr {
-	padding: 3px;
-}
-
-.average-marks-table th {
+.average-marks-table th, .average-marks-table td  {
 	color: gray;
-	padding: 0 5px;
-}
-
-.average-marks-table td {
-	padding: 0 5px;
+	padding-right: 10px;
 }
 
 .course-table-container .average-marks-table {
@@ -38,6 +30,11 @@ span.name {
 
 .course-table-container .average-marks-table th {
 	font-size: 0.86em;
+	padding: 0 5px;
+}
+
+.course-table-container .average-marks-table td {
+	padding: 0 5px;
 }
 
 .popover .average-marks-table th, .popover .average-marks-table td {
