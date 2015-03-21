@@ -43,7 +43,11 @@ var ArrayList = (function () {
 })();
 
 function normalize(value) {
-	return value.replace(/[\s]+/g, '');
+	if (value) {
+		return value.replace(/[\s]+/g, '');
+	} else {
+		return value;
+	}
 }
 
 function downloadCourseStats(courseTitle, callback) {

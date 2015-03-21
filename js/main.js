@@ -33,6 +33,10 @@ event.onCourseAdded(function (context) {
 	}, 500);	
 });
 
+$('body').on('click', '.dropdown-menu a', function () {
+	window.location.reload();
+});
+
 $('body').on('mouseenter', '.course-box', function () {
 	var course = $(this).find('.course-content').html();
 	currentCourse = course.replace(' - ', '');
