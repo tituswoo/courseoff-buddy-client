@@ -139,7 +139,6 @@ event.onResourcesLoaded(courses, function () {
 			}
 		} else {
 			getProfessorStats(profName, function (data, spinner) {
-				console.log('[here] ' + normalize(data.name));
 				professors.add(profName, data);
 				if (data) {
 					var pillbox = makeProfessorPillbox(data);
