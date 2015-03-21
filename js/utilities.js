@@ -98,7 +98,7 @@ function getProfessorStats(profName, callback, spinner) {
 }
 
 function makeAverageMarksTable(averages, color) {		
-	color = color || 'white';
+	color = String(color) || 'initial';
 	// table to hold averageMarks
 	var table = $('<table/>').addClass('average-marks-table');
 	table.css({
@@ -106,8 +106,8 @@ function makeAverageMarksTable(averages, color) {
 	});
 	// header section
 	var header = $('<tr/>');
-	$('<th/>').text('GPA').appendTo(header);
-	$('<th/>').text('A%').appendTo(header);
+	$('<th class="gpa" />').text('GPA').appendTo(header);
+	$('<th class="a"/>').text('A%').appendTo(header);
 	$('<th/>').text('B%').appendTo(header);
 	$('<th/>').text('C%').appendTo(header);
 	$('<th/>').text('D%').appendTo(header);
@@ -115,8 +115,8 @@ function makeAverageMarksTable(averages, color) {
 	// content section
 	var body = $('<tr/>');
 	try {
-		$('<td/>').text(averages.gpa).appendTo(body);
-		$('<td/>').text(averages.a).appendTo(body);
+		$('<td class="gpa"/>').text(averages.gpa).appendTo(body);
+		$('<td class="a"/>').text(averages.a).appendTo(body);
 		$('<td/>').text(averages.b).appendTo(body);
 		$('<td/>').text(averages.c).appendTo(body);
 		$('<td/>').text(averages.d).appendTo(body);
@@ -131,34 +131,79 @@ function makeAverageMarksTable(averages, color) {
 	return table;
 }
 
-function makeProfessorPillbox(professor) {
+function makeProfessorPillbox(professor, color) {
+	color = String(color) | 'initial';
+
 	var container = $('<div/>').addClass('professor-pillbox');
-	var rmpBox = $('<div/>').addClass('rmp-box');
 
 	try {
-		var rmp = professor.rateMyProfessors;
-		var averageMarksTable = makeAverageMarksTable(professor.averageMarks);
-		var clarity = $('<div/>').html('clarity');
-		rmp.clarity = rmp.clarity || '?';
-		clarity.append($('<span/>').html(rmp.clarity));
-
-		var easiness = $('<div/>').html('easiness');
-		rmp.easiness = rmp.easiness || '?';
-		easiness.append($('<span/>').html(rmp.easiness));
-
-		var helpfulness = $('<div/>').html('helpfulness');
-		rmp.helpfulness = rmp.helpfulness || '?';
-		helpfulness.append($('<span/>').html(rmp.helpfulness));
-
-		clarity.appendTo(rmpBox);
-		easiness.appendTo(rmpBox);
-		helpfulness.appendTo(rmpBox);
-
+		var averageMarksTable = makeAverageMarksTable(professor.averageMarks, color);
+		var rmpBox = makeRmpBox(professor.rateMyProfessors, color);
 		container.append(rmpBox);
 		container.append(averageMarksTable);
 	} catch (e) {
 		return false;
 	}
+
+	return container;
+}
+
+function makeRmpBox(rmp, color) {
+	color = String(color) || 'initial';
+	var rmpBox = $('<div/>').addClass('rmp-box');
+
+	var clarity = $('<div/>').html('clarity');
+	rmp.clarity = rmp.clarity || '?';
+	clarity.append($('<span/>').html(rmp.clarity).css({backgroundColor: color}));
+
+	var easiness = $('<div/>').html('easiness');
+	rmp.easiness = rmp.easiness || '?';
+	easiness.append($('<span/>').html(rmp.easiness).css({backgroundColor: color}));
+
+
+	var helpfulness = $('<div/>').html('helpfulness');
+	rmp.helpfulness = rmp.helpfulness || '?';
+	helpfulness.append($('<span/>').html(rmp.helpfulness).css({backgroundColor: color}));
+
+	clarity.appendTo(rmpBox);
+	easiness.appendTo(rmpBox);
+	helpfulness.appendTo(rmpBox);
+
+	return rmpBox;
+}
+
+function makeDetailedProfessorStatsBox(professor, color) {
+	color = String(color) || 'initial';
+
+	var profAveragesTable = makeAverageMarksTable(professor.averageMarks, color);
+	var rmpBox = makeRmpBox(professor.rateMyProfessors, color);
+
+	var container = $('<div/>').addClass('detailed-prof-stats-box');
+
+	var title = $('<h4/>').addClass('title');
+	var link = $('<a/>')
+		.attr('href', professor.url)
+		.attr('target', '_blank')
+		.html(professor.name);
+	title.html(link);
+	title.appendTo(container);
+
+	$('<h5/>').html(
+		$('<a/>').html('Rate My Professors').attr('href', professor.rateMyProfessors.url).attr('target', '_blank')
+	).appendTo(container);
+	rmpBox.appendTo(container);
+
+	$('<hr/>').appendTo(container);
+	
+	$('<h5/>').html(
+		$('<a/>').html('Average marks for all courses').attr('href', '#').attr('target', '_blank')
+	).appendTo(container);
+	profAveragesTable.appendTo(container);
+	$('<hr/>').appendTo(container);
+
+	var email = $('<a/>').attr('href', 'mailto:' + professor.email).html(professor.email);
+	email.appendTo(container);
+
 	return container;
 }
 

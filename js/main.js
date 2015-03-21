@@ -52,9 +52,11 @@ $('body').on('mouseenter', '.instructor', function () {
 		functionBefore: function (origin, continueTooltip) {
 			var name = normalize($(this).html());
 			var data = professors.get(name);
+			var color = $(this).parents('.course-info-container').css('border-left-color');
 
+			origin.tooltipster('content', '');
 			if (data) {
-				origin.tooltipster('content', makeProfessorPillbox(data.value));
+				origin.tooltipster('content', makeDetailedProfessorStatsBox(data.value));
 			} else {
 				origin.tooltipster('content', $('<p>No information found for this instructor.</p>'));
 			}
