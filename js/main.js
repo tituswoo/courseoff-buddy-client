@@ -8,7 +8,29 @@ var currentCourse = '';
 var loadingScreen = new LoadingScreen($('body'));
 
 event.onResourcesLoaded(courses, function () {
-	
+	$('.instructor').each(function () {
+		var name = $(this).html();
+		console.log(name);
+		getProfessorStats(name, function (data) {
+			if (data.status != '404') {
+				professors.add(name, data);
+			}
+		});
+	});
+});
+
+event.onCourseAdded(function (context) {
+	setTimeout(function () {
+		var html = $(context).find('.instructor').each(function () {
+			var name = $(this).html();
+			console.log(name);
+			getProfessorStats(name, function (data) {
+				if (data.status != '404') {
+					professors.add(name, data);
+				}
+			});
+		});
+	}, 500);	
 });
 
 $('body').on('mouseenter', '.course-box', function () {
@@ -26,16 +48,19 @@ $('body').on('mouseenter', '.instructor', function () {
 		speed: 0,
 		delay: 0,
 		interactive: true,
-		functionInit: function () {
-			getProfessorStats($(this).html(), function (data) {
-				console.log(data);
-				professors.add(data.name, data);
-				console.log(professors.get(data.name));
-			});
+		functionBefore: function (origin, continueTooltip) {
+			var name = normalize($(this).html());
+			var data = professors.get(name);
+
+			if (data) {
+				origin.tooltipster('content', makeProfessorPillbox(data.value));
+			} else {
+				origin.tooltipster('content', $('<p>No information found for this instructor.</p>'));
+			}
+			continueTooltip();	
 		}
 	});
 	$(this).tooltipster('show');
-	$(this).tooltipster('content', new Loader().html());
 });
 
 
@@ -104,6 +129,7 @@ event.onResourcesLoaded(courses, function () {
 
 		var notFoundMessage = 'No information is available for this instructor.';
 
+		console.log('[here2] ' + normalize(profName));
 		if (professors.get(normalize(profName))) {
 			var pillbox = makeProfessorPillbox(professors.get(normalize(profName)).value);
 			if (pillbox) {
@@ -113,6 +139,7 @@ event.onResourcesLoaded(courses, function () {
 			}
 		} else {
 			getProfessorStats(profName, function (data, spinner) {
+				console.log('[here] ' + normalize(data.name));
 				professors.add(profName, data);
 				if (data) {
 					var pillbox = makeProfessorPillbox(data);

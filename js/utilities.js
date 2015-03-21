@@ -4,7 +4,6 @@ var ArrayList = (function () {
 
 	ArrayList.prototype.add = function (key, object) {
 		key = normalize(key);
-		console.log('normalized key: ' + key);
 		if (!exists(key)) {
 			data.push({
 				key: key,
