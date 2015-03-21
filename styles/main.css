@@ -134,7 +134,7 @@ hr {
 }
 
 .detailed-prof-stats-box hr {
-	margin: 10px 0 !important;
+	margin: 10px 0 5px 0 !important;
 }
 
 .detailed-prof-stats-box .average-marks-table .gpa {
