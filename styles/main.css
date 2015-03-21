@@ -124,7 +124,7 @@ hr {
 	  border-radius: 4px 4px 0 0;
 }
 
-.detailed-prof-stats-box h4.title a, .detailed-prof-stats-box h5 a {
+.detailed-prof-stats-box h4.title a, .detailed-prof-stats-box h5 a:hover {
 	background-image: url('chrome-extension://__MSG_@@extension_id__/images/link-icon.png');
 	background-position: 100% 50%;
 	background-repeat: no-repeat;
@@ -134,7 +134,7 @@ hr {
 }
 
 .detailed-prof-stats-box hr {
-	margin: 5px 0;
+	margin: 10px 0 !important;
 }
 
 .detailed-prof-stats-box .average-marks-table .gpa {
