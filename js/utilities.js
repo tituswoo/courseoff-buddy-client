@@ -152,6 +152,8 @@ function makeRmpBox(rmp, color) {
 	color = String(color) || 'initial';
 	var rmpBox = $('<div/>').addClass('rmp-box');
 
+	rmp = rmp || {};
+
 	var clarity = $('<div/>').html('clarity');
 	rmp.clarity = rmp.clarity || '?';
 	clarity.append($('<span/>').html(rmp.clarity).css({backgroundColor: color}));
