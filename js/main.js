@@ -7,10 +7,37 @@ var professorsQueue = new ArrayList();
 var currentCourse = '';
 var loadingScreen = new LoadingScreen($('body'));
 
+event.onResourcesLoaded(courses, function () {
+	
+});
+
 $('body').on('mouseenter', '.course-box', function () {
 	var course = $(this).find('.course-content').html();
 	currentCourse = course.replace(' - ', '');
 });
+
+$('body').on('mouseenter', '.instructor', function () {
+	console.log('hit');	
+	$(this).tooltipster({
+		onlyOne: true,
+		position: 'left',
+		theme: 'tooltipster-courseoff-light',
+		animation: 'fade',
+		speed: 0,
+		delay: 0,
+		interactive: true,
+		functionInit: function () {
+			getProfessorStats($(this).html(), function (data) {
+				console.log(data);
+				professors.add(data.name, data);
+				console.log(professors.get(data.name));
+			});
+		}
+	});
+	$(this).tooltipster('show');
+	$(this).tooltipster('content', new Loader().html());
+});
+
 
 event.onPageLoaded(function () {
 	if (numCourses() > 0) {
@@ -77,8 +104,8 @@ event.onResourcesLoaded(courses, function () {
 
 		var notFoundMessage = 'No information is available for this instructor.';
 
-		if (professors.get(profName)) {
-			var pillbox = makeProfessorPillbox(professors.get(profName).value);
+		if (professors.get(normalize(profName))) {
+			var pillbox = makeProfessorPillbox(professors.get(normalize(profName)).value);
 			if (pillbox) {
 				container.append(pillbox);
 			} else {

@@ -20,9 +20,9 @@ gulp.task('js', ['clean'], function() {
 });
 
 gulp.task('css', ['clean'], function () {
-	return gulp.src('main.css')
+	return gulp.src(['styles/**/*.css'])
 		.pipe(csso())
-		.pipe(gulp.dest('prod/'));
+		.pipe(gulp.dest('prod/styles'));
 });
 
 gulp.task('copy', ['clean'], function () {

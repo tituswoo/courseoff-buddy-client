@@ -3,6 +3,8 @@ var ArrayList = (function () {
 	var data = [];
 
 	ArrayList.prototype.add = function (key, object) {
+		key = normalize(key);
+		console.log('normalized key: ' + key);
 		if (!exists(key)) {
 			data.push({
 				key: key,
@@ -41,6 +43,10 @@ var ArrayList = (function () {
 	return ArrayList;
 })();
 
+function normalize(value) {
+	return value.replace(/[\s]+/g, '');
+}
+
 function downloadCourseStats(courseTitle, callback) {
 	retrieve('search', {query: courseTitle}, function (results) {
 		if (results.status === 404) {
@@ -50,7 +56,7 @@ function downloadCourseStats(courseTitle, callback) {
 			var id = results[0].id;
 			retrieve('course', {id: id}, function (course) {
 				if (course.status != '404') {
-					courses.add(course.title.replace(' ', ''), course);
+					courses.add(normalize(course.title), course);
 					if (callback) callback(course);
 				} else {
 					courses.add(false);
@@ -70,7 +76,7 @@ function getProfessorStats(profName, callback, spinner) {
 	// 	}
 	// });
 
-	spinner.begin();
+	if (spinner) spinner.begin();
 	// if (!alreadyProcessing) {
 		// professorQueue.push(profName);
 		retrieve('search', {query: profName}, function (results) {
@@ -196,17 +202,21 @@ function Loader(target) {
 	var id = 'ls' + randID;
 	var spinnerHTML = '<p id="'+id+'"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
 
+	this.html = function () {
+		return $(spinnerHTML);
+	};
+
 	this.begin = function () {
 		target.append(spinnerHTML);
-	}
+	};
 
 	this.end = function () {
 		$('#'+id).remove();
-	}
+	};
 
 	this.error = function (msg) {
 		$('#'+id).fadeOut(function () {
 			$('#'+id).html(msg).fadeIn();
 		});		
-	}
+	};
 }

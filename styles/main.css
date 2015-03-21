@@ -33,6 +33,7 @@ span.name {
 	margin-bottom: 5px;
 	width: 100%;
 	background-color: lightgray;
+	font-family: monospace;
 }
 
 .course-table-container .average-marks-table th {
@@ -92,6 +93,14 @@ span.name {
 hr {
 	margin: 5px 0 !important;
 	border-top: 1px solid lightgray !important;
+}
+
+.tooltipster-content p {
+	margin: 0;
+}
+
+.instructor:hover {
+	cursor: pointer;
 }
 
 /* Professor Pillbox */
