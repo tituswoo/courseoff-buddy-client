@@ -112,9 +112,8 @@ hr {
 	color: black;
 }
 
-.detailed-prof-stats-box .link {
-	float: right;
-	opacity: 0.6;
+.detailed-prof-stats-box h4 a, .detailed-prof-stats-box h5 a {
+	display: block;
 }
 
 .detailed-prof-stats-box h4.title {
@@ -125,6 +124,11 @@ hr {
 	  border-radius: 4px 4px 0 0;
 }
 
+.detailed-prof-stats-box h4.title a, .detailed-prof-stats-box h5 a {
+	background-image: url('chrome-extension://__MSG_@@extension_id__/images/link-icon.png');
+	background-position: 100% 50%;
+	background-repeat: no-repeat;
+}
 .detailed-prof-stats-box h5 {
 	margin-bottom: 5px;
 }
