@@ -70,31 +70,18 @@ function downloadCourseStats(courseTitle, callback) {
 	});
 }
 
-// var professorQueue = [];
 function getProfessorStats(profName, callback, spinner) {
-	// var alreadyProcessing = false;
-	// professorQueue.map(function (name) {
-	// 	if (name === profName) {
-	// 		alreadyProcessing = true;
-	// 	}
-	// });
-
 	if (spinner) spinner.begin();
-	// if (!alreadyProcessing) {
-		// professorQueue.push(profName);
-		retrieve('search', {query: profName}, function (results) {
-			if (results.status != '404') {
-				var profID = results[0].id;
-				retrieve('prof', {id: profID}, function (data) {
-					callback(data, spinner);
-				});
-			} else {
-				callback(false, spinner);
-			}
-		});
-	// } else {
-		
-	// }
+	retrieve('search', {query: profName}, function (results) {
+		if (results.status != '404') {
+			var profID = results[0].id;
+			retrieve('prof', {id: profID}, function (data) {
+				callback(data, spinner);
+			});
+		} else {
+			callback(false, spinner);
+		}
+	});
 }
 
 function makeAverageMarksTable(averages, color) {		
@@ -198,7 +185,7 @@ function makeDetailedProfessorStatsBox(professor, color) {
 	$('<hr/>').appendTo(container);
 	
 	$('<h5/>').html(
-		$('<a/>').html('Average marks for all courses').attr('href', '#').attr('target', '_blank')
+		$('<a/>').html('Average marks for all courses').attr('href', professor.averageMarks.url).attr('target', '_blank')
 	).appendTo(container);
 	profAveragesTable.appendTo(container);
 	$('<hr/>').appendTo(container);
