@@ -209,6 +209,7 @@ function LoadingScreen(element) {
 	var overlay = $('<div/>').attr('id', id).css({
 		paddingTop: (element.height() / 2) - 50
 	});
+	overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/page-action-icon.png')));
 	overlay.append($('<h2/>').html('Loading enhancements...'));
 	overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/spinner.gif')));
 
