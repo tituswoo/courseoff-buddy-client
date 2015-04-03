@@ -8,6 +8,7 @@ var Courses = (function () {
 		var course = courses.get(courseName);
 
 		if (course) {
+			console.log('course exists already');
 			return course;
 		} else {
 			chrome.runtime.sendMessage({

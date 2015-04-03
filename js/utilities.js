@@ -4,7 +4,7 @@ var ArrayList = (function () {
 
 	ArrayList.prototype.add = function (key, object) {
 		key = normalize(key);
-		if (!exists(key)) {
+		if (!this.exists(key)) {
 			data.push({
 				key: key,
 				value: object
@@ -27,9 +27,17 @@ var ArrayList = (function () {
 		return data.length;
 	};
 
+	ArrayList.prototype.remove = function (key) {
+		data.map(function (item, index) {
+			if (item.key === key) {
+				var thing = data.splice(index, 1);
+			}
+		});
+	};
+
 	// helper methods:
 	
-	function exists(key) {
+	ArrayList.prototype.exists = function (key) {
 		var found = false;
 		data.map(function (item) {
 			if (item.key === key && item.key) {
