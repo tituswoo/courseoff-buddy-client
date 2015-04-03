@@ -35,6 +35,7 @@
 				"lib/jquery.tooltipster.min.js",
 				"js/utilities.js",
 				"js/Courses.js",
+				"js/Instructors.js",
 				"js/Buddy.js",
 				"js/Events.js",
 				"js/app.js",

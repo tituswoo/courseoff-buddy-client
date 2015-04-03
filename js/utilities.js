@@ -315,3 +315,14 @@ function AverageMarksTable(averages, color) {
 		return table;
 	};
 }
+
+var Ajax = (function() {
+	function Ajax() {}
+	Ajax.prototype.get = function (url, callback) {
+		chrome.runtime.sendMessage({
+			action: 'get',
+			url: url
+		}, callback);
+	}
+	return new Ajax();
+})();

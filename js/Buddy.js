@@ -1,7 +1,5 @@
 var Buddy = (function () {
 
-	var courses = new ArrayList();
-
 	function Buddy() {
 		this.showPageAction();
 	}
@@ -11,10 +9,10 @@ var Buddy = (function () {
 	};
 
 	Buddy.prototype.init = function () {
-		this.courseInfo();
+		this.attachCourseListInfo();
 	};
 
-	Buddy.prototype.courseInfo = function () {
+	Buddy.prototype.attachCourseListInfo = function () {
 		$('body').on('mouseenter', '.course-info-container', function (event) {
 			var course = $(this).find('.name').text();
 			course = normalize(course);
@@ -25,18 +23,34 @@ var Buddy = (function () {
 			if (!context.data('clicked')) {
 				Courses.get(course, function (response) {
 					if (response.successful) {
-						console.log('trying to insert');
+						// create average marks table and insert:
 						var color = context.css('border-left-color');
 						color = RGBtoRGBA(color, '0.15');
 						table.config(response.data.averageMarks, color);
-						table.make().hide().insertBefore(context.find('.table')).fadeIn();
+						table.make().hide().insertBefore(context.find('.table')).fadeIn();						
 					} else {
 						table.error().hide().insertBefore(context.find('.table')).fadeIn();
 					}
 				});
+				attachProfInfoInCourseList(context);
 				context.data('clicked', true);
 			}
 		});
+	};
+
+	function attachProfInfoInCourseList(context) {
+		context.find('.instructor').each(function () {
+			var profName = $(this).text();
+			Instructors.get(profName, function (response) {
+				if (response.successful) {
+
+				} else {
+
+				}
+			});
+		});
+
+		
 	};
 
 	return new Buddy();
