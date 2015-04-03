@@ -1,6 +1,6 @@
-function Events() {}
+function PageEvent() {}
 
-Events.prototype.onPageLoaded = function (callback) {
+PageEvent.prototype.onPageLoaded = function (callback) {
 	var checkInterval = setInterval(function () {
 		if ($('.course-info-container').html() != undefined) {
 			clearInterval(checkInterval);
@@ -9,7 +9,7 @@ Events.prototype.onPageLoaded = function (callback) {
 	}, 300);
 };
 
-Events.prototype.onPopupAdded = function (callback) {
+PageEvent.prototype.onPopupAdded = function (callback) {
 	$('body').observe('childList', '.popover.tip', function(record) {
 		if (record.addedNodes[0] != null) {
 			var context = $(record.addedNodes[0]);
@@ -24,7 +24,7 @@ Events.prototype.onPopupAdded = function (callback) {
 	});
 };
 
-Events.prototype.onCourseAdded = function (callback) {
+PageEvent.prototype.onCourseAdded = function (callback) {
 	this.onPageLoaded(function () {
 		$('.course-list').observe('childList', '.course-info-container', function(record) {
 			if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
@@ -32,7 +32,7 @@ Events.prototype.onCourseAdded = function (callback) {
 	});	
 };
 
-Events.prototype.onCourseRemoved = function (callback) {
+PageEvent.prototype.onCourseRemoved = function (callback) {
 	this.onPageLoaded(function () {
 		$('.course-list').observe('childList', '.course-info-container', function(record) {
 			if (record.removedNodes[0] != null) callback(record.removedNodes[0]);
@@ -40,7 +40,7 @@ Events.prototype.onCourseRemoved = function (callback) {
 	});
 };
 
-Events.prototype.onCoursePinned = function (callback) {
+PageEvent.prototype.onCoursePinned = function (callback) {
 	this.onPageLoaded(function () {
 		$('.calendar .wk-day-body').observe('childList', '.course-box', function(record) {
 			var node = record.addedNodes[0];
@@ -51,7 +51,7 @@ Events.prototype.onCoursePinned = function (callback) {
 	});
 };
 
-Events.prototype.onCourseUnpinned = function (callback) {
+PageEvent.prototype.onCourseUnpinned = function (callback) {
 	this.onPageLoaded(function () {
 		$('.calendar .wk-day-body').observe('childList', '.course-box', function(record) {
 			var node = record.removedNodes[0];
@@ -62,7 +62,7 @@ Events.prototype.onCourseUnpinned = function (callback) {
 	});
 };
 
-Events.prototype.onResourcesLoaded = function (courses, callback) {
+PageEvent.prototype.onResourcesLoaded = function (courses, callback) {
 	this.onPageLoaded(function () {
 		var numCourses = $('.course-list > .course-info-container').size();
 		var interval = setInterval(function () {

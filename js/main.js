@@ -1,6 +1,6 @@
 chrome.extension.sendMessage({type: 'showPageAction'});
 
-var event = new Events();
+var event = new PageEvent();
 var courses = new ArrayList();
 var professors = new ArrayList();
 var professorsQueue = new ArrayList();
@@ -33,6 +33,10 @@ event.onCourseAdded(function (context) {
 
 $('body').on('click', '.dropdown-menu a', function () {
 	window.location.reload();
+});
+
+$('body').on('click', '.schedules-menu a', function () {
+	// to be implemented
 });
 
 $('body').on('mouseenter', '.course-box', function () {
