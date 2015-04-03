@@ -11,6 +11,10 @@ var Buddy = (function () {
 	};
 
 	Buddy.prototype.init = function () {
+		this.courseInfo();
+	};
+
+	Buddy.prototype.courseInfo = function () {
 		$('body').on('mouseenter', '.course-info-container', function (event) {
 			var course = $(this).find('.name').text();
 			course = normalize(course);
@@ -21,6 +25,7 @@ var Buddy = (function () {
 			if (!context.data('clicked')) {
 				Courses.get(course, function (response) {
 					if (response.successful) {
+						console.log('trying to insert');
 						var color = context.css('border-left-color');
 						color = RGBtoRGBA(color, '0.15');
 						table.config(response.data.averageMarks, color);
