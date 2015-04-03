@@ -33,8 +33,11 @@
 				"lib/jquery-1.11.2.min.js",
 				"lib/jquery-observe.js",
 				"lib/jquery.tooltipster.min.js",
-				"js/Events.js",
 				"js/utilities.js",
+				"js/Courses.js",
+				"js/Buddy.js",
+				"js/Events.js",
+				"js/app.js",
 				"js/main.js"
 			],
 			"run_at": "document_end"

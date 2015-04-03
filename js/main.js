@@ -1,6 +1,6 @@
-chrome.extension.sendMessage({type: 'showPageAction'});
 
-var event = new PageEvent();
+
+/*var event = new PageEvent();
 var courses = new ArrayList();
 var professors = new ArrayList();
 var professorsQueue = new ArrayList();
@@ -175,4 +175,4 @@ event.onCourseAdded(function (context) {
 		}
 	});	
 });
-
+*/

@@ -6,7 +6,7 @@ PageEvent.prototype.onPageLoaded = function (callback) {
 			clearInterval(checkInterval);
 			callback();
 		}
-	}, 300);
+	}, 600);
 };
 
 PageEvent.prototype.onPopupAdded = function (callback) {
