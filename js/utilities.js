@@ -258,3 +258,52 @@ function Loader(target) {
 		});		
 	};
 }
+
+function AverageMarksTable(averages, color) {
+	color = String(color) || 'initial';
+	averages = averages;
+
+	this.config = function (a, c) {
+		averages = a;
+		color = c;
+	}
+
+	this.make = function () {
+		// table to hold averageMarks
+		var table = $('<table/>').addClass('average-marks-table');
+		table.css({
+			backgroundColor: color
+		});
+
+		// header section
+		var header = $('<tr/>');
+		$('<th class="gpa" />').text('GPA').appendTo(header);
+		$('<th class="a"/>').text('A%').appendTo(header);
+		$('<th/>').text('B%').appendTo(header);
+		$('<th/>').text('C%').appendTo(header);
+		$('<th/>').text('D%').appendTo(header);
+		$('<th/>').text('F%').appendTo(header);
+		// content section
+		var body = $('<tr/>');
+		try {
+			$('<td class="gpa"/>').text(averages.gpa).appendTo(body);
+			$('<td class="a"/>').text(averages.a).appendTo(body);
+			$('<td/>').text(averages.b).appendTo(body);
+			$('<td/>').text(averages.c).appendTo(body);
+			$('<td/>').text(averages.d).appendTo(body);
+			$('<td/>').text(averages.f).appendTo(body);
+		} catch (e) {
+			return false;
+		}
+		// put everything into the table
+		header.appendTo(table);
+		body.appendTo(table);
+		return table;
+	};
+
+	this.error = function () {
+		var table = $('<div/>').addClass('average-marks-table-error');
+		table.html('No info is available.');
+		return table;
+	};
+}

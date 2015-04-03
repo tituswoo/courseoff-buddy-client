@@ -17,7 +17,7 @@ var Courses = (function () {
 				courses.add(courseName, response);
 				callback(response);
 			});
-		}		
+		}
 	};
 
 	return new Courses();

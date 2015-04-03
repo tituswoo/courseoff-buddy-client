@@ -15,18 +15,18 @@ var Buddy = (function () {
 			var course = $(this).find('.name').text();
 			course = normalize(course);
 			course = course.substring(0, course.indexOf('-'));
-
 			var context = $(this);
+
+			var table = new AverageMarksTable();
 
 			Courses.get(course, function (response) {
 				if (response.successful) {
-					console.log(response.data);
 					var color = context.css('border-left-color');
 					color = RGBtoRGBA(color, '0.15');
-					var table = makeAverageMarksTable(response.data.averageMarks, color).hide();
-					table.insertBefore(context.find('.table')).fadeIn();
+					table.config(response.data.averageMarks, color);
+					table.make().hide().insertBefore(context.find('.table')).fadeIn();
 				} else {
-					console.log(response.data);
+					table.error().hide().insertBefore(context.find('.table')).fadeIn();
 				}
 			});
 		});
