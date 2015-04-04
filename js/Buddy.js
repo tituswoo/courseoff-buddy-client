@@ -43,38 +43,45 @@ var Buddy = (function () {
 			var thatContext = $(this);
 			var profName = $(this).text();
 
-			if (!thatContext.data('hovered')) {
+			//if (!thatContext.data('hovered')) {
 				console.log('getting info for ' + profName);
-				Instructors.get(profName, function (response) {
-					// console.log(response);
-					thatContext.data('hovered', true);
-				});
-			}
+				Instructors.get(profName, function () {});
+			//}
 		});
 
 		$('body').on('mouseenter', '.instructor', function () {
-			var profName = $(this).text();
-
-			$(this).tooltipster({
-				position: 'left',
-				onlyOne: true,
-				interactive: true,
-				delay: 10,
-				speed: 0,
-				theme: 'tooltipster-courseoff-light',
-				content: 'Loading...',
-				functionBefore: function (origin, continueTooltip) {
-					continueTooltip();
-					Instructors.get(profName, function (response) {
-						if (response.successful) {							
-							origin.tooltipster('content', makeDetailedProfessorStatsBox(response.data));
-						} else {
-							origin.tooltipster('content', 'Nothing found.');
-						}
-					});
-				}
-			});
-			$(this).tooltipster('show');
+			var context = $(this);
+			var profName = context.text();
+			if (!context.data('hovered')) {
+				console.log('fetching ' + profName);
+				$(this).tooltipster({
+					position: 'left',
+					onlyOne: true,
+					interactive: true,
+					delay: 10,
+					speed: 0,
+					theme: 'tooltipster-courseoff-light',
+					debug: false,
+					content: 'Loading...',
+					functionBefore: function (origin, continueTooltip) {
+						// @todo: this gets fired way too often.
+						// figure out how to make it only fire once.
+						context.data('hovered', true);
+						continueTooltip();
+						Instructors.get(profName, function (response) {
+							console.log(response);
+							if (response.successful) {							
+								origin.tooltipster('content', makeDetailedProfessorStatsBox(response.data));
+							} else {
+								origin.tooltipster('content', 'Nothing found.');
+							}
+						});
+					}
+				});
+				$(this).tooltipster('show');
+			} else {
+				console.log('already fetched ' + profName);
+			}
 		});
 
 		/*$('body').on('mouseenter', '.instructor', function () {

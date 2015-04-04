@@ -171,7 +171,6 @@ function makeRmpBox(rmp, color) {
 }
 
 function makeDetailedProfessorStatsBox(professor, color) {
-	console.log(professor);
 	color = String(color) || 'initial';
 
 	var profAveragesTable = new AverageMarksTable();
@@ -331,3 +330,10 @@ var Ajax = (function() {
 	}
 	return new Ajax();
 })();
+
+function Response(successful, data) {
+	return {
+		successful: successful,
+		data: data || false
+	};
+}

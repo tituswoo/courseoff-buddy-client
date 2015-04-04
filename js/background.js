@@ -60,12 +60,4 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 		var tab = sender.tab;
 		chrome.pageAction.show(tab.id);
 	}
-})
-
-// chrome.runtime.onMessage.addListener(function (request, sender, response) {
-// 	if (request.action === 'getTabId') {
-// 		response({
-// 			tabId: sender.tab.id
-// 		});
-// 	}
-// });
+});

@@ -12,7 +12,7 @@ var Courses = (function () {
 		} else {
 			chrome.runtime.sendMessage({
 				action: 'get',
-				url: 'http://courseoffbuddy.tk/course/' + courseName
+				url: 'http://localhost:3000/course/' + courseName
 			}, function (response) {
 				courses.add(courseName, response);
 				callback(response);
