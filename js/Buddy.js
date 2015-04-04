@@ -59,14 +59,17 @@ var Buddy = (function () {
 				position: 'left',
 				onlyOne: true,
 				interactive: true,
+				delay: 10,
+				speed: 0,
+				theme: 'tooltipster-courseoff-light',
 				content: 'Loading...',
 				functionBefore: function (origin, continueTooltip) {
 					continueTooltip();
 					Instructors.get(profName, function (response) {
-						if (response.successful) {
-							origin.tooltipster('content', 'got it');
+						if (response.successful) {							
+							origin.tooltipster('content', makeDetailedProfessorStatsBox(response.data));
 						} else {
-							origin.tooltipster('content', 'there was a problem.');
+							origin.tooltipster('content', 'Nothing found.');
 						}
 					});
 				}

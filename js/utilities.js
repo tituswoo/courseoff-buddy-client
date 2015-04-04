@@ -171,9 +171,13 @@ function makeRmpBox(rmp, color) {
 }
 
 function makeDetailedProfessorStatsBox(professor, color) {
+	console.log(professor);
 	color = String(color) || 'initial';
 
-	var profAveragesTable = makeAverageMarksTable(professor.averageMarks, color);
+	var profAveragesTable = new AverageMarksTable();
+	profAveragesTable.config(professor.averageMarks, color);
+
+	// var profAveragesTable = makeAverageMarksTable(professor.averageMarks, color);
 	var rmpBox = makeRmpBox(professor.rateMyProfessors, color);
 
 	var container = $('<div/>').addClass('detailed-prof-stats-box');
@@ -196,7 +200,7 @@ function makeDetailedProfessorStatsBox(professor, color) {
 	$('<h5/>').html(
 		$('<a/>').html('Average marks for all courses').attr('href', professor.averageMarks.url).attr('target', '_blank')
 	).appendTo(container);
-	profAveragesTable.appendTo(container);
+	profAveragesTable.make().appendTo(container);
 	$('<hr/>').appendTo(container);
 
 	var email = $('<a/>').attr('href', 'mailto:' + professor.email).html(professor.email);
@@ -269,13 +273,13 @@ function Loader(target) {
 }
 
 function AverageMarksTable(averages, color) {
-	color = String(color) || 'initial';
-	averages = averages;
 
 	this.config = function (a, c) {
 		averages = a;
-		color = c;
+		color = String(c) || 'initial';
 	}
+
+	this.config(averages, color);
 
 	this.make = function () {
 		// table to hold averageMarks
