@@ -53,7 +53,6 @@ var Buddy = (function () {
 			var context = $(this);
 			var profName = context.text();
 			if (!context.data('hovered')) {
-				console.log('fetching ' + profName);
 				$(this).tooltipster({
 					position: 'left',
 					onlyOne: true,
@@ -64,12 +63,9 @@ var Buddy = (function () {
 					debug: false,
 					content: 'Loading...',
 					functionBefore: function (origin, continueTooltip) {
-						// @todo: this gets fired way too often.
-						// figure out how to make it only fire once.
 						context.data('hovered', true);
 						continueTooltip();
 						Instructors.get(profName, function (response) {
-							console.log(response);
 							if (response.successful) {							
 								origin.tooltipster('content', makeDetailedProfessorStatsBox(response.data));
 							} else {
@@ -79,8 +75,6 @@ var Buddy = (function () {
 					}
 				});
 				$(this).tooltipster('show');
-			} else {
-				console.log('already fetched ' + profName);
 			}
 		});
 

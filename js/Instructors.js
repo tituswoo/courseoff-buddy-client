@@ -8,11 +8,9 @@ var Instructors = (function () {
 		var instructor = instructors.get(profName);
 
 		if (instructor) {
-			console.log(instructor.value);
 			callback(instructor.value);
 		} else {
 			Ajax.get('http://localhost:3000/search/' + profName, function (response) {
-				console.log(profName + ' was ' + response.successful);
 				if (response.successful) {
 					var profId = response.data[0].id;
 					Ajax.get('http://localhost:3000/prof/' + profId, function (response) {
