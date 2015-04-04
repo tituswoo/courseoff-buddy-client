@@ -20,7 +20,7 @@ var Buddy = (function () {
 			var context = $(this);
 			var table = new AverageMarksTable();
 
-			if (!context.data('clicked')) {
+			if (!context.data('hovered')) {
 				Courses.get(course, function (response) {
 					if (response.successful) {
 						// create average marks table and insert:
@@ -33,24 +33,85 @@ var Buddy = (function () {
 					}
 				});
 				attachProfInfoInCourseList(context);
-				context.data('clicked', true);
+				context.data('hovered', true);
 			}
 		});
 	};
 
 	function attachProfInfoInCourseList(context) {
 		context.find('.instructor').each(function () {
+			var thatContext = $(this);
 			var profName = $(this).text();
-			Instructors.get(profName, function (response) {
-				if (response.successful) {
 
-				} else {
-
-				}
-			});
+			if (!thatContext.data('hovered')) {
+				console.log('getting info for ' + profName);
+				Instructors.get(profName, function (response) {
+					// console.log(response);
+					thatContext.data('hovered', true);
+				});
+			}
 		});
 
-		
+		$('body').on('mouseenter', '.instructor', function () {
+			var profName = $(this).text();
+
+			$(this).tooltipster({
+				position: 'left',
+				onlyOne: true,
+				interactive: true,
+				content: 'Loading...',
+				functionBefore: function (origin, continueTooltip) {
+					continueTooltip();
+					Instructors.get(profName, function (response) {
+						if (response.successful) {
+							origin.tooltipster('content', 'got it');
+						} else {
+							origin.tooltipster('content', 'there was a problem.');
+						}
+					});
+				}
+			});
+			$(this).tooltipster('show');
+		});
+
+		/*$('body').on('mouseenter', '.instructor', function () {
+			var context = $(this);
+
+			if (!context.data('hovered')) {
+				Instructors.get(name, function (response) {
+
+				});
+				context.data('hovered', true);
+			}
+
+			/*$(this).tooltipster({
+				onlyOne: true,
+				position: 'left',
+				theme: 'tooltipster-courseoff-light',
+				animation: 'fade',
+				speed: 0,
+				delay: 0,
+				interactive: true,
+				functionBefore: function (origin, continueTooltip) {
+					var name = normalize($(this).html());
+					origin.tooltipster('content', '');
+
+					if (!context.data('hovered')) {
+						Instructors.get(name, function (response) {
+							console.log(response);
+							// if (response.success) {
+							// 	origin.tooltipster('content', 'SUCCESS');
+							// } else {
+							// 	origin.tooltipster('content', $('<p>No information found for this instructor.</p>'));
+							// }
+							context.data('hovered', true);
+						});
+					}
+					continueTooltip();	
+				}
+			});
+			$(this).tooltipster('show');*/
+		//});*/
 	};
 
 	return new Buddy();

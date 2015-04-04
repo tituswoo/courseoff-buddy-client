@@ -17,6 +17,7 @@ var ArrayList = (function () {
 	};
 
 	ArrayList.prototype.get = function (key) {
+		key = normalize(key);
 		for (var i = 0; i < data.length; i++) {
 			if (data[i].key === key) return data[i];
 		}
