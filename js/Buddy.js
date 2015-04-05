@@ -10,8 +10,8 @@ var Buddy = (function () {
 
 	Buddy.prototype.init = function () {
 		this.attachCourseListInfo();
-		this.attachCourseCalendarInfo();
-		this.attachCredits();
+		this.attachCourseInfoPopup();
+		this.attachBanner();
 	};
 
 	Buddy.prototype.attachCourseListInfo = function () {
@@ -38,13 +38,13 @@ var Buddy = (function () {
 						table.error().hide().insertBefore(context.find('.table')).fadeIn();
 					}
 				});
-				attachProfInfoInCourseList(context);
+				attachProfInfoPopup(context);
 				context.data('hovered', true);
 			}
 		});
 	};
 
-	function attachProfInfoInCourseList(context) {
+	function attachProfInfoPopup(context) {
 		context.find('.instructor').each(function () {
 			var thatContext = $(this);
 			var profName = $(this).text();
@@ -82,19 +82,23 @@ var Buddy = (function () {
 		});
 	};
 
-	Buddy.prototype.attachCourseCalendarInfo = function () {
-
+	Buddy.prototype.attachCourseInfoPopup = function () {
+		var pageEvent = new PageEvent();
+		pageEvent.onPopupAdded(function (context) {
+			var refNum = context.find('em').first().text();
+			console.log(refNum);
+			// @todo: goal is to use API endpoint /course/90104
+			// where the number is the CRN of the course.
+		});
 	};
 
-	Buddy.prototype.attachCredits = function () {
+	Buddy.prototype.attachBanner = function () {
 		var chromePageUrl = 'http://chrome.google.com/webstore/detail/courseoff-buddy-for-georg/hiiomkfdlmhbdfbjboldgnkdhcboifhe';
 		var messages = [
 			$('<a/>').attr('href', chromePageUrl).attr('target', '_blank')
 					 .html('Rate Courseoff Buddy on the Chrome Store!'),
 			$('<a/>').attr('href', chromePageUrl).attr('target', '_blank')
 					 .html('Courseoff Buddy is enabled.'),
-			$('<a/>').attr('href', chromePageUrl).attr('target', '_blank')
-					 .html('Enhanced by Courseoff Buddy.'),
 			$('<p/>').html('Found a bug? Report it on the <a href="http://bit.ly/courseoff-buddy-issue-tracker" target="_blank">issue tracker</a>.')
 		];
 
