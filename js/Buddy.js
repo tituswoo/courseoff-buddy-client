@@ -11,6 +11,7 @@ var Buddy = (function () {
 	Buddy.prototype.init = function () {
 		this.attachCourseListInfo();
 		this.attachCourseCalendarInfo();
+		this.attachCredits();
 	};
 
 	Buddy.prototype.attachCourseListInfo = function () {
@@ -82,7 +83,30 @@ var Buddy = (function () {
 	};
 
 	Buddy.prototype.attachCourseCalendarInfo = function () {
-		
+
+	};
+
+	Buddy.prototype.attachCredits = function () {
+		var chromePageUrl = 'http://chrome.google.com/webstore/detail/courseoff-buddy-for-georg/hiiomkfdlmhbdfbjboldgnkdhcboifhe';
+		var messages = [
+			$('<a/>').attr('href', chromePageUrl).attr('target', '_blank')
+					 .html('Rate Courseoff Buddy on the Chrome Store!'),
+			$('<a/>').attr('href', chromePageUrl).attr('target', '_blank')
+					 .html('Courseoff Buddy is enabled.'),
+			$('<a/>').attr('href', chromePageUrl).attr('target', '_blank')
+					 .html('Enhanced by Courseoff Buddy.'),
+			$('<p/>').html('Found a bug? Report it on the <a href="http://bit.ly/courseoff-buddy-issue-tracker" target="_blank">issue tracker</a>.')
+		];
+
+		var message = messages[Math.floor(Math.random() * messages.length)];
+		var credits = $('<div/>').css({ float: 'right', color: 'gray'})
+							   .html(message)
+							   .hide();
+		var context = $('.calendar-panel > .noprint');
+
+		setTimeout(function () {
+			$('.calendar-panel > .noprint').append(credits.fadeIn());
+		}, 1500);
 	};
 
 	return new Buddy();
