@@ -10,6 +10,7 @@ var Buddy = (function () {
 
 	Buddy.prototype.init = function () {
 		this.attachCourseListInfo();
+		this.attachCourseCalendarInfo();
 	};
 
 	Buddy.prototype.attachCourseListInfo = function () {
@@ -78,6 +79,10 @@ var Buddy = (function () {
 				$(this).tooltipster('show');
 			}
 		});
+	};
+
+	Buddy.prototype.attachCourseCalendarInfo = function () {
+		
 	};
 
 	return new Buddy();

@@ -251,14 +251,9 @@ function Loader(target, klass) {
 	klass = klass || '';
 	var randID = Math.floor(Math.random() * 10) + new Date().getSeconds();
 	var id = 'ls' + randID;
-	// var spinnerHTML = '<p class="'+klass+'" id="'+id+'"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
-
-	// var gif = '<img width="16" src="' + chrome.extension.getURL('/images/spinner.gif') + '/>';
-
 	var gif = $('<img/>').attr('width', '16')
 						 .attr('src', chrome.extension.getURL('/images/spinner.gif'))
 						 .css({ marginRight: '5px'});
-
 	var spinnerHTML = $('<p/>').addClass(klass)
 							   .attr('id', id)
 							   .html('Loading...')
