@@ -24,10 +24,10 @@ span.name {
 
 .course-table-container .average-marks-table {
 	border-top: 1px solid #ddd;
-	margin-bottom: 5px;
 	width: 100%;
 	background-color: lightgray;
 	font-family: monospace;
+	border-bottom: none;
 }
 
 .course-table-container .average-marks-table th {
@@ -50,10 +50,17 @@ span.name {
 	padding: 0 5px;
 	font-family: monospace;
 	background-color: rgb(236, 236, 236);
-	margin-bottom: 5px;
 	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+}
 
+/* Average Marks loading */
+
+.average-marks-table-loading {
+	height: 39px;
+	background-color: rgb(236, 236, 236);
+	border-top: 1px solid rgb(221, 221, 221);
+	margin-bottom: 0;
+	padding: 9px 0 0 3px;
 }
 
 .popover .popover {

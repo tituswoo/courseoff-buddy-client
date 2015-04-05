@@ -247,20 +247,32 @@ function RGBtoRGBA(rgb, opacity) {
 	return rgba;
 }
 
-function Loader(target) {
+function Loader(target, klass) {
+	klass = klass || '';
 	var randID = Math.floor(Math.random() * 10) + new Date().getSeconds();
 	var id = 'ls' + randID;
-	var spinnerHTML = '<p id="'+id+'"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
+	// var spinnerHTML = '<p class="'+klass+'" id="'+id+'"><img width="16" src=' + chrome.extension.getURL('/images/spinner.gif') + '/> Loading...</p>';
+
+	// var gif = '<img width="16" src="' + chrome.extension.getURL('/images/spinner.gif') + '/>';
+
+	var gif = $('<img/>').attr('width', '16')
+						 .attr('src', chrome.extension.getURL('/images/spinner.gif'))
+						 .css({ marginRight: '5px'});
+
+	var spinnerHTML = $('<p/>').addClass(klass)
+							   .attr('id', id)
+							   .html('Loading...')
+							   .prepend(gif);
 
 	this.html = function () {
-		return $(spinnerHTML);
+		return spinnerHTML;
 	};
 
 	this.begin = function () {
-		target.append(spinnerHTML);
+		this.html().insertBefore(target);
 	};
 
-	this.end = function () {
+	this.finish = function () {
 		$('#'+id).remove();
 	};
 

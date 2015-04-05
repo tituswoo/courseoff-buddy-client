@@ -21,7 +21,11 @@ var Buddy = (function () {
 			var table = new AverageMarksTable();
 
 			if (!context.data('hovered')) {
+				var loader = new Loader(context.find('.table'), 'average-marks-table-loading');
+				loader.begin();
+
 				Courses.get(course, function (response) {
+					loader.finish();
 					if (response.successful) {
 						// create average marks table and insert:
 						var color = context.css('border-left-color');
@@ -43,10 +47,8 @@ var Buddy = (function () {
 			var thatContext = $(this);
 			var profName = $(this).text();
 
-			//if (!thatContext.data('hovered')) {
-				console.log('getting info for ' + profName);
-				Instructors.get(profName, function () {});
-			//}
+			console.log('getting info for ' + profName);
+			Instructors.get(profName, function () {});
 		});
 
 		$('body').on('mouseenter', '.instructor', function () {
@@ -77,45 +79,6 @@ var Buddy = (function () {
 				$(this).tooltipster('show');
 			}
 		});
-
-		/*$('body').on('mouseenter', '.instructor', function () {
-			var context = $(this);
-
-			if (!context.data('hovered')) {
-				Instructors.get(name, function (response) {
-
-				});
-				context.data('hovered', true);
-			}
-
-			/*$(this).tooltipster({
-				onlyOne: true,
-				position: 'left',
-				theme: 'tooltipster-courseoff-light',
-				animation: 'fade',
-				speed: 0,
-				delay: 0,
-				interactive: true,
-				functionBefore: function (origin, continueTooltip) {
-					var name = normalize($(this).html());
-					origin.tooltipster('content', '');
-
-					if (!context.data('hovered')) {
-						Instructors.get(name, function (response) {
-							console.log(response);
-							// if (response.success) {
-							// 	origin.tooltipster('content', 'SUCCESS');
-							// } else {
-							// 	origin.tooltipster('content', $('<p>No information found for this instructor.</p>'));
-							// }
-							context.data('hovered', true);
-						});
-					}
-					continueTooltip();	
-				}
-			});
-			$(this).tooltipster('show');*/
-		//});*/
 	};
 
 	return new Buddy();
