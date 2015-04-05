@@ -46,8 +46,6 @@ var Buddy = (function () {
 		context.find('.instructor').each(function () {
 			var thatContext = $(this);
 			var profName = $(this).text();
-
-			console.log('getting info for ' + profName);
 			Instructors.get(profName, function () {});
 		});
 
@@ -55,6 +53,7 @@ var Buddy = (function () {
 			var context = $(this);
 			var profName = context.text();
 			if (!context.data('hovered')) {
+				var loader = new Loader(context);
 				$(this).tooltipster({
 					position: 'left',
 					onlyOne: true,
@@ -63,7 +62,7 @@ var Buddy = (function () {
 					speed: 0,
 					theme: 'tooltipster-courseoff-light',
 					debug: false,
-					content: 'Loading...',
+					content: loader.html(),
 					functionBefore: function (origin, continueTooltip) {
 						context.data('hovered', true);
 						continueTooltip();

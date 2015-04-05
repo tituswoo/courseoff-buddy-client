@@ -21,10 +21,6 @@ var Instructors = (function () {
 						callback(response);
 					});
 				} else {
-					if (!response.successful) {
-						console.log(response);
-						console.log('---');
-					}
 					instructors.add(profName, {
 						successful: false,
 						data: false
