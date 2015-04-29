@@ -84,11 +84,36 @@ var Buddy = (function () {
 
 	Buddy.prototype.attachCourseInfoPopup = function () {
 		var pageEvent = new PageEvent();
-		pageEvent.onPopupAdded(function (context) {
-			var refNum = context.find('em').first().text();
-			console.log(refNum);
-			// @todo: goal is to use API endpoint /course/90104
-			// where the number is the CRN of the course.
+		$('body').on('mouseenter', '.course-cal.pinned', function () {
+			var that = $(this);
+
+			that.tooltipster({
+				interactive: true,
+				onlyOne: true,
+				delay: 0,
+				speed: 0,
+				theme: 'tooltipster-courseoff-light',
+				debug: false,
+				position: 'right',
+				functionBefore: function (origin, continueTooltip) {
+					continueTooltip();					
+					setTimeout(function () {
+						var data = $('.tip-inner .popover > .body').find('em');
+						var course = {
+							crn: data[0].innerText,
+							section: data[1].innerText,
+							credits: data[2].innerText,
+							professor: data[3].innerText,
+							location: data[4].innerText
+						};
+						console.log(course);
+
+						var html = $('<h5>CRN</h5>' + '<p>' + course.crn + '</p>');
+						origin.tooltipster('content', html);						
+					}, 100);
+				}
+			});
+			that.tooltipster('show');
 		});
 	};
 
