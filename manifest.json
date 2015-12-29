@@ -1,5 +1,5 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 2.1,
 
 	"name": "Courseoff Buddy for Georgia Tech",
 	"description": "Integrates info from Rate My Professors, Course Critique, and Oscar directly into Courseoff for all your Georgia Tech classes!",
