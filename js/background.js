@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.command === 'search') {
-			$.getJSON('http://courseoffbuddy.tk/search/' + request.params.query)
+			$.getJSON('http://courseoffbuddy.tk/search/' + request.params.query.trim())
 				.done(function (data) {
 					sendResponse(data);
 				}).fail(function (message) {
