@@ -19,6 +19,7 @@ PageEvent.prototype.onPageLoaded = function (callback) {
 };
 
 PageEvent.prototype.onPopupAdded = function (callback) {
+
 	$('body').onCreate('.popover.tip', function(record) {
 		if (record.addedNodes[0] != null) {
 			var context = $(record.addedNodes[0]);
@@ -46,47 +47,5 @@ PageEvent.prototype.onCourseAdded = function (callback) {
 		const config = { childList: true }
 
 		observer.observe(target, config)
-	});
-};
-
-PageEvent.prototype.onCourseRemoved = function (callback) {
-	this.onPageLoaded(function () {
-		$('.course-list').observe('childList', '.course-info-container', function(record) {
-			if (record.removedNodes[0] != null) callback(record.removedNodes[0]);
-		});
-	});
-};
-
-PageEvent.prototype.onCoursePinned = function (callback) {
-	this.onPageLoaded(function () {
-		$('.calendar .wk-day-body').observe('childList', '.course-box', function(record) {
-			var node = record.addedNodes[0];
-			if (node != null) {
-				callback(node);
-			}
-		});
-	});
-};
-
-PageEvent.prototype.onCourseUnpinned = function (callback) {
-	this.onPageLoaded(function () {
-		$('.calendar .wk-day-body').observe('childList', '.course-box', function(record) {
-			var node = record.removedNodes[0];
-			if (node != null) {
-				callback(node);
-			}
-		});
-	});
-};
-
-PageEvent.prototype.onResourcesLoaded = function (courses, callback) {
-	this.onPageLoaded(function () {
-		var numCourses = $('.course-list > .course-info-container').size();
-		var interval = setInterval(function () {
-			if (courses.size() == numCourses) {
-				clearInterval(interval);
-				callback();
-			}
-		}, 150);
 	});
 };
