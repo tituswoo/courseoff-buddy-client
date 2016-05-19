@@ -6,10 +6,13 @@ const webpack = require('webpack')
 
 const config = {
   context: path.join(__dirname, 'app'),
-  entry: './content/index.js',
+  entry: {
+    'content': './content/index.js',
+    'background': './background/index.js'
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: './content/index.js'
+    filename: '[name]/index.js'
   },
   devtool: 'inline-source-map',
   resolve: {
