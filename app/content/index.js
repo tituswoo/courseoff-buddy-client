@@ -30,7 +30,7 @@ import PageEvents from 'shared/PageEvents'
 // });
 
 PageEvents.onPageLoaded(() => {
-  $('.course-list > .course-info-container').on('click', function () {
+  $('.course-list > .course-info-container').on('mouseover', function () {
     $(this).off()
     let courseId = $(this).find('.name').text().split('-')[0].replace(/\s/g, '')
     dirtyGet(`http://courseoffbuddy.tk/course/${courseId}`)
@@ -42,9 +42,7 @@ PageEvents.onPageLoaded(() => {
           ...course.averageMarks,
           color
         })
-        $(template).insertBefore($(this).find('.table')).fadeIn()
-        // let table = makeAverageMarksTable(course.averageMarks, color)
-        // table.insertBefore($(this).find('.table')).fadeIn()
+        $(template).hide().insertBefore($(this).find('.table')).fadeIn()
       })
       .fail(({ url, statusText }) => console.warn(statusText, url))
   })
