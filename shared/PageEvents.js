@@ -19,19 +19,31 @@ PageEvent.prototype.onPageLoaded = function (callback) {
 };
 
 PageEvent.prototype.onPopupAdded = function (callback) {
+	this.onPageLoaded(() => {
+		let observer = new MutationObserver(mutations => {
+			mutations.forEach(mutation => {
+				if (mutation.addedNodes.length > 0) {
+					console.log(mutation.addedNodes)
+				}
+			})
+		})
+		const target = $('body')[0]
+		const config = { childList: true }
 
-	$('body').onCreate('.popover.tip', function(record) {
-		if (record.addedNodes[0] != null) {
-			var context = $(record.addedNodes[0]);
-			// need to set timeout so that it waits for
-			// the "current course" to be updated.
-			// hacky, but works.
-			setTimeout(function () {
-				callback(context);
-			}, 10);
-		} else {
-		}
-	});
+		observer.observe(target, config)
+	})
+	// $('body').onCreate('.popover.tip', function(record) {
+	// 	if (record.addedNodes[0] != null) {
+	// 		var context = $(record.addedNodes[0]);
+	// 		// need to set timeout so that it waits for
+	// 		// the "current course" to be updated.
+	// 		// hacky, but works.
+	// 		setTimeout(function () {
+	// 			callback(context);
+	// 		}, 10);
+	// 	} else {
+	// 	}
+	// });
 };
 
 PageEvent.prototype.onCourseAdded = function (callback) {

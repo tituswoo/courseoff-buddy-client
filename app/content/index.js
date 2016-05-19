@@ -9,6 +9,15 @@ import { dirtyGet } from 'shared/dirtyRest'
 import { RGBtoRGBA } from 'shared/ColorUtilities'
 import PageEvents from 'shared/PageEvents'
 
+PageEvents.onPageLoaded(() => {
+  onHoverOverCourseInList()
+  $('.calendar-panel > .noprint').append(credits)
+})
+
+PageEvents.onCourseAdded((course) => {
+  placeAverageMarksTable($(course))
+})
+
 function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
   dirtyGet(`http://courseoffbuddy.tk/course/${courseId}`)
@@ -24,17 +33,9 @@ function placeAverageMarksTable(context) {
     .fail(({ url, statusText }) => console.warn(statusText, url))
 }
 
-PageEvents.onPageLoaded(() => {
+function onHoverOverCourseInList() {
   $('.course-list > .course-info-container').on('mouseover', function () {
     $(this).off()
     placeAverageMarksTable($(this))
   })
-})
-
-PageEvents.onPageLoaded(() => {
-  $('.calendar-panel > .noprint').append(credits)
-})
-
-PageEvents.onCourseAdded((course) => {
-  placeAverageMarksTable($(course))
-})
+}
