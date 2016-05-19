@@ -27,8 +27,10 @@ PageEvents.onPageLoaded(() => {
   })
 })
 
+PageEvents.onPageLoaded(() => {
+  $('.calendar-panel > .noprint').append(credits)
+})
+
 PageEvents.onCourseAdded(() => {
   console.info('COURSE ADDED!')
 })
-
-$('.calendar-panel > .noprint').append(credits)

@@ -1,4 +1,5 @@
-import $ from 'jQuery'
+// import $ from 'jQuery'
+import $ from 'jquery-onmutate'
 
 let PageEvents = new PageEvent()
 export default PageEvents
@@ -6,16 +7,20 @@ export default PageEvents
 function PageEvent() {}
 
 PageEvent.prototype.onPageLoaded = function (callback) {
-	var checkInterval = setInterval(function () {
-		if ($('.course-info-container').html() != undefined) {
-			clearInterval(checkInterval);
-			callback();
+	let checkInterval = setInterval(function () {
+
+		let coursesLoaded = !!$('.course-info-container').html()
+		let footerLoaded = !!$('.calendar-panel > .noprint').text()
+
+		if (coursesLoaded && footerLoaded) {
+			clearInterval(checkInterval)
+			callback()
 		}
-	}, 300);
+	}, 500);
 };
 
 PageEvent.prototype.onPopupAdded = function (callback) {
-	$('body').observe('childList', '.popover.tip', function(record) {
+	$('body').onCreate('.popover.tip', function(record) {
 		if (record.addedNodes[0] != null) {
 			var context = $(record.addedNodes[0]);
 			// need to set timeout so that it waits for
@@ -31,9 +36,12 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 
 PageEvent.prototype.onCourseAdded = function (callback) {
 	this.onPageLoaded(function () {
-		$('.course-list').observe('childList', '.course-info-container', function(record) {
-			if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
-		});
+		$('.course-list').onCreate('.course-info-container', elements => {
+			console.info(elements)
+		}, true)
+		// $('.course-list').onCreate('.course-info-container', function(record) {
+		// 	if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
+		// });
 	});
 };
 
