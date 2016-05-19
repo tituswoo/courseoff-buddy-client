@@ -8,11 +8,11 @@ chrome.runtime.onMessage.addListener(
 		if (command === 'mget') {
       axios.get(url)
         .then(resp => {
-          console.info('SUCCESS', url)
+          console.info('SUCCESS', url, resp)
           sendResponse({ success: true, resp })
         })
         .catch(resp => {
-          console.info('FAILED', url, resp)
+          console.warn('FAILED', url, resp)
           sendResponse({ success: false, resp })
         })
 		}
