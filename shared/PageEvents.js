@@ -23,7 +23,7 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 		let observer = new MutationObserver(mutations => {
 			mutations.forEach(mutation => {
 				if (mutation.addedNodes.length > 0) {
-					console.log(mutation.addedNodes)
+					callback(mutation.addedNodes[0])
 				}
 			})
 		})
@@ -44,7 +44,7 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 	// 	} else {
 	// 	}
 	// });
-};
+}
 
 PageEvent.prototype.onCourseAdded = function (callback) {
 	this.onPageLoaded(function () {

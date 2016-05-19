@@ -18,6 +18,26 @@ PageEvents.onCourseAdded((course) => {
   placeAverageMarksTable($(course))
 })
 
+PageEvents.onPopupAdded((popup) => {
+  popup = $(popup)
+  popup.hide()
+  const course = extractCourseInfoFromPopup(popup.html())
+  console.info('course:', course)
+})
+
+function extractCourseInfoFromPopup(html) {
+  const content = $(html).find('.popover')
+  let items = content.find('em')
+  let course = {
+    refNumber: items[0].innerText.trim(),
+    section: items[1].innerText.trim(),
+    creditHours: items[2].innerText.trim(),
+    instructor: content.find('[data-visible="instr"]').find('em').text().trim(),
+    location: content.find('[data-visible="location"]').find('em').text().trim()
+  }
+  return course
+}
+
 function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
   dirtyGet(`http://courseoffbuddy.tk/course/${courseId}`)
