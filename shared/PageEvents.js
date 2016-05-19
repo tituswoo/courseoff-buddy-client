@@ -32,18 +32,6 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 
 		observer.observe(target, config)
 	})
-	// $('body').onCreate('.popover.tip', function(record) {
-	// 	if (record.addedNodes[0] != null) {
-	// 		var context = $(record.addedNodes[0]);
-	// 		// need to set timeout so that it waits for
-	// 		// the "current course" to be updated.
-	// 		// hacky, but works.
-	// 		setTimeout(function () {
-	// 			callback(context);
-	// 		}, 10);
-	// 	} else {
-	// 	}
-	// });
 }
 
 PageEvent.prototype.onCourseAdded = function (callback) {
