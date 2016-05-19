@@ -2,7 +2,6 @@ import $ from 'jquery'
 import Handlebars from 'handlebars'
 
 import mainStyles from './main.css'
-
 import credits from './templates/credits.html'
 import averageMarksTable from './templates/averageMarksTable.html'
 
@@ -27,3 +26,9 @@ PageEvents.onPageLoaded(() => {
       .fail(({ url, statusText }) => console.warn(statusText, url))
   })
 })
+
+PageEvents.onCourseAdded(() => {
+  console.info('COURSE ADDED!')
+})
+
+$('.calendar-panel > .noprint').append(credits)
