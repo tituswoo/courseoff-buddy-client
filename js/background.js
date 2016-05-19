@@ -1,4 +1,18 @@
+import $ from 'jquery'
+
+console.info('BACKGROUND SCRIPT RUNNING')
+
 chrome.runtime.onMessage.addListener(
+	(request, sender, sendResponse) => {
+		console.info('GOT SOME REQUEST!')
+		if (request.command === 'mget') {
+			console.info('GOT AN MGET REQUEST!', request.url)
+			sendResponse({ data: 'SUCCESS!'})
+		}
+	}
+)
+
+/*chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.command === 'search') {
 			$.getJSON('http://courseoffbuddy.tk/search/' + request.params.query.trim())
@@ -32,4 +46,4 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
 		var tab = sender.tab;
 		chrome.pageAction.show(tab.id);
 	}
-});
+});*/
