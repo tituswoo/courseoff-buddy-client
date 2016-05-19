@@ -17,6 +17,9 @@ const config = {
   devtool: 'inline-source-map',
   resolve: {
     root: './app',
+    alias: {
+      shared: path.resolve('./shared')
+    },
     extensions: ['', '.webpack.js', '.web.js', '.js', '.css']
   },
   module: {
@@ -28,7 +31,11 @@ const config = {
       },
       {
         test: /\.js$/,
-        loader: 'babel?presets[]=es2015',
+        loader: 'babel',
+        query: {
+          presets: ['es2015'],
+          plugins: ['transform-object-rest-spread']
+        },
         exclude: /(node_modules)/
       },
       {

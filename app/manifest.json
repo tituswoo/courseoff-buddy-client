@@ -11,8 +11,12 @@
 	"permissions": [
 		"tabs",
 		"activeTab",
+		"background",
 		"http://*/"
 	],
+	"background": {
+		"scripts": ["background/index.js"]
+	},
 	"content_scripts": [
 		{
 			"matches": ["https://gatech.courseoff.com/*"],
