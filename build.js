@@ -11,6 +11,7 @@ const config = {
     path: path.join(__dirname, 'dist'),
     filename: './content/index.js'
   },
+  devtool: 'inline-source-map',
   resolve: {
     root: './app',
     extensions: ['', '.webpack.js', '.web.js', '.js', '.css']
