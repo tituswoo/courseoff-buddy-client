@@ -1,5 +1,4 @@
-// import $ from 'jQuery'
-import $ from 'jquery-onmutate'
+import $ from 'jQuery'
 
 let PageEvents = new PageEvent()
 export default PageEvents
@@ -36,12 +35,17 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 
 PageEvent.prototype.onCourseAdded = function (callback) {
 	this.onPageLoaded(function () {
-		$('.course-list').onCreate('.course-info-container', elements => {
-			console.info(elements)
-		}, true)
-		// $('.course-list').onCreate('.course-info-container', function(record) {
-		// 	if (record.addedNodes[0] != null) callback(record.addedNodes[0]);
-		// });
+		let observer = new MutationObserver(mutations => {
+			mutations.forEach(mutation => {
+				if (mutation.addedNodes.length > 0) {
+					callback(mutation.addedNodes)
+				}
+			})
+		})
+		const target = $('.course-list')[0]
+		const config = { childList: true }
+
+		observer.observe(target, config)
 	});
 };
 

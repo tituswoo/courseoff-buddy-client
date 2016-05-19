@@ -9,21 +9,25 @@ import { dirtyGet } from 'shared/dirtyRest'
 import { RGBtoRGBA } from 'shared/ColorUtilities'
 import PageEvents from 'shared/PageEvents'
 
+function placeAverageMarksTable(context) {
+  let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
+  dirtyGet(`http://courseoffbuddy.tk/course/${courseId}`)
+    .done(({ data: course }) => {
+      let color = context.css('border-left-color')
+      color = RGBtoRGBA(color, '0.15')
+      let template = Handlebars.compile(averageMarksTable)({
+        ...course.averageMarks,
+        color
+      })
+      $(template).hide().insertBefore(context.find('.table')).fadeIn()
+    })
+    .fail(({ url, statusText }) => console.warn(statusText, url))
+}
+
 PageEvents.onPageLoaded(() => {
   $('.course-list > .course-info-container').on('mouseover', function () {
     $(this).off()
-    let courseId = $(this).find('.name').text().split('-')[0].replace(/\s/g, '')
-    dirtyGet(`http://courseoffbuddy.tk/course/${courseId}`)
-      .done(({ data: course }) => {
-        let color = $(this).css('border-left-color')
-        color = RGBtoRGBA(color, '0.15')
-        let template = Handlebars.compile(averageMarksTable)({
-          ...course.averageMarks,
-          color
-        })
-        $(template).hide().insertBefore($(this).find('.table')).fadeIn()
-      })
-      .fail(({ url, statusText }) => console.warn(statusText, url))
+    placeAverageMarksTable($(this))
   })
 })
 
@@ -31,6 +35,6 @@ PageEvents.onPageLoaded(() => {
   $('.calendar-panel > .noprint').append(credits)
 })
 
-PageEvents.onCourseAdded(() => {
-  console.info('COURSE ADDED!')
+PageEvents.onCourseAdded((course) => {
+  placeAverageMarksTable($(course))
 })
