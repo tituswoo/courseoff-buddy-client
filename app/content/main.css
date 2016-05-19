@@ -2,6 +2,17 @@ html, body {
 	height: 100%;
 }
 
+.calendar-panel .noprint {
+	margin: 10px 0;
+}
+
+.credits {
+	color: gray;
+	float: right;
+	font-size: 0.85em;
+	margin-top: 2px;
+}
+
 .calendar-panel {
 	/* allow loading panel to fill up the calendar*/
 	position: relative;

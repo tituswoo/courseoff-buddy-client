@@ -1,0 +1,22 @@
+{
+	"manifest_version": 2,
+
+	"name": "Courseoff Buddy for Georgia Tech",
+	"description": "Integrates info from Rate My Professors, Course Critique, and Oscar directly into Courseoff for all your Georgia Tech classes!",
+	"version": "0.1.0",
+	"icons": {
+		"128": "images/icon.png",
+		"32": "images/icon.png"
+	},
+	"permissions": [
+		"tabs",
+		"activeTab",
+		"http://*/"
+	],
+	"content_scripts": [
+		{
+			"matches": ["https://gatech.courseoff.com/*"],
+			"js": ["content/index.js"]
+		}
+	]
+}
