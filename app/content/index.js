@@ -32,8 +32,8 @@ Courseoff.on('courseBlockAdded', courseBlock => {
         ...courseInfo1,
         ...courseInfo2
       }
-      console.info(result)
       Courseoff.off(sub)
+      console.info(result)
     })
   })
 })
@@ -49,11 +49,14 @@ function extractCourseInfoFromCourseBlock (courseBlock) {
 function extractCourseInfoFromPopup(popup) {
   const content = $(popup).find('.popover')
   let items = content.find('em')
+  let instructorName = content.find('[data-visible="instr"]').find('em').text().trim()
+  let instructorId = instructorName.replace(/\s/g,'').replace(',','').toUpperCase()
   let course = {
     refNumber: items[0].innerText.trim(),
     section: items[1].innerText.trim(),
     creditHours: items[2].innerText.trim(),
-    instructor: content.find('[data-visible="instr"]').find('em').text().trim(),
+    instructor: instructorName,
+    instructorId,
     location: content.find('[data-visible="location"]').find('em').text().trim()
   }
   return course
