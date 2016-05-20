@@ -8,6 +8,7 @@ import averageMarksTable from './templates/averageMarksTable.html'
 import { dirtyGet } from 'shared/dirtyRest'
 import { RGBtoRGBA } from 'shared/ColorUtilities'
 import Courseoff from 'shared/Courseoff'
+import * as Extract from 'shared/Extract'
 
 Courseoff.on('pageLoaded', () => {
   onHoverOverCourseInList()
@@ -18,16 +19,11 @@ Courseoff.on('courseAdded', course => {
   placeAverageMarksTable($(course))
 })
 
-Courseoff.on('popupAdded', popup => {
-  popup = $(popup)
-  const course = extractCourseInfoFromPopup(popup)
-})
-
 Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseenter', e => {
-    const courseInfo1 = extractCourseInfoFromCourseBlock(courseBlock)
+    const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)
     const sub = Courseoff.on('popupAdded', popup => {
-      const courseInfo2 = extractCourseInfoFromPopup(popup)
+      const courseInfo2 = Extract.courseFromPopup(popup)
       let result = {
         ...courseInfo1,
         ...courseInfo2
@@ -37,30 +33,6 @@ Courseoff.on('courseBlockAdded', courseBlock => {
     })
   })
 })
-
-function extractCourseInfoFromCourseBlock (courseBlock) {
-  courseBlock = $(courseBlock)
-  return {
-    name: courseBlock.find('.course-content').text().replace(' - ', ''),
-    location: courseBlock.find('.location').text()
-  }
-}
-
-function extractCourseInfoFromPopup(popup) {
-  const content = $(popup).find('.popover')
-  let items = content.find('em')
-  let instructorName = content.find('[data-visible="instr"]').find('em').text().trim()
-  let instructorId = instructorName.replace(/\s/g,'').replace(',','').toUpperCase()
-  let course = {
-    refNumber: items[0].innerText.trim(),
-    section: items[1].innerText.trim(),
-    creditHours: items[2].innerText.trim(),
-    instructor: instructorName,
-    instructorId,
-    location: content.find('[data-visible="location"]').find('em').text().trim()
-  }
-  return course
-}
 
 function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
