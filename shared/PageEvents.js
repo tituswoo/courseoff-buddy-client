@@ -1,11 +1,6 @@
 import $ from 'jQuery'
 
-let PageEvents = new PageEvent()
-export default PageEvents
-
-function PageEvent() {}
-
-PageEvent.prototype.onPageLoaded = function (callback) {
+export function onPageLoaded(callback) {
 	let checkInterval = setInterval(function () {
 
 		let coursesLoaded = !!$('.course-info-container').html()
@@ -18,7 +13,7 @@ PageEvent.prototype.onPageLoaded = function (callback) {
 	}, 500);
 };
 
-PageEvent.prototype.onPopupAdded = function (callback) {
+export function onPopupAdded(callback) {
 	this.onPageLoaded(() => {
 		let observer = new MutationObserver(mutations => {
 			mutations.forEach(mutation => {
@@ -36,7 +31,7 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 	})
 }
 
-PageEvent.prototype.onCourseAdded = function (callback) {
+export function onCourseAdded(callback) {
 	this.onPageLoaded(function () {
 		let observer = new MutationObserver(mutations => {
 			mutations.forEach(mutation => {
@@ -56,7 +51,7 @@ PageEvent.prototype.onCourseAdded = function (callback) {
  * Fires whenever a course block is added to the page.
  * Also fires initially for every block already on the page at startup.
  */
-PageEvent.prototype.onCourseBlockAdded = function(callback) {
+export function onCourseBlockAdded(callback) {
 	this.onPageLoaded(() => {
 		$('.course-cal.pinned').each((index, block) => {
 			callback(block)
