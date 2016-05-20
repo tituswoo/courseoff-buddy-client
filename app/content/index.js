@@ -34,7 +34,7 @@ Courseoff.on('courseBlockAdded', courseBlock => {
         ...courseInfo2
       }
       get(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
-        .done(({ data: prof }) => {
+        .done(prof => {
           const html = Handlebars.compile(coursePopup)({
             course,
             prof,
@@ -51,7 +51,7 @@ Courseoff.on('courseBlockAdded', courseBlock => {
 function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
   get(`http://courseoffbuddy.tk/course/${courseId}`)
-    .done(({ data: course }) => {
+    .done(course => {
       let color = context.css('border-left-color')
       color = RGBtoRGBA(color, '0.15')
       let template = Handlebars.compile(averageMarksTable)({

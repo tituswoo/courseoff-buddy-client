@@ -2,9 +2,20 @@ import $ from 'jquery'
 
 export function get(url) {
   let deferred = $.Deferred()
+
+  let cached = localStorage.getItem(url)
+
+  if (cached) {
+    return deferred.resolve(JSON.parse(cached))
+  }
+
   chrome.runtime.sendMessage({ command: 'mget', url }, resp => {
-    if (resp.success) return deferred.resolve(resp.resp)
+    if (resp.success) {
+      localStorage.setItem(url, JSON.stringify(resp.resp))
+      deferred.resolve(resp.resp)
+    }
     return deferred.reject(resp.resp)
   })
+
   return deferred.promise()
 }
