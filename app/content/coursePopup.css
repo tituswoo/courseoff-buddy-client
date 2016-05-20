@@ -11,6 +11,8 @@
   border: 1px solid lightgray;
   border-radius: 4px;
   background-color: white;
+
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .course-popup > .title {
