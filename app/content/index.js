@@ -7,25 +7,24 @@ import averageMarksTable from './templates/averageMarksTable.html'
 
 import { dirtyGet } from 'shared/dirtyRest'
 import { RGBtoRGBA } from 'shared/ColorUtilities'
-import * as events from 'shared/PageEvents'
+import Courseoff from 'shared/Courseoff'
 
-events.onPageLoaded(() => {
+Courseoff.on('pageLoaded', () => {
   onHoverOverCourseInList()
   $('.calendar-panel > .noprint').append(credits)
 })
 
-events.onCourseAdded((course) => {
+Courseoff.on('courseAdded', course => {
   placeAverageMarksTable($(course))
 })
 
-events.onPopupAdded((popup) => {
+Courseoff.on('popupAdded', popup => {
   popup = $(popup)
-  popup.hide()
   const course = extractCourseInfoFromPopup(popup.html())
   console.info(course)
 })
 
-events.onCourseBlockAdded((courseBlock) => {
+Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseover', e => {
     let course = extractCourseInfoFromCourseBlock(courseBlock)
     console.info(course)

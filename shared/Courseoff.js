@@ -1,6 +1,29 @@
 import $ from 'jQuery'
+import PubSub from 'pubsub-js'
 
-export function onPageLoaded(callback) {
+export default { on }
+
+function on(topic, cb) {
+	PubSub.subscribe(topic, (msg, data) => cb(data))
+}
+
+onPageLoaded(() => {
+	PubSub.publish('pageLoaded')
+})
+
+onPopupAdded((popup) => {
+	PubSub.publish('popupAdded', popup)
+})
+
+onCourseAdded((course) => {
+	PubSub.publish('courseAdded', course)
+})
+
+onCourseBlockAdded((courseBlock) => {
+	PubSub.publish('courseBlockAdded', courseBlock)
+})
+
+function onPageLoaded(callback) {
 	let checkInterval = setInterval(function () {
 
 		let coursesLoaded = !!$('.course-info-container').html()
@@ -13,8 +36,8 @@ export function onPageLoaded(callback) {
 	}, 500);
 };
 
-export function onPopupAdded(callback) {
-	this.onPageLoaded(() => {
+function onPopupAdded(callback) {
+	on('pageLoaded', () => {
 		let observer = new MutationObserver(mutations => {
 			mutations.forEach(mutation => {
 				if (mutation.addedNodes.length > 0) {
@@ -31,12 +54,12 @@ export function onPopupAdded(callback) {
 	})
 }
 
-export function onCourseAdded(callback) {
-	this.onPageLoaded(function () {
+function onCourseAdded(callback) {
+	on('pageLoaded', () => {
 		let observer = new MutationObserver(mutations => {
 			mutations.forEach(mutation => {
 				if (mutation.addedNodes.length > 0) {
-					callback(mutation.addedNodes)
+					callback(mutation.addedNodes[0])
 				}
 			})
 		})
@@ -44,15 +67,15 @@ export function onCourseAdded(callback) {
 		const config = { childList: true }
 
 		observer.observe(target, config)
-	});
+	})
 };
 
 /**
  * Fires whenever a course block is added to the page.
  * Also fires initially for every block already on the page at startup.
  */
-export function onCourseBlockAdded(callback) {
-	this.onPageLoaded(() => {
+function onCourseBlockAdded(callback) {
+	on('pageLoaded', () => {
 		$('.course-cal.pinned').each((index, block) => {
 			callback(block)
 		})
