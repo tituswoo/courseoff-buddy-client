@@ -20,14 +20,21 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('popupAdded', popup => {
   popup = $(popup)
-  const course = extractCourseInfoFromPopup(popup.html())
-  console.info(course)
+  const course = extractCourseInfoFromPopup(popup)
 })
 
 Courseoff.on('courseBlockAdded', courseBlock => {
-  $(courseBlock).on('mouseover', e => {
-    let course = extractCourseInfoFromCourseBlock(courseBlock)
-    console.info(course)
+  $(courseBlock).on('mouseenter', e => {
+    const courseInfo1 = extractCourseInfoFromCourseBlock(courseBlock)
+    const sub = Courseoff.on('popupAdded', popup => {
+      const courseInfo2 = extractCourseInfoFromPopup(popup)
+      let result = {
+        ...courseInfo1,
+        ...courseInfo2
+      }
+      console.info(result)
+      Courseoff.off(sub)
+    })
   })
 })
 
@@ -39,8 +46,8 @@ function extractCourseInfoFromCourseBlock (courseBlock) {
   }
 }
 
-function extractCourseInfoFromPopup(html) {
-  const content = $(html).find('.popover')
+function extractCourseInfoFromPopup(popup) {
+  const content = $(popup).find('.popover')
   let items = content.find('em')
   let course = {
     refNumber: items[0].innerText.trim(),
@@ -68,7 +75,7 @@ function placeAverageMarksTable(context) {
 }
 
 function onHoverOverCourseInList() {
-  $('.course-list > .course-info-container').on('mouseover', function () {
+  $('.course-list > .course-info-container').on('mouseenter', function () {
     $(this).off()
     placeAverageMarksTable($(this))
   })

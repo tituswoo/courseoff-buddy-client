@@ -1,10 +1,13 @@
 import $ from 'jQuery'
 import PubSub from 'pubsub-js'
 
-export default { on }
+export default {
+	on,
+	off: PubSub.unsubscribe
+}
 
 function on(topic, cb) {
-	PubSub.subscribe(topic, (msg, data) => cb(data))
+	return PubSub.subscribe(topic, (msg, data) => cb(data))
 }
 
 onPageLoaded(() => {
