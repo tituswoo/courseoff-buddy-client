@@ -5,7 +5,7 @@ import mainStyles from './main.css'
 import credits from './templates/credits.html'
 import averageMarksTable from './templates/averageMarksTable.html'
 
-import { dirtyGet } from 'shared/dirtyRest'
+import { get } from 'shared/DirtyRest'
 import { RGBtoRGBA } from 'shared/ColorUtilities'
 import Courseoff from 'shared/Courseoff'
 import * as Extract from 'shared/Extract'
@@ -29,9 +29,8 @@ Courseoff.on('courseBlockAdded', courseBlock => {
         ...courseInfo1,
         ...courseInfo2
       }
-      dirtyGet(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
+      get(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
         .done(({ data: prof }) => {
-          console.info(prof)
         })
         .fail(({ url, statusText }) => console.warn(statusText, url))
     })
@@ -40,7 +39,7 @@ Courseoff.on('courseBlockAdded', courseBlock => {
 
 function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
-  dirtyGet(`http://courseoffbuddy.tk/course/${courseId}`)
+  get(`http://courseoffbuddy.tk/course/${courseId}`)
     .done(({ data: course }) => {
       let color = context.css('border-left-color')
       color = RGBtoRGBA(color, '0.15')
