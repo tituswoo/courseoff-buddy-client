@@ -37,7 +37,8 @@ Courseoff.on('courseBlockAdded', courseBlock => {
         .done(({ data: prof }) => {
           const html = Handlebars.compile(coursePopup)({
             course,
-            prof
+            prof,
+            professorStatsTable: Handlebars.compile(averageMarksTable)(prof.averageMarks)
           })
           console.log(course, prof)
           $('body').append($(html).css({ top: e.pageY, left: e.pageX + 20 }))
