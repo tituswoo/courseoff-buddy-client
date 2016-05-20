@@ -25,8 +25,16 @@ PageEvents.onPopupAdded((popup) => {
 })
 
 PageEvents.onCourseBlockAdded((courseBlock) => {
-  console.info('💥 Course block:', courseBlock)
+  console.info(extractCourseInfoFromCourseBlock(courseBlock))
 })
+
+function extractCourseInfoFromCourseBlock (courseBlock) {
+  courseBlock = $(courseBlock)
+  return {
+    name: courseBlock.find('.course-content').text().replace(' - ', ''),
+    location: courseBlock.find('.location').text()
+  }
+}
 
 function extractCourseInfoFromPopup(html) {
   const content = $(html).find('.popover')
