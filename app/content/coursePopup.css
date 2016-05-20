@@ -1,0 +1,30 @@
+.course-popup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  padding: 10px;
+
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.course-popup > .title {
+  font-size: 18px;
+  padding: 10px;
+  margin: -10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.course-popup h4 {
+  font-size: 13px;
+  font-weight: 200;
+  color: rgba(128, 128, 128, 0.8);
+  margin-bottom: 1px;
+}
+
+.course-popup p {
+  font-size: 15px;
+}
