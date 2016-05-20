@@ -23,7 +23,9 @@ PageEvent.prototype.onPopupAdded = function (callback) {
 		let observer = new MutationObserver(mutations => {
 			mutations.forEach(mutation => {
 				if (mutation.addedNodes.length > 0) {
-					callback(mutation.addedNodes[0])
+					if ($(mutation.addedNodes[0]).is('.popover.tip')) {
+						callback(mutation.addedNodes[0])
+					}
 				}
 			})
 		})

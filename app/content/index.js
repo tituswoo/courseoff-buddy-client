@@ -22,10 +22,14 @@ PageEvents.onPopupAdded((popup) => {
   popup = $(popup)
   popup.hide()
   const course = extractCourseInfoFromPopup(popup.html())
+  console.info(course)
 })
 
 PageEvents.onCourseBlockAdded((courseBlock) => {
-  console.info(extractCourseInfoFromCourseBlock(courseBlock))
+  $(courseBlock).on('mouseover', e => {
+    let course = extractCourseInfoFromCourseBlock(courseBlock)
+    console.info(course)
+  })
 })
 
 function extractCourseInfoFromCourseBlock (courseBlock) {
