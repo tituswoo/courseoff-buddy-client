@@ -14,6 +14,7 @@ export function courseFromPopup(popup) {
   let instructorName = content.find('[data-visible="instr"]').find('em').text().trim()
   let instructorId = instructorName.replace(/\s/g,'').replace(',','').toUpperCase()
   let course = {
+    title: content.find('.title').text().trim(),
     refNumber: items[0].innerText.trim(),
     section: items[1].innerText.trim(),
     creditHours: items[2].innerText.trim(),
