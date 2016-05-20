@@ -2,6 +2,10 @@ html, body {
 	height: 100%;
 }
 
+.popover {
+	display: none;
+}
+
 .calendar-panel .noprint {
 	margin: 10px 0;
 }
