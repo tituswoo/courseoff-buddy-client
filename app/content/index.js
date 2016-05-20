@@ -22,7 +22,10 @@ PageEvents.onPopupAdded((popup) => {
   popup = $(popup)
   popup.hide()
   const course = extractCourseInfoFromPopup(popup.html())
-  console.info('course:', course)
+})
+
+PageEvents.onCourseBlockAdded((courseBlock) => {
+  console.info('💥 Course block:', courseBlock)
 })
 
 function extractCourseInfoFromPopup(html) {
