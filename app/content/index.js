@@ -24,6 +24,7 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseenter', e => {
+    $('.course-popup').remove()
     const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)
     const sub = Courseoff.on('popupAdded', popup => {
       Courseoff.off(sub)
@@ -38,8 +39,8 @@ Courseoff.on('courseBlockAdded', courseBlock => {
             course,
             prof
           })
-          console.log(course)
-          $('body').append($(html))
+          console.log(course, prof)
+          $('body').append($(html).css({ top: e.pageY, left: e.pageX + 20 }))
         })
         .fail(({ url, statusText }) => console.warn(statusText, url))
     })

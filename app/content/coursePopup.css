@@ -3,7 +3,10 @@
   bottom: 0;
   right: 0;
 
+  width: 500px;
+  height: 300px;
   padding: 10px;
+  overflow: hidden;
 
   border: 1px solid lightgray;
   border-radius: 4px;
@@ -14,8 +17,20 @@
   font-size: 18px;
   padding: 10px;
   margin: -10px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   border-bottom: 1px solid lightgray;
+  background-color: #FAFAFA;
+}
+
+.course-popup > .content {
+  display: flex;
+  flex-direction: row;
+}
+
+.course-popup .sidebar {
+  max-width: 180px;
+  padding-right: 10px;
+  border-right: 1px solid lightgray;
 }
 
 .course-popup h4 {
@@ -27,4 +42,9 @@
 
 .course-popup p {
   font-size: 15px;
+}
+
+.course-popup .stats {
+  flex-grow: 1;
+  padding-left: 10px;
 }
