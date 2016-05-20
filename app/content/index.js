@@ -23,13 +23,17 @@ Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseenter', e => {
     const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)
     const sub = Courseoff.on('popupAdded', popup => {
+      Courseoff.off(sub)
       const courseInfo2 = Extract.courseFromPopup(popup)
-      let result = {
+      let course = {
         ...courseInfo1,
         ...courseInfo2
       }
-      Courseoff.off(sub)
-      console.info(result)
+      dirtyGet(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
+        .done(({ data: prof }) => {
+          console.info(prof)
+        })
+        .fail(({ url, statusText }) => console.warn(statusText, url))
     })
   })
 })
