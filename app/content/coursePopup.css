@@ -1,8 +1,8 @@
-.course-popup {
+:local(.popup) {
   position: absolute;
 }
 
-.course-popup > .content {
+:local(.content) {
   padding: 10px;
   padding-bottom: 0;
   width: 500px;
@@ -15,7 +15,7 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-.course-popup .title {
+:local(.title) {
   border-bottom: 1px solid lightgray;
   background-color: #FAFAFA;
 
@@ -25,29 +25,29 @@
   font-size: 20px;
 }
 
-.course-popup .row {
+:local(.row) {
   display: flex;
   flex-direction: row;
 }
 
-.course-popup .sidebar {
+:local(.sidebar) {
   max-width: 180px;
   padding-right: 10px;
   border-right: 1px solid lightgray;
 }
 
-.course-popup h4 {
+:local(.popup h4) {
   font-size: 13px;
   font-weight: 200;
   color: rgba(128, 128, 128, 0.8);
   margin-bottom: 1px;
 }
 
-.course-popup p {
+:local(.popup p) {
   font-size: 15px;
 }
 
-.course-popup .stats {
+:local(.stats) {
   flex-grow: 1;
   padding-left: 10px;
 }

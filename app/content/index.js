@@ -2,12 +2,14 @@ import $ from 'jquery'
 import Handlebars from 'handlebars'
 
 import mainStyles from './main.css'
-import coursePopupStyles from './coursePopup.css'
+// import coursePopupStyles from './coursePopup.css'
 
 import credits from './templates/credits.html'
 import averageMarksTable from './templates/averageMarksTable.html'
-import coursePopup from './templates/coursePopup.html'
+// import coursePopup from './templates/coursePopup.html'
+import coursePopup from './templates/coursePopup.tpl.js'
 
+import Popup from 'shared/Popup'
 import { get } from 'shared/DirtyRest'
 import { RGBtoRGBA } from 'shared/ColorUtilities'
 import Courseoff from 'shared/Courseoff'
@@ -35,11 +37,8 @@ Courseoff.on('courseBlockAdded', courseBlock => {
       }
       get(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
         .done(prof => {
-          const html = Handlebars.compile(coursePopup)({
-            course,
-            prof,
-            professorStatsTable: Handlebars.compile(averageMarksTable)(prof.averageMarks)
-          })
+          const professorStatsTable = Handlebars.compile(averageMarksTable)(prof.averageMarks)
+          const html = coursePopup({ course, prof, professorStatsTable })
           console.log(course, prof)
           $('body').append($(html).css({ top: e.pageY, left: e.pageX + 20 }))
         })
