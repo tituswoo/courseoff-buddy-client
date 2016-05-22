@@ -1,30 +1,31 @@
 .course-popup {
   position: absolute;
-  bottom: 0;
-  right: 0;
+}
 
-  width: 500px;
-  height: 300px;
+.course-popup > .content {
   padding: 10px;
-  overflow: hidden;
+  padding-bottom: 0;
+  width: 500px;
 
   border: 1px solid lightgray;
   border-radius: 4px;
   background-color: white;
 
+  overflow: hidden;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-.course-popup > .title {
-  font-size: 18px;
-  padding: 10px;
-  margin: -10px;
-  margin-bottom: 0;
+.course-popup .title {
   border-bottom: 1px solid lightgray;
   background-color: #FAFAFA;
+
+  margin: -10px;
+  margin-bottom: 0;
+  padding: 10px;
+  font-size: 20px;
 }
 
-.course-popup > .content {
+.course-popup .row {
   display: flex;
   flex-direction: row;
 }
