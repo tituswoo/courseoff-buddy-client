@@ -49,12 +49,9 @@ function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
   get(`http://courseoffbuddy.tk/course/${courseId}`)
     .done(course => {
+      let template = averageMarksTable({ ...course.averageMarks })
       const color = Extract.colorFromCourseInfoContainer(context[0])
-      let template = averageMarksTable({
-        ...course.averageMarks,
-        color
-      })
-      Hydrate.courseInfoContainer(context, template)
+      Hydrate.courseInfoContainer(context, template, color)
     })
     .fail(({ url, statusText }) => console.warn(statusText, url))
 }

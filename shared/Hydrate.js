@@ -1,8 +1,13 @@
 import $ from 'jQuery'
-import courseInfoContainerStyles from 'content/hydrators/courseInfoContainer.css'
+import Handlebars from 'handlebars'
 
-export function courseInfoContainer(courseInfoContainer, html) {
+export function courseInfoContainer(courseInfoContainer, html, bkgColor) {
   let target = $(courseInfoContainer)
-  let template = `<div class="test">${html}</div>`
+  const s = require('content/hydrators/courseInfoContainer.css')
+  let template = Handlebars.compile(`
+    <div class="{{s.wrap}}" style="background-color:{{bkgColor}};">
+      ${html}
+    </div>
+  `)({ s, bkgColor })
   $(template).hide().insertBefore(target.find('.table')).fadeIn()
 }

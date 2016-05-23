@@ -1,8 +1,8 @@
 :local(.table) {
   color: black;
   width: 100%;
-  border-bottom: none;
-  background-color: transparent;
+  border-bottom: none !important;
+  background-color: transparent !important;
 }
 
 :local(.table th, .table td) {
