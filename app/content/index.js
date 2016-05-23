@@ -24,29 +24,34 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseenter', e => {
+    Popup.destroy()
     const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)
     const sub = Courseoff.on('popupAdded', popup => {
-      Courseoff.off(sub)
       const courseInfo2 = Extract.courseFromPopup(popup)
       let course = {
         ...courseInfo1,
         ...courseInfo2
       }
+
+      let html = coursePopup({ course })
+
+      const coords = { ...$(courseBlock).offset() }
+      const width = $(courseBlock).width()
+      const popupPos = { top: coords.top, left: coords.left + width }
+
+      Popup.create(html, popupPos)
+
       get(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
         .done(prof => {
           const professorStatsTable = averageMarksTable(prof.averageMarks)
-          const html = coursePopup({ course, prof, professorStatsTable })
-          console.log(course, prof)
-          const coords = { ...$(courseBlock).offset() }
-          const width = $(courseBlock).width()
-          Popup.create(html, { top: coords.top, left: coords.left + width })
+          html = coursePopup({ course, prof, professorStatsTable })
+          // console.log(course, prof)
+          Popup.update(html)
         })
         .fail(({ url, statusText }) => console.warn(statusText, url))
     })
   })
-  $(courseBlock).on('mouseleave', e => {
-    Popup.destroy()
-  })
+  $(courseBlock).on('mouseleave', e => Popup.destroy())
 })
 
 function placeAverageMarksTable(context) {
