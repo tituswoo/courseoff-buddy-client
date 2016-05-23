@@ -1,11 +1,13 @@
 import $ from 'jQuery'
 
 const template = '<div id="cbe-popup" style="position: absolute;"></div>'
-let popup = $(template).appendTo('body')
+let popup = $(template)
 
 export default { create, update, destroy }
 
 function create(html, coords) {
+  destroy()
+  popup = $(template).appendTo('body')
   return popup.html(html).css(coords)
 }
 
@@ -14,5 +16,5 @@ function update(newHtml) {
 }
 
 function destroy() {
-  popup.html('')
+  popup.remove()
 }
