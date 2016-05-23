@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import Handlebars from 'handlebars'
+import styles from 'content/main.css'
 
-import mainStyles from 'content/main.css'
 import credits from 'content/templates/credits.html'
 import averageMarksTable from 'content/templates/averageMarksTable.tpl.js'
 import coursePopup from 'content/templates/coursePopup.tpl.js'
@@ -33,6 +33,7 @@ Courseoff.on('courseBlockAdded', courseBlock => {
         ...courseInfo1,
         ...courseInfo2
       }
+
       let prof = {}
       let profStatsTable = {}
       let courseStatsTable = {}

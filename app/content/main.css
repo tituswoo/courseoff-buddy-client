@@ -1,7 +1,3 @@
-html, body {
-	height: 100%;
-}
-
 .popover {
 	display: none;
 }
@@ -10,160 +6,13 @@ html, body {
 	margin: 10px 0;
 }
 
+.course-cal {
+	cursor: default;
+}
+
 .credits {
 	color: gray;
 	float: right;
 	font-size: 0.85em;
 	margin-top: 2px;
-}
-
-.calendar-panel {
-	/* allow loading panel to fill up the calendar*/
-	position: relative;
-}
-
-span.name {
-	font-weight: bold;
-}
-
-/* Averages table */
-
-.average-marks-table {
-	color: black;
-}
-
-.average-marks-table th, .average-marks-table td  {
-	color: gray;
-	padding-right: 10px;
-}
-
-.course-table-container .average-marks-table th {
-	font-size: 0.86em;
-	padding: 0 5px;
-}
-
-.course-table-container .average-marks-table td {
-	padding: 0 5px;
-}
-
-.popover .average-marks-table th, .popover .average-marks-table td {
-	padding-left: 0;
-	padding-right: 10px;
-}
-
-.popover .popover {
-	overflow: hidden;
-	width: 500px;
-}
-
-.popover .title {
-	border-bottom: 1px solid lightgray;
-	background-color: #e5e3e3;
-	width: 99.5%;
-	border-radius: 4px 4px 0 0;
-}
-
-.popover .tip-inner, .popover {
-	width: 500px !important;
-	max-width: 500px !important;
-}
-
-.body {
-	float: left;
-	background-color: #fcfcfc;
-	border-right: 1px solid lightgray;
-	max-width: 180px;
-	min-height: 340px;
-	border-radius: 0 0 0 4px;
-}
-
-#cb-class-info {
-	float: left;
-	padding: 10px 15px;
-	min-height: 295px;
-	max-width: 320px;
-}
-
-hr {
-	margin: 5px 0 !important;
-	border-top: 1px solid lightgray !important;
-}
-
-.instructor:hover {
-	cursor: pointer;
-}
-
-.tooltipster-content * {
-	margin: 0;
-}
-
-/* Detailed professor stats box */
-
-.detailed-prof-stats-box * {
-	margin: 0;
-}
-
-.detailed-prof-stats-box a {
-	color: black;
-}
-
-.detailed-prof-stats-box h4 a, .detailed-prof-stats-box h5 a {
-	display: block;
-}
-
-.detailed-prof-stats-box h4.title {
-	  border-bottom: 1px solid rgb(211, 211, 211);
-	  padding: 8px 10px 8px;
-	  margin: -8px -10px 5px;
-	  background-color: rgb(249, 249, 249);
-	  border-radius: 4px 4px 0 0;
-}
-
-.detailed-prof-stats-box h4.title a, .detailed-prof-stats-box h5 a:hover {
-	background-image: url('chrome-extension://__MSG_@@extension_id__/images/link-icon.png');
-	background-position: 100% 50%;
-	background-repeat: no-repeat;
-}
-.detailed-prof-stats-box h5 {
-	margin-bottom: 5px;
-}
-
-.detailed-prof-stats-box hr {
-	margin: 10px 0 5px 0 !important;
-}
-
-.detailed-prof-stats-box .average-marks-table .gpa {
-	background-color: gray;
-	color: white;
-	padding: 0 5px;
-	width: 20px;
-}
-
-.detailed-prof-stats-box .average-marks-table .a {
-	padding-left: 10px;
-}
-
-/* Professor Pillbox */
-
-.rmp-box {
-	height: 20px;
-}
-
-.rmp-box > div {
-	display: inline-block;
-	margin-right: 5px;
-	background-color: lightgray;
-	padding: 3px 0 0 3px;
-	text-transform: uppercase;
-	font-size: 0.7em;
-	overflow: hidden;
-}
-
-.rmp-box > div > span {
-	font-weight: bold;
-	margin-left: 3px;
-	background-color: gray;
-	padding: 4px;
-	color: white;
-	font-size: 1.2em;
 }
