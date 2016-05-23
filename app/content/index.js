@@ -24,7 +24,6 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseenter', e => {
-    $('.course-popup').remove()
     const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)
     const sub = Courseoff.on('popupAdded', popup => {
       Courseoff.off(sub)
@@ -38,11 +37,15 @@ Courseoff.on('courseBlockAdded', courseBlock => {
           const professorStatsTable = averageMarksTable(prof.averageMarks)
           const html = coursePopup({ course, prof, professorStatsTable })
           console.log(course, prof)
-          Popup.create(html, { top: e.pageY, left: e.pageX + 20 })
-          // $('body').append($(html).css({ top: e.pageY, left: e.pageX + 20 }))
+          const coords = { ...$(courseBlock).offset() }
+          const width = $(courseBlock).width()
+          Popup.create(html, { top: coords.top, left: coords.left + width })
         })
         .fail(({ url, statusText }) => console.warn(statusText, url))
     })
+  })
+  $(courseBlock).on('mouseleave', e => {
+    Popup.destroy()
   })
 })
 
