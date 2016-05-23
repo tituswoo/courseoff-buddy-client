@@ -24,15 +24,19 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('courseBlockAdded', courseBlock => {
   $(courseBlock).on('mouseenter', e => {
-    console.info('mouseenter')
     const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)
     const sub = Courseoff.on('popupAdded', popup => {
+      Courseoff.off(sub)
+
       const courseInfo2 = Extract.courseFromPopup(popup)
 
       let course = {
         ...courseInfo1,
         ...courseInfo2
       }
+      let prof = {}
+      let profStatsTable = {}
+      let courseStatsTable = {}
 
       const coords = { ...$(courseBlock).offset() }
       const width = $(courseBlock).width()
@@ -41,14 +45,24 @@ Courseoff.on('courseBlockAdded', courseBlock => {
       const html = coursePopup({ course })
       Popup.create(html, popupPos)
 
-      // get(`http://courseoffbuddy.tk/prof/${course.instructorId}`).done(prof => {
-      //   const professorStatsTable = averageMarksTable(prof.averageMarks)
-      //   let html = coursePopup({ course, prof, professorStatsTable })
-      //   Popup.update(html)
-      // })
+      get(`http://courseoffbuddy.tk/course/${course.name}`)
+        .done(({ details, averageMarks }) => {
+          course = { ...course, averageMarks, details }
+          courseStatsTable = averageMarksTable(averageMarks)
+          let html = coursePopup({ course, prof, profStatsTable, courseStatsTable })
+          Popup.update(html)
+          console.info(course)
+        })
+
+      get(`http://courseoffbuddy.tk/prof/${course.instructorId}`).done(p => {
+        prof = p
+        profStatsTable = averageMarksTable(p.averageMarks)
+        let html = coursePopup({ course, prof, profStatsTable, courseStatsTable })
+        Popup.update(html)
+      })
     })
   })
-  // $(courseBlock).on('mouseleave', e => Popup.destroy())
+  $(courseBlock).on('mouseleave', e => Popup.destroy())
 })
 
 function placeAverageMarksTable(context) {

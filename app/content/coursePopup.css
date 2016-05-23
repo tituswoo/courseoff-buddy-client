@@ -31,7 +31,7 @@
 }
 
 :local(.sidebar) {
-  max-width: 180px;
+  width: 300px;
   padding-right: 10px;
   border-right: 1px solid lightgray;
 }
