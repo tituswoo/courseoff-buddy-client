@@ -5,9 +5,8 @@
 :local(.content) {
   padding: 10px;
   padding-bottom: 0;
-  width: 500px;
+  width: 300px;
 
-  border: 1px solid lightgray;
   border-radius: 4px;
   background-color: white;
 
@@ -16,24 +15,59 @@
 }
 
 :local(.title) {
-  border-bottom: 1px solid lightgray;
   background-color: #FAFAFA;
-
   margin: -10px;
+  margin-bottom: 10px;
+}
+
+:local(.title h2) {
+  padding: 3px 10px;
+  margin: 0;
   margin-bottom: 0;
+  font-size: 15px;
+  font-weight: 500;
+  background: rgba(0,0,0,0.1);
+}
+
+:local(.bottom) {
+  border-top: 1px solid lightgray;
+  margin: 0 -10px;
   padding: 10px;
-  font-size: 20px;
-}
-
-:local(.row) {
   display: flex;
-  flex-direction: row;
 }
 
-:local(.sidebar) {
-  width: 300px;
-  padding-right: 10px;
-  border-right: 1px solid lightgray;
+:local(.details) {
+  border-top: 1px solid lightgray;
+  margin: 0 -10px;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+:local(.details__row) {
+  display: flex;
+}
+
+:local(.details__row > span) {
+  color: lightgray;
+  min-width: 54px;
+}
+
+:local(.details__row > p) {
+  flex-grow: 1;
+}
+
+:local(.box) {
+  flex-grow: 1;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+:local(.box > h3) {
+  margin: 0;
+}
+
+:local(.box > p) {
+  margin: 0;
 }
 
 :local(.popup h4) {
@@ -53,8 +87,6 @@
 }
 
 :local(.courseStatsTable) {
-  margin: 0 -10px 0 -10px;
   padding: 10px;
   color: white;
-  background-color: lightgray;
 }

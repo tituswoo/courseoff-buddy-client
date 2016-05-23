@@ -1,5 +1,55 @@
 <div class="{{styles.popup}}">
   <div class="{{styles.content}}">
+    <div
+      class="{{styles.title}}"
+      style="background-color:{{accentColor}}">
+      <h2>{{course.title}}</h2>
+      <div
+        class="{{styles.courseStatsTable}}"
+        style="color: black;">
+        {{{courseStatsTable}}}
+      </div>
+    </div>
+    <div>
+      <div class="{{styles.details__row}}">
+        <span>INFO</span>
+        <p>{{course.details}}</p>
+      </div>
+      <div class="{{styles.details}}">
+        <div class="{{styles.details__row}}">
+          <span>PROF</span>
+          <p>{{course.instructor}}</p>
+        </div>
+        <div class="{{styles.details__row}}">
+          <span>LOC</span>
+          <p>{{course.location}}</p>
+        </div>
+      </div>
+      <div class="{{styles.bottom}}">
+        <div class="{{styles.box}}">
+          <h3>
+            {{course.creditHours}}
+          </h3>
+          <p>credits</p>
+        </div>
+        <div class="{{styles.box}}">
+          <h3>
+            {{course.refNumber}}
+          </h3>
+          <p>course id</p>
+        </div>
+        <div class="{{styles.box}}">
+          <h3>
+            {{course.section}}
+          </h3>
+          <p>section</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="{{styles.popup}}">
+  <div class="{{styles.content}}">
     <h2 class="{{styles.title}}">{{course.title}}</h2>
     <div class="{{styles.row}}">
       <div class="{{styles.sidebar}}">
@@ -28,4 +78,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
