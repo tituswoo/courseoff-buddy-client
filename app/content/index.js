@@ -2,7 +2,6 @@ import $ from 'jquery'
 import Handlebars from 'handlebars'
 
 import mainStyles from 'content/main.css'
-
 import credits from 'content/templates/credits.html'
 import averageMarksTable from 'content/templates/averageMarksTable.tpl.js'
 import coursePopup from 'content/templates/coursePopup.tpl.js'
@@ -40,29 +39,29 @@ Courseoff.on('courseBlockAdded', courseBlock => {
 
       const coords = { ...$(courseBlock).offset() }
       const width = $(courseBlock).width()
-      const popupPos = { top: coords.top, left: coords.left + width }
 
+      const color = Extract.colorFromCourseBlock(courseBlock)
       const html = coursePopup({ course })
-      Popup.create(html, popupPos)
+      Popup.create(html, { top: coords.top, left: coords.left + width })
 
       get(`http://courseoffbuddy.tk/course/${course.name}`)
         .done(({ details, averageMarks }) => {
           course = { ...course, averageMarks, details }
           courseStatsTable = averageMarksTable(averageMarks)
-          let html = coursePopup({ course, prof, profStatsTable, courseStatsTable })
+          let html = coursePopup({ course, prof, profStatsTable, courseStatsTable }, color)
           Popup.update(html)
-          console.info(course)
         })
 
-      get(`http://courseoffbuddy.tk/prof/${course.instructorId}`).done(p => {
-        prof = p
-        profStatsTable = averageMarksTable(p.averageMarks)
-        let html = coursePopup({ course, prof, profStatsTable, courseStatsTable })
-        Popup.update(html)
-      })
+      get(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
+        .done(p => {
+          prof = p
+          profStatsTable = averageMarksTable(p.averageMarks)
+          let html = coursePopup({ course, prof, profStatsTable, courseStatsTable }, color)
+          Popup.update(html)
+        })
     })
   })
-  $(courseBlock).on('mouseleave', e => Popup.destroy())
+  // $(courseBlock).on('mouseleave', e => Popup.destroy())
 })
 
 function placeAverageMarksTable(context) {

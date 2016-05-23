@@ -1,12 +1,11 @@
 :local(.table) {
-  color: gray;
   width: 100%;
   border-bottom: none !important;
   background-color: transparent !important;
 }
 
 :local(.table th, .table td) {
-  color: gray;
+  color: inherit;
   padding: 5px;
   padding-right: 10px;
 }

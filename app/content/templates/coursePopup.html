@@ -15,8 +15,11 @@
         <p>{{course.creditHours}}</p>
       </div>
       <div class="{{styles.stats}}">
-        <h4>course averages</h4>
-        <div>{{{courseStatsTable}}}</div>
+        <div
+          class="{{styles.courseStatsTable}}"
+          style="background-color:{{accentColor}}; color: black;">
+          {{{courseStatsTable}}}
+        </div>
         <h4>course description</h4>
         <p>{{course.details}}</p>
         <h4>professor stats</h4>

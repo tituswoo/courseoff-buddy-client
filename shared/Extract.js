@@ -33,3 +33,8 @@ export function colorFromCourseInfoContainer(container) {
   let color = container.css('border-left-color')
   return RGBtoRGBA(color, '0.15')
 }
+
+export function colorFromCourseBlock(block) {
+  let color = $(block).css('backgroundColor')
+  return color
+}
