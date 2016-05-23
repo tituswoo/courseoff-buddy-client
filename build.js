@@ -18,7 +18,8 @@ const config = {
   resolve: {
     root: './app',
     alias: {
-      shared: path.resolve('./shared')
+      shared: path.resolve('./shared'),
+      content: path.resolve('./app/content')
     },
     extensions: ['', '.webpack.js', '.web.js', '.js', '.css']
   },

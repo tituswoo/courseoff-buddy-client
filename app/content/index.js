@@ -1,16 +1,17 @@
 import $ from 'jquery'
 import Handlebars from 'handlebars'
 
-import mainStyles from './main.css'
+import mainStyles from 'content/main.css'
 
-import credits from './templates/credits.html'
-import averageMarksTable from './templates/averageMarksTable.tpl.js'
-import coursePopup from './templates/coursePopup.tpl.js'
+import credits from 'content/templates/credits.html'
+import averageMarksTable from 'content/templates/averageMarksTable.tpl.js'
+import coursePopup from 'content/templates/coursePopup.tpl.js'
 
 import Popup from 'shared/Popup'
 import { get } from 'shared/DirtyRest'
 import Courseoff from 'shared/Courseoff'
 import * as Extract from 'shared/Extract'
+import * as Hydrate from 'shared/Hydrate'
 
 Courseoff.on('pageLoaded', () => {
   onHoverOverCourseInList()
@@ -53,7 +54,7 @@ function placeAverageMarksTable(context) {
         ...course.averageMarks,
         color
       })
-      $(template).hide().insertBefore(context.find('.table')).fadeIn()
+      Hydrate.courseInfoContainer(context, template)
     })
     .fail(({ url, statusText }) => console.warn(statusText, url))
 }
