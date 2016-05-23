@@ -3,7 +3,7 @@ import $ from 'jquery'
 export function get(url) {
   let deferred = $.Deferred()
 
-  let cached = localStorage.getItem(url)
+  let cached = sessionStorage.getItem(url)
 
   if (cached) {
     return deferred.resolve(JSON.parse(cached))
@@ -11,7 +11,7 @@ export function get(url) {
 
   chrome.runtime.sendMessage({ command: 'mget', url }, resp => {
     if (resp.success) {
-      localStorage.setItem(url, JSON.stringify(resp.resp))
+      sessionStorage.setItem(url, JSON.stringify(resp.resp))
       deferred.resolve(resp.resp)
     }
     return deferred.reject(resp.resp)
