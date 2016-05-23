@@ -8,6 +8,5 @@ export default function(course, accentColor) {
     accentColor,
     styles
   }
-  console.info('bundle:', bundle)
   return Handlebars.compile(coursePopup)(bundle)
 }
