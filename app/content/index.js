@@ -5,7 +5,8 @@ import mainStyles from './main.css'
 // import coursePopupStyles from './coursePopup.css'
 
 import credits from './templates/credits.html'
-import averageMarksTable from './templates/averageMarksTable.html'
+// import averageMarksTable from './templates/averageMarksTable.html'
+import averageMarksTable from './templates/averageMarksTable.tpl.js'
 // import coursePopup from './templates/coursePopup.html'
 import coursePopup from './templates/coursePopup.tpl.js'
 
@@ -37,7 +38,7 @@ Courseoff.on('courseBlockAdded', courseBlock => {
       }
       get(`http://courseoffbuddy.tk/prof/${course.instructorId}`)
         .done(prof => {
-          const professorStatsTable = Handlebars.compile(averageMarksTable)(prof.averageMarks)
+          const professorStatsTable = averageMarksTable(prof.averageMarks)
           const html = coursePopup({ course, prof, professorStatsTable })
           console.log(course, prof)
           $('body').append($(html).css({ top: e.pageY, left: e.pageX + 20 }))
@@ -53,7 +54,11 @@ function placeAverageMarksTable(context) {
     .done(course => {
       let color = context.css('border-left-color')
       color = RGBtoRGBA(color, '0.15')
-      let template = Handlebars.compile(averageMarksTable)({
+      // let template = Handlebars.compile(averageMarksTable)({
+      //   ...course.averageMarks,
+      //   color
+      // })
+      let template = averageMarksTable({
         ...course.averageMarks,
         color
       })

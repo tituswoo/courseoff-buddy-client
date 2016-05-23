@@ -1,0 +1,16 @@
+:local(.table) {
+  color: black;
+  width: 100%;
+  border-bottom: none;
+  background-color: transparent;
+}
+
+:local(.table th, .table td) {
+  color: gray;
+  padding: 5px;
+  padding-right: 10px;
+}
+
+:local(.table th) {
+  text-align: left;
+}

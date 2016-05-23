@@ -7,6 +7,5 @@ export default function(course) {
     ...course,
     styles
   }
-  console.info('bundle:', bundle)
   return Handlebars.compile(coursePopup)(bundle)
 }
