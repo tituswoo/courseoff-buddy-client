@@ -1,4 +1,5 @@
 import $ from 'jQuery'
+import { RGBtoRGBA } from 'shared/ColorUtilities'
 
 const unknown = '?'
 
@@ -25,4 +26,10 @@ export function courseFromPopup(popup) {
     location: content.find('[data-visible="location"]').find('em').text().trim() || unknown
   }
   return course
+}
+
+export function colorFromCourseInfoContainer(container) {
+  container = $(container)
+  let color = container.css('border-left-color')
+  return RGBtoRGBA(color, '0.15')
 }

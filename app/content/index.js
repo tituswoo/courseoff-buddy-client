@@ -2,17 +2,13 @@ import $ from 'jquery'
 import Handlebars from 'handlebars'
 
 import mainStyles from './main.css'
-// import coursePopupStyles from './coursePopup.css'
 
 import credits from './templates/credits.html'
-// import averageMarksTable from './templates/averageMarksTable.html'
 import averageMarksTable from './templates/averageMarksTable.tpl.js'
-// import coursePopup from './templates/coursePopup.html'
 import coursePopup from './templates/coursePopup.tpl.js'
 
 import Popup from 'shared/Popup'
 import { get } from 'shared/DirtyRest'
-import { RGBtoRGBA } from 'shared/ColorUtilities'
 import Courseoff from 'shared/Courseoff'
 import * as Extract from 'shared/Extract'
 
@@ -52,12 +48,7 @@ function placeAverageMarksTable(context) {
   let courseId = context.find('.name').text().split('-')[0].replace(/\s/g, '')
   get(`http://courseoffbuddy.tk/course/${courseId}`)
     .done(course => {
-      let color = context.css('border-left-color')
-      color = RGBtoRGBA(color, '0.15')
-      // let template = Handlebars.compile(averageMarksTable)({
-      //   ...course.averageMarks,
-      //   color
-      // })
+      const color = Extract.colorFromCourseInfoContainer(context[0])
       let template = averageMarksTable({
         ...course.averageMarks,
         color
