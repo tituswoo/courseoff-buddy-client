@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars'
 import template from './averageMarksTable.html'
-import styles from '../averageMarksTable.css'
+import styles from './averageMarksTable.css'
 
 export default function(averageMarks) {
   const bundle = {

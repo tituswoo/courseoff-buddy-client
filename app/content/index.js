@@ -2,9 +2,9 @@ import $ from 'jquery'
 import Handlebars from 'handlebars'
 import styles from 'content/main.css'
 
-import credits from 'content/templates/credits.html'
-import averageMarksTable from 'content/templates/averageMarksTable.tpl.js'
-import coursePopup from 'content/templates/coursePopup.tpl.js'
+import credits from 'content/components/credits.html'
+import averageMarksTable from 'content/components/averageMarksTable/averageMarksTable.js'
+import coursePopup from 'content/components/coursePopup/coursePopup.js'
 
 import Popup from 'shared/Popup'
 import { get } from 'shared/DirtyRest'

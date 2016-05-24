@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars'
 import coursePopup from './coursePopup.html'
-import styles from '../coursePopup.css'
+import styles from './coursePopup.css'
 
 export default function(course, accentColor) {
   const bundle = {
