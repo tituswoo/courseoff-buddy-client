@@ -5,10 +5,15 @@ let popup = $(template)
 
 export default { create, update, destroy }
 
-function create(html, coords) {
+function create(html, elementToAnchorTo) {
   destroy()
+
   popup = $(template).appendTo('body')
-  return popup.html(html).css(coords)
+
+  const coords = { ...$(elementToAnchorTo).offset() }
+  const width = $(elementToAnchorTo).width()
+
+  return popup.html(html).css({ top: coords.top, left: coords.left + width })
 }
 
 function update(newHtml) {

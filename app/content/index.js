@@ -38,12 +38,10 @@ Courseoff.on('courseBlockAdded', courseBlock => {
       let profStatsTable = {}
       let courseStatsTable = {}
 
-      const coords = { ...$(courseBlock).offset() }
-      const width = $(courseBlock).width()
-
       const color = Extract.colorFromCourseBlock(courseBlock)
       const html = coursePopup({ course })
-      Popup.create(html, { top: coords.top, left: coords.left + width })
+
+      Popup.create(html, courseBlock)
 
       get(`http://courseoffbuddy.tk/course/${course.name}`)
         .done(({ details, averageMarks }) => {

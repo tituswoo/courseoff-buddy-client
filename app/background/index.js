@@ -1,18 +1,14 @@
 import $ from 'jQuery'
 
-console.info('BACKGROUND SCRIPT RUNNING')
-
 chrome.runtime.onMessage.addListener(
 	(request, sender, sendResponse) => {
     const { command, url } = request
 		if (command === 'mget') {
       $.ajax({ url, cache: true })
         .done(resp => {
-          console.info('SUCCESS', url, resp)
           sendResponse({ success: true, resp })
         })
         .fail(resp => {
-          console.warn('FAILED', url, resp)
           sendResponse({ success: false, resp })
         })
 		}
