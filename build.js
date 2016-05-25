@@ -40,10 +40,6 @@ const config = {
         exclude: /(node_modules)/
       },
       {
-        test: require.resolve('jquery-onmutate'),
-        loader: 'exports?$!imports?jQuery=jquery,$=jquery,this=>window'
-      },
-      {
         test: /\.html$/,
         loader: 'html-loader'
       }
