@@ -1,100 +1,147 @@
 import $ from 'jQuery'
 import PubSub from 'pubsub-js'
 
-export default {
-	on,
-	off: PubSub.unsubscribe
-}
 
-function on(topic, cb) {
-	return PubSub.subscribe(topic, (msg, data) => cb(data))
-}
 
-onPageLoaded(() => {
-	PubSub.publish('pageLoaded')
-})
+// export default {
+// 	on,
+// 	off: PubSub.unsubscribe
+// }
 
-onPopupAdded((popup) => {
-	PubSub.publish('popupAdded', popup)
-})
+// function on(topic, cb) {
+// 	return PubSub.subscribe(topic, (msg, data) => cb(data))
+// }
+//
+// onPageLoaded(() => {
+// 	console.info('page loaded')
+// 	PubSub.publish('pageLoaded')
+// })
+//
+// onPopupAdded((popup) => {
+// 	PubSub.publish('popupAdded', popup)
+// })
+//
+// onCourseAdded((course) => {
+// 	PubSub.publish('courseAdded', course)
+// })
+//
+// onCourseBlockAdded((courseBlock) => {
+// 	PubSub.publish('courseBlockAdded', courseBlock)
+// })
 
-onCourseAdded((course) => {
-	PubSub.publish('courseAdded', course)
-})
 
-onCourseBlockAdded((courseBlock) => {
-	PubSub.publish('courseBlockAdded', courseBlock)
-})
 
-function onPageLoaded(callback) {
-	let checkInterval = setInterval(function () {
-
-		let coursesLoaded = !!$('.course-info-container').html()
-		let footerLoaded = !!$('.calendar-panel > .noprint').text()
-
-		if (coursesLoaded && footerLoaded) {
-			clearInterval(checkInterval)
-			callback()
-		}
-	}, 500);
-};
-
-function onPopupAdded(callback) {
-	on('pageLoaded', () => {
-		let observer = new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				if (mutation.addedNodes.length > 0) {
-					if ($(mutation.addedNodes[0]).is('.popover.tip')) {
-						callback(mutation.addedNodes[0])
-					}
-				}
-			})
-		})
-		const target = $('body')[0]
-		const config = { childList: true }
-
-		observer.observe(target, config)
-	})
-}
-
-function onCourseAdded(callback) {
-	on('pageLoaded', () => {
-		let observer = new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				if (mutation.addedNodes.length > 0) {
-					callback(mutation.addedNodes[0])
-				}
-			})
-		})
-		const target = $('.course-list')[0]
-		const config = { childList: true }
-
-		observer.observe(target, config)
-	})
-};
-
-/**
- * Fires whenever a course block is added to the page.
- * Also fires initially for every block already on the page at startup.
- */
-function onCourseBlockAdded(callback) {
-	on('pageLoaded', () => {
-		$('.course-cal.pinned').each((index, block) => {
-			callback(block)
-		})
-		let observer = new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				const { type, target, attributeName } = mutation
-				if (type === 'attributes' && attributeName === 'class') {
-					if ($(target).is('.pinned')) {
-						callback(target)
-					}
-				}
-			})
-		})
-		const target = $('.calendar-panel > .calendar > table > tbody')[0]
-		const config = { childList: true, subtree: true, attributes: true }
-
-		observer.observe(target, config)
-	})
-}
+// let observer = new MutationObserver(mutations => {
+// 	mutations.forEach( ( mutation ) => {
+// 		// console.log(target)
+// 		const $target = $(mutation.target)
+//
+// 		if (mutation.attributeName === 'class') {
+// 			if ($target.not('.tip-hide').is('.popover')) {
+// 				console.info('popoverAdded')
+// 			}
+// 		}
+//
+// 		// onPopupAdded($target, () => PubSub.publish('popoverAdded'))
+//
+// 		// onPageLoaded($target, () => PubSub.publish('pageLoaded'))
+// 	})
+// })
+//
+// const target = document.querySelector('body')
+// const config = { childList: true, subtree: true, attributes: true }
+//
+// observer.observe(target, config)
+//
+// function onPageLoaded($elem, cb) {
+// 	if ($elem.is('body')) {
+// 		console.info('page loaded')
+// 		cb()
+// 	}
+// }
+//
+// function onPopupAdded($elem, cb) {
+// 	if ($elem.is('.popover')) {
+// 		console.info('onPopoverAdded')
+// 		cb()
+// 	}
+// }
+//
+// function onPageLoaded(callback) {
+// 	let checkInterval = setInterval(function () {
+//
+// 		let coursesLoaded = !!$('.course-info-container').html()
+// 		let footerLoaded = !!$('.calendar-panel > .noprint').text()
+//
+// 		if (coursesLoaded && footerLoaded) {
+// 			clearInterval(checkInterval)
+// 			callback()
+// 		}
+// 	}, 500);
+// };
+//
+// function onPopupAdded(callback) {
+// 	on('pageLoaded', () => {
+// 		let observer = new MutationObserver(mutations => {
+// 			mutations.forEach(mutation => {
+// 				if (mutation.addedNodes.length > 0) {
+// 					if ($(mutation.addedNodes[0]).is('.popover')) {
+// 						console.info(mutation.addedNodes[0], mutation.removedNodes[0])
+// 						callback(mutation.addedNodes[0])
+// 					}
+// 				}
+// 				// if (mutation.addedNodes.length > 0) {
+// 				// 	if ($(mutation.addedNodes[0]).is('.popover.tip')) {
+// 				// 		callback(mutation.addedNodes[0])
+// 				// 	}
+// 				// }
+// 			})
+// 		})
+// 		const target = $('body')[0]
+// 		const config = { childList: true, subtree: true }
+//
+// 		observer.observe(target, config)
+// 	})
+// }
+//
+// function onCourseAdded(callback) {
+// 	on('pageLoaded', () => {
+// 		let observer = new MutationObserver(mutations => {
+// 			mutations.forEach(mutation => {
+// 				if (mutation.addedNodes.length > 0) {
+// 					callback(mutation.addedNodes[0])
+// 				}
+// 			})
+// 		})
+// 		const target = $('.course-list')[0]
+// 		const config = { childList: true }
+//
+// 		observer.observe(target, config)
+// 	})
+// };
+//
+// /**
+//  * Fires whenever a course block is added to the page.
+//  * Also fires initially for every block already on the page at startup.
+//  */
+// function onCourseBlockAdded(callback) {
+// 	on('pageLoaded', () => {
+// 		$('.course-cal.pinned').each((index, block) => {
+// 			callback(block)
+// 		})
+// 		let observer = new MutationObserver(mutations => {
+// 			mutations.forEach(mutation => {
+// 				const { type, target, attributeName } = mutation
+// 				if (type === 'attributes' && attributeName === 'class') {
+// 					if ($(target).is('.pinned')) {
+// 						callback(target)
+// 					}
+// 				}
+// 			})
+// 		})
+// 		const target = $('.calendar-panel > .calendar > table > tbody')[0]
+// 		const config = { childList: true, subtree: true, attributes: true }
+//
+// 		observer.observe(target, config)
+// 	})
+// }
