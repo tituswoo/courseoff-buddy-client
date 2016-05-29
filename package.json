@@ -1,9 +1,10 @@
 {
-  "name": "coursebuddy",
+  "name": "courseoff-buddy-for-georgia-tech",
   "version": "0.0.1",
   "description": "Course buddy for Gatech Courseoff",
   "main": "main.js",
   "scripts": {
+    "dev": "webpack --config dev.webpack.config.js --watch -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
