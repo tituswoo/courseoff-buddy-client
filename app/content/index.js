@@ -1,16 +1,211 @@
-import $ from 'jquery'
-import Handlebars from 'handlebars'
-import styles from 'content/main.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, combineReducers } from 'redux';
+import Courseoff from 'shared/Courseoff';
+import { RGBtoRGBA } from 'shared/ColorUtilities';
+import AverageMarksTable from 'content/components/AverageMarksTable';
+import { get } from 'shared/dirtyRest';
 
-import credits from 'content/components/credits.html'
-import averageMarksTable from 'content/components/averageMarksTable/averageMarksTable.js'
-import coursePopup from 'content/components/coursePopup/coursePopup.js'
+const course = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_COURSE':
+      return {
+        title: action.title,
+        color: action.color,
+        id: action.id,
+      };
+    default:
+      return state;
+  }
+};
 
-import Popup from 'shared/Popup'
-import { get } from 'shared/DirtyRest'
-import Courseoff from 'shared/Courseoff'
-import * as Extract from 'shared/Extract'
-import * as Hydrate from 'shared/Hydrate'
+const courses = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_COURSE':
+      return [
+        ...state,
+        course(undefined, action),
+      ];
+    default:
+      return state;
+  }
+};
+
+const distribution = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_DISTRIBUTION':
+      return {
+        id: action.id,
+        a: action.a,
+        b: action.b,
+        c: action.c,
+        d: action.d,
+        f: action.f,
+        gpa: action.gpa,
+      };
+    default:
+      return state;
+  }
+};
+
+const distributions = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_DISTRIBUTION':
+      return [
+        ...state,
+        distribution(undefined, action),
+      ];
+    default:
+      return state;
+  }
+};
+
+const popup = (state = {}, action) => {
+  switch (action.type) {
+    case 'SHOW_POPUP':
+      return state;
+    case 'HIDE_POPUP':
+      return state;
+    default:
+      return state;
+  }
+};
+
+const courseoffBuddy = combineReducers({
+  courses,
+  distributions,
+  popup,
+});
+
+const store = createStore(courseoffBuddy);
+
+console.log(store.getState());
+
+store.subscribe(() => {
+  console.log(store.getState());
+});
+
+Courseoff.on('pageLoaded', () => {
+  let courses = document.querySelectorAll('.schedule-panel .course-list .course-info-container');
+  courses = [...courses];
+
+  courses.forEach(course => {
+    const title = course.querySelector('.name').innerText.trim();
+    const color = course.style.borderLeftColor;
+    const id = title.split('-')[0].replace(/\s/, '').trim();
+
+    store.dispatch({
+      type: 'ADD_COURSE',
+      title, color, id,
+    });
+
+    const parentElement = course.querySelector('.course-table-container');
+    const beforeElement = parentElement.querySelector('.table');
+    const containerElement = document.createElement('div');
+    parentElement.insertBefore(containerElement, beforeElement);
+
+    store.subscribe(() => {
+      ReactDOM.render(
+        <div
+          style={{
+            padding: '2px',
+            backgroundColor: RGBtoRGBA(color, 0.2),
+            borderTop: '1px solid #ddd',
+            color: 'gray',
+            fontSize: '11px',
+            fontFamily: 'monospace',
+          }}
+        >
+          <AverageMarksTable
+            distribution={
+              store.getState().distributions.filter(d => d.id === id)[0]
+            }
+          />
+        </div>, containerElement
+      );
+    });
+
+    get(`http://courseoffbuddy.tk/course/${id}`)
+      .done(course => {
+        store.dispatch({
+          type: 'ADD_DISTRIBUTION',
+          id,
+          ...course.averageMarks,
+        });
+      })
+      .fail(({ url, statusText }) => console.warn(statusText, url));
+  });
+});
+
+// import React from 'react'
+// import ReactDOM from 'react-dom'
+
+// import { createStore } from 'redux'
+// import { connect } from 'react-redux'
+
+//
+// import { createDevTools } from 'redux-devtools'
+// import { LogMonitor } from 'redux-devtools-log-monitor'
+//
+// import { configureStore } from 'content/store/configureStore'
+// import Courseoff from 'shared/Courseoff'
+//
+// import AverageMarksTable from 'content/components/AverageMarksTable'
+// import DevTools from 'content/containers/DevTools'
+
+// let store = configureStore()
+
+// const addCourse = (course) => {
+//   return {
+//     type: 'ADD_COURSE',
+//     ...course
+//   }
+// }
+
+// const App = () => (
+//   <div>TESTING TESTING 123</div>
+// )
+
+// let reduxDebugToolsContainer = document.createElement('div')
+// document.body.appendChild(reduxDebugToolsContainer)
+// ReactDOM.render(<DevTools />, reduxDebugToolsContainer)
+// console.log(AverageMarksTable)
+
+/* const AverageMarksTableContainer = connect(
+  (state, ownProps) => {
+    console.log(ownProps)
+    return { marks: {} }
+  }
+)(AverageMarksTable)
+
+Courseoff.on('pageLoaded', () => {
+  let courses = document.querySelectorAll('.schedule-panel .course-list .course-info-container')
+  courses = [...courses]
+  courses.forEach(course => {
+    let c = {
+      title: course.querySelector('.name').innerText.trim(),
+      color: course.style.borderLeftColor
+    }
+    store.dispatch(addCourse(c))
+
+    let parentElement = course.querySelector('.course-table-container')
+    let beforeElement = parentElement.querySelector('.table')
+    let containerElement = document.createElement('div')
+    parentElement.insertBefore(containerElement, beforeElement)
+
+    ReactDOM.render(<AverageMarksTableContainer course={c.title} />, containerElement)
+  })
+})*/
+
+// let devToolsContainer = document.createElement('div')
+// document.body.appendChild(devToolsContainer)
+
+// let app = tree(<button>TESTING</button>)
+// render(app, devToolsContainer)
+
+// [...courses].forEach(course => {
+//   console.info(course)
+// })
 
 // Courseoff.on('pageLoaded', () => {
 //   onHoverOverCourseInList()

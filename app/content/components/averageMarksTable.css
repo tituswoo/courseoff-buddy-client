@@ -4,12 +4,12 @@
   background-color: transparent !important;
 }
 
-:local(.table th, .table td) {
+:local(.row) {
   color: inherit;
   padding: 5px;
   padding-right: 10px;
 }
 
-:local(.table th) {
-  text-align: left;
+:local(.row > th) {
+    min-width: 30px;
 }
