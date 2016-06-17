@@ -85,12 +85,6 @@ const courseoffBuddy = combineReducers({
 
 const store = createStore(courseoffBuddy);
 
-console.log(store.getState());
-
-store.subscribe(() => {
-  // console.log(store.getState());
-});
-
 function hydrateCourseInCourseList(course) {
   const title = course.querySelector('.name').innerText.trim();
   const color = course.style.borderLeftColor;
@@ -131,17 +125,18 @@ function hydrateCourseInCourseList(course) {
     });
 }
 
-Courseoff.on('pageLoaded', () => {
+Courseoff.on('courseAdded', course => {
+  console.log('COURSE ADDED');
+  hydrateCourseInCourseList(course);
+});
+
+Courseoff.on('workspaceChanged', () => {
   let courses = document.querySelectorAll('.schedule-panel .course-list .course-info-container');
   courses = [...courses];
 
   courses.forEach(course => {
     hydrateCourseInCourseList(course);
   });
-});
-
-Courseoff.on('courseAdded', course => {
-  hydrateCourseInCourseList(course);
 });
 
 // // import React from 'react'

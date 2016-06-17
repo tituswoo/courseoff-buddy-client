@@ -17,6 +17,8 @@ onCourseAdded((course) => {
   PubSub.publish('courseAdded', course);
 });
 
+onWorkspaceChanged(() => PubSub.publish('workspaceChanged'));
+
 // onCourseBlockAdded((courseBlock) => {
 //     PubSub.publish('courseBlockAdded', courseBlock);
 // });
@@ -103,12 +105,30 @@ function onCourseAdded(callback) {
       });
     });
 
-    const target = $('.course-list')[0];
+    const target = document.querySelector('.course-list');
     const config = { childList: true };
 
     observer.observe(target, config);
   });
 }
+
+
+function onWorkspaceChanged(cb) {
+  on('pageLoaded', () => {
+    cb();
+
+    const observer = new MutationObserver(() => {
+      cb();
+    });
+
+    const target = document.querySelector('#workspace');
+    const config = { childList: true };
+
+    observer.observe(target, config);
+  });
+}
+
+
 //
 // /**
 //  * Fires whenever a course block is added to the page.
