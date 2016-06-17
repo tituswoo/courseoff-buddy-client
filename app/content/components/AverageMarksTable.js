@@ -4,11 +4,15 @@ import styles from './averageMarksTable.css';
 const AverageMarksTable = (props) => {
   const { distribution } = props;
 
-  console.log('dist:', distribution);
-
   if (!distribution) {
     return (
       <div>Loading...</div>
+    );
+  }
+
+  if (distribution.errorMessage) {
+    return (
+      <div>{distribution.errorMessage}</div>
     );
   }
 
@@ -38,6 +42,7 @@ const AverageMarksTable = (props) => {
 
 AverageMarksTable.propTypes = {
   distribution: PropTypes.object,
+  errorMessage: PropTypes.string,
 };
 
 export default AverageMarksTable;

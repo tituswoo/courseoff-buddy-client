@@ -43,6 +43,11 @@ const distribution = (state = {}, action) => {
         f: action.f,
         gpa: action.gpa,
       };
+    case 'ADD_DISTRIBUTION_ERROR':
+      return {
+        id: action.id,
+        errorMessage: action.errorMessage,
+      };
     default:
       return state;
   }
@@ -51,6 +56,7 @@ const distribution = (state = {}, action) => {
 const distributions = (state = [], action) => {
   switch (action.type) {
     case 'ADD_DISTRIBUTION':
+    case 'ADD_DISTRIBUTION_ERROR':
       return [
         ...state,
         distribution(undefined, action),
@@ -133,8 +139,18 @@ Courseoff.on('pageLoaded', () => {
           ...course.averageMarks,
         });
       })
-      .fail(({ url, statusText }) => console.warn(statusText, url));
+      .fail(({ url, statusText }) => {
+        store.dispatch({
+          type: 'ADD_DISTRIBUTION_ERROR',
+          id,
+          errorMessage: 'Sorry, no data available :('
+        });
+      });
   });
+});
+
+Courseoff.on('courseBlockAdded', courseBlock => {
+  console.log('COURSE BLOCK ADDED');
 });
 
 // import React from 'react'
