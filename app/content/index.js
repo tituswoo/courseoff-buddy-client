@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import Courseoff from 'shared/Courseoff';
-import { RGBtoRGBA } from 'shared/ColorUtilities';
 import AverageMarksTable from 'content/components/AverageMarksTable';
+import AverageMarksTableForCourseList from 'content/components/AverageMarksTableForCourseList';
 import { get } from 'shared/dirtyRest';
 
 const course = (state = {}, action) => {
@@ -88,7 +88,7 @@ const store = createStore(courseoffBuddy);
 console.log(store.getState());
 
 store.subscribe(() => {
-  console.log(store.getState());
+  // console.log(store.getState());
 });
 
 Courseoff.on('pageLoaded', () => {
@@ -110,24 +110,13 @@ Courseoff.on('pageLoaded', () => {
     const containerElement = document.createElement('div');
     parentElement.insertBefore(containerElement, beforeElement);
 
+    
+
     store.subscribe(() => {
       ReactDOM.render(
-        <div
-          style={{
-            padding: '2px',
-            backgroundColor: RGBtoRGBA(color, 0.2),
-            borderTop: '1px solid #ddd',
-            color: 'gray',
-            fontSize: '11px',
-            fontFamily: 'monospace',
-          }}
-        >
-          <AverageMarksTable
-            distribution={
-              store.getState().distributions.filter(d => d.id === id)[0]
-            }
-          />
-        </div>, containerElement
+        <AverageMarksTableForCourseList
+          distribution={store.getState().distributions.filter(d => d.id === id)[0]}
+          color={color} />, containerElement
       );
     });
 
@@ -149,8 +138,8 @@ Courseoff.on('pageLoaded', () => {
   });
 });
 
-Courseoff.on('courseBlockAdded', courseBlock => {
-  console.log('COURSE BLOCK ADDED');
+Courseoff.on('courseAdded', courseBlock => {
+  
 });
 
 // import React from 'react'

@@ -1,35 +1,25 @@
-import $ from 'jQuery'
-import PubSub from 'pubsub-js'
+import $ from 'jQuery';
+import PubSub from 'pubsub-js';
 
+function on(topic, cb) {
+  return PubSub.subscribe(topic, (msg, data) => cb(data));
+}
 
-
-// export default {
-// 	on,
-// 	off: PubSub.unsubscribe
-// }
-
-// function on(topic, cb) {
-// 	return PubSub.subscribe(topic, (msg, data) => cb(data))
-// }
-//
-// onPageLoaded(() => {
-// 	console.info('page loaded')
-// 	PubSub.publish('pageLoaded')
-// })
+onPageLoaded(() => {
+  PubSub.publish('pageLoaded');
+});
 //
 // onPopupAdded((popup) => {
 // 	PubSub.publish('popupAdded', popup)
 // })
 //
-// onCourseAdded((course) => {
-// 	PubSub.publish('courseAdded', course)
-// })
-//
+onCourseAdded((course) => {
+  PubSub.publish('courseAdded', course);
+});
+
 // onCourseBlockAdded((courseBlock) => {
-// 	PubSub.publish('courseBlockAdded', courseBlock)
-// })
-
-
+//     PubSub.publish('courseBlockAdded', courseBlock);
+// });
 
 // let observer = new MutationObserver(mutations => {
 // 	mutations.forEach( ( mutation ) => {
@@ -67,18 +57,17 @@ import PubSub from 'pubsub-js'
 // 	}
 // }
 //
-// function onPageLoaded(callback) {
-// 	let checkInterval = setInterval(function () {
-//
-// 		let coursesLoaded = !!$('.course-info-container').html()
-// 		let footerLoaded = !!$('.calendar-panel > .noprint').text()
-//
-// 		if (coursesLoaded && footerLoaded) {
-// 			clearInterval(checkInterval)
-// 			callback()
-// 		}
-// 	}, 500);
-// };
+function onPageLoaded(callback) {
+  const checkInterval = setInterval(() => {
+    const coursesLoaded = !!$('.course-info-container').html();
+    const footerLoaded = !!$('.calendar-panel > .noprint').text();
+
+    if (coursesLoaded && footerLoaded) {
+      clearInterval(checkInterval);
+      callback();
+    }
+  }, 500);
+}
 //
 // function onPopupAdded(callback) {
 // 	on('pageLoaded', () => {
@@ -104,21 +93,22 @@ import PubSub from 'pubsub-js'
 // 	})
 // }
 //
-// function onCourseAdded(callback) {
-// 	on('pageLoaded', () => {
-// 		let observer = new MutationObserver(mutations => {
-// 			mutations.forEach(mutation => {
-// 				if (mutation.addedNodes.length > 0) {
-// 					callback(mutation.addedNodes[0])
-// 				}
-// 			})
-// 		})
-// 		const target = $('.course-list')[0]
-// 		const config = { childList: true }
-//
-// 		observer.observe(target, config)
-// 	})
-// };
+function onCourseAdded(callback) {
+  on('pageLoaded', () => {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.addedNodes.length > 0) {
+          callback(mutation.addedNodes[0]);
+        }
+      });
+    });
+
+    const target = $('.course-list')[0];
+    const config = { childList: true };
+
+    observer.observe(target, config);
+  });
+}
 //
 // /**
 //  * Fires whenever a course block is added to the page.
@@ -145,3 +135,8 @@ import PubSub from 'pubsub-js'
 // 		observer.observe(target, config)
 // 	})
 // }
+
+export default {
+  on,
+  off: PubSub.unsubscribe,
+};
