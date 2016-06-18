@@ -65,83 +65,9 @@ Courseoff.on('workspaceChanged', () => {
   });
 });
 
-// // import React from 'react'
-// // import ReactDOM from 'react-dom'
-
-// // import { createStore } from 'redux'
-// // import { connect } from 'react-redux'
-
-// //
-// // import { createDevTools } from 'redux-devtools'
-// // import { LogMonitor } from 'redux-devtools-log-monitor'
-// //
-// // import { configureStore } from 'content/store/configureStore'
-// // import Courseoff from 'shared/Courseoff'
-// //
-// // import AverageMarksTable from 'content/components/AverageMarksTable'
-// // import DevTools from 'content/containers/DevTools'
-
-// // let store = configureStore()
-
-// // const addCourse = (course) => {
-// //   return {
-// //     type: 'ADD_COURSE',
-// //     ...course
-// //   }
-// // }
-
-// // const App = () => (
-// //   <div>TESTING TESTING 123</div>
-// // )
-
-// // let reduxDebugToolsContainer = document.createElement('div')
-// // document.body.appendChild(reduxDebugToolsContainer)
-// // ReactDOM.render(<DevTools />, reduxDebugToolsContainer)
-// // console.log(AverageMarksTable)
-
-// /* const AverageMarksTableContainer = connect(
-//   (state, ownProps) => {
-//     console.log(ownProps)
-//     return { marks: {} }
-//   }
-// )(AverageMarksTable)
-
-// Courseoff.on('pageLoaded', () => {
-//   let courses = document.querySelectorAll('.schedule-panel .course-list .course-info-container')
-//   courses = [...courses]
-//   courses.forEach(course => {
-//     let c = {
-//       title: course.querySelector('.name').innerText.trim(),
-//       color: course.style.borderLeftColor
-//     }
-//     store.dispatch(addCourse(c))
-
-//     let parentElement = course.querySelector('.course-table-container')
-//     let beforeElement = parentElement.querySelector('.table')
-//     let containerElement = document.createElement('div')
-//     parentElement.insertBefore(containerElement, beforeElement)
-
-//     ReactDOM.render(<AverageMarksTableContainer course={c.title} />, containerElement)
-//   })
-// })*/
-
-// // let devToolsContainer = document.createElement('div')
-// // document.body.appendChild(devToolsContainer)
-
-// // let app = tree(<button>TESTING</button>)
-// // render(app, devToolsContainer)
-
-// // [...courses].forEach(course => {
-// //   console.info(course)
-// // })
-
 // // Courseoff.on('pageLoaded', () => {
 // //   onHoverOverCourseInList()
 // //   $('.calendar-panel > .noprint').append(credits)
-// // })
-// //
-// // Courseoff.on('courseAdded', course => {
-// //   placeAverageMarksTable($(course))
 // // })
 // //
 // // Courseoff.on('courseBlockAdded', courseBlock => {
