@@ -60,7 +60,7 @@ const distributions = (state = [], action) => {
   }
 };
 
-const popup = (state = { visible: false }, action) => {
+const popup = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_POPUP':
       return Object.assign(
@@ -69,7 +69,9 @@ const popup = (state = { visible: false }, action) => {
         action
       );
     default:
-      return state;
+      return {
+        visible: false,
+      };
   }
 };
 

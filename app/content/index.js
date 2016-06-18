@@ -60,7 +60,7 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('popupAdded', (popup) => {
   const data = courseFromPopup(popup);
-  store.dispatch(Object.assign({}, data, { type: 'UPDATE_POPUP', visible: true }));
+  store.dispatch(Object.assign({}, data, { type: 'UPDATE_POPUP' }));
 });
 
 Courseoff.on('courseBlockAdded', (courseBlock) => {
@@ -72,9 +72,10 @@ Courseoff.on('courseBlockAdded', (courseBlock) => {
         block,
         {
           x: block.x,
-          y: block.y
-        },
-        { type: 'UPDATE_POPUP' }
+          y: block.y,
+          type: 'UPDATE_POPUP',
+          visible: true,
+        }
       )
     );
   });
@@ -97,6 +98,7 @@ Courseoff.on('pageLoaded', () => {
     const { distributions, popup } = store.getState();
     ReactDOM.render(
       <Popup
+        visible={popup.visible}
         course={popup}
         distributions={distributions}
         x={popup.x}

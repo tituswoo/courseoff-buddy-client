@@ -4,9 +4,13 @@ import styles from 'content/components/popup.css';
 import AverageMarksTable from 'content/components/AverageMarksTable';
 
 const Popup = (props) => {
-  const { course, distributions, x, y } = props;
+  const { visible, course, distributions, x, y } = props;
 
   const courseDistribution = distributions.filter(c => c.id === course.id)[0];
+
+  if (!visible) {
+    return false;
+  }
 
   return (
     <div
@@ -75,6 +79,7 @@ Popup.propTypes = {
   distributions: PropTypes.array,
   x: PropTypes.number,
   y: PropTypes.number,
+  visible: PropTypes.bool,
 };
 
 export default Popup;
