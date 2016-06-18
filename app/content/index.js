@@ -8,6 +8,8 @@ import { get } from 'shared/dirtyRest';
 import rootReducer from 'content/reducers';
 import { courseFromPopup, courseFromCourseBlock } from 'shared/Extract';
 
+import 'content/main.css';
+
 const store = createStore(rootReducer);
 
 store.subscribe(() => console.log(store.getState()));
@@ -65,7 +67,15 @@ Courseoff.on('courseBlockAdded', (courseBlock) => {
   courseBlock.addEventListener('mouseenter', () => {
     const block = courseFromCourseBlock(courseBlock);
     store.dispatch(
-      Object.assign({}, { type: 'UPDATE_POPUP' }, block)
+      Object.assign(
+        {},
+        block,
+        {
+          x: block.x,
+          y: block.y
+        },
+        { type: 'UPDATE_POPUP' }
+      )
     );
   });
 });
@@ -89,6 +99,8 @@ Courseoff.on('pageLoaded', () => {
       <Popup
         course={popup}
         distributions={distributions}
+        x={popup.x}
+        y={popup.y}
       />,
       popupContainer
     );
