@@ -139,7 +139,7 @@ function onCourseBlockAdded(callback) {
   on('pageLoaded', () => {
     const courseBlocks = [...document.querySelectorAll('.course-cal.pinned')];
 
-    courseBlocks.forEach((index, block) => {
+    courseBlocks.forEach((block) => {
       callback(block);
     });
 
@@ -154,9 +154,11 @@ function onCourseBlockAdded(callback) {
       });
     });
 
-    const target = document.querySelector('.calendar-panel > .calendar > table > tbody');
-    const config = { childList: true, subtree: true, attributes: true };
-    observer.observe(target, config);
+    on('workspaceChanged', () => {
+      const target = document.querySelector('.calendar-panel > .calendar > table > tbody');
+      const config = { childList: true, subtree: true, attributes: true };
+      observer.observe(target, config);
+    });
   });
 }
 
