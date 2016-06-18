@@ -16,11 +16,13 @@ onCourseAdded((course) => {
   PubSub.publish('courseAdded', course);
 });
 
-onWorkspaceChanged(() => PubSub.publish('workspaceChanged'));
+onWorkspaceChanged(() => {
+  PubSub.publish('workspaceChanged');
+});
 
-// onCourseBlockAdded((courseBlock) => {
-//     PubSub.publish('courseBlockAdded', courseBlock);
-// });
+onCourseBlockAdded((courseBlock) => {
+  PubSub.publish('courseBlockAdded', courseBlock);
+});
 
 // let observer = new MutationObserver(mutations => {
 // 	mutations.forEach( ( mutation ) => {
@@ -129,33 +131,34 @@ function onWorkspaceChanged(cb) {
   });
 }
 
+/**
+ * Fires whenever a course block is added to the page.
+ * Also fires initially for every block already on the page at startup.
+ */
+function onCourseBlockAdded(callback) {
+  on('pageLoaded', () => {
+    const courseBlocks = [...document.querySelectorAll('.course-cal.pinned')];
 
-//
-// /**
-//  * Fires whenever a course block is added to the page.
-//  * Also fires initially for every block already on the page at startup.
-//  */
-// function onCourseBlockAdded(callback) {
-// 	on('pageLoaded', () => {
-// 		$('.course-cal.pinned').each((index, block) => {
-// 			callback(block)
-// 		})
-// 		let observer = new MutationObserver(mutations => {
-// 			mutations.forEach(mutation => {
-// 				const { type, target, attributeName } = mutation
-// 				if (type === 'attributes' && attributeName === 'class') {
-// 					if ($(target).is('.pinned')) {
-// 						callback(target)
-// 					}
-// 				}
-// 			})
-// 		})
-// 		const target = $('.calendar-panel > .calendar > table > tbody')[0]
-// 		const config = { childList: true, subtree: true, attributes: true }
-//
-// 		observer.observe(target, config)
-// 	})
-// }
+    courseBlocks.forEach((index, block) => {
+      callback(block);
+    });
+
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        const { type, target, attributeName } = mutation;
+        if (type === 'attributes' && attributeName === 'class') {
+          if (target && target.classList && target.classList.contains('pinned')) {
+            callback(target);
+          }
+        }
+      });
+    });
+
+    const target = document.querySelector('.calendar-panel > .calendar > table > tbody');
+    const config = { childList: true, subtree: true, attributes: true };
+    observer.observe(target, config);
+  });
+}
 
 export default {
   on,
