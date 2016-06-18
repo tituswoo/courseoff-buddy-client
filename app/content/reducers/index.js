@@ -60,12 +60,14 @@ const distributions = (state = [], action) => {
   }
 };
 
-const popup = (state = {}, action) => {
+const popup = (state = { visible: false }, action) => {
   switch (action.type) {
-    case 'SHOW_POPUP':
-      return state;
-    case 'HIDE_POPUP':
-      return state;
+    case 'UPDATE_POPUP':
+      return Object.assign(
+        {},
+        state,
+        action
+      );
     default:
       return state;
   }

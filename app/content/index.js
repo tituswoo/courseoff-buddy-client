@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import Courseoff from 'shared/Courseoff';
 import AverageMarksTableForCourseList from 'content/components/AverageMarksTableForCourseList';
+import Popup from 'content/components/Popup';
 import { get } from 'shared/dirtyRest';
 import rootReducer from 'content/reducers';
+import { courseFromPopup, courseFromCourseBlock } from 'shared/Extract';
 
 const store = createStore(rootReducer);
+
+store.subscribe(() => console.log(store.getState()));
 
 function hydrateCourseInCourseList(course) {
   const title = course.querySelector('.name').innerText.trim();
@@ -43,7 +47,7 @@ function hydrateCourseInCourseList(course) {
       store.dispatch({
         type: 'ADD_DISTRIBUTION_ERROR',
         id,
-        errorMessage: 'Sorry, no data available :('
+        errorMessage: 'No data available for this course :('
       });
     });
 }
@@ -52,8 +56,18 @@ Courseoff.on('courseAdded', course => {
   hydrateCourseInCourseList(course);
 });
 
-Courseoff.on('popupAdded', () => {
-  console.log('popup added!');
+Courseoff.on('popupAdded', (popup) => {
+  const data = courseFromPopup(popup);
+  store.dispatch(Object.assign({}, data, { type: 'UPDATE_POPUP', visible: true }));
+});
+
+Courseoff.on('courseBlockAdded', (courseBlock) => {
+  courseBlock.addEventListener('mouseenter', () => {
+    const block = courseFromCourseBlock(courseBlock);
+    store.dispatch(
+      Object.assign({}, { type: 'UPDATE_POPUP' }, block)
+    );
+  });
 });
 
 Courseoff.on('workspaceChanged', () => {
@@ -65,11 +79,27 @@ Courseoff.on('workspaceChanged', () => {
   });
 });
 
+Courseoff.on('pageLoaded', () => {
+  const popupContainer = document.createElement('div');
+  document.body.appendChild(popupContainer);
+
+  store.subscribe(() => {
+    const { distributions, popup } = store.getState();
+    ReactDOM.render(
+      <Popup
+        course={popup}
+        distributions={distributions}
+      />,
+      popupContainer
+    );
+  });
+});
+
 // // Courseoff.on('pageLoaded', () => {
 // //   onHoverOverCourseInList()
 // //   $('.calendar-panel > .noprint').append(credits)
 // // })
-// //
+
 // // Courseoff.on('courseBlockAdded', courseBlock => {
 // //   $(courseBlock).on('mouseenter', e => {
 // //     const courseInfo1 = Extract.courseFromCourseBlock(courseBlock)

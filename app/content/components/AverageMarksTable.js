@@ -28,7 +28,7 @@ const AverageMarksTable = (props) => {
           <th>F</th>
         </tr>
         <tr>
-          <td>{distribution.gpa}%</td>
+          <td>{distribution.gpa}</td>
           <td>{distribution.a}%</td>
           <td>{distribution.b}%</td>
           <td>{distribution.c}%</td>

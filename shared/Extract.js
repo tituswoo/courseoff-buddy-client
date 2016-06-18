@@ -1,40 +1,41 @@
-import $ from 'jQuery'
-import { RGBtoRGBA } from 'shared/ColorUtilities'
+import $ from 'jQuery';
+import { RGBtoRGBA } from 'shared/ColorUtilities';
 
-const unknown = '?'
+const unknown = '?';
 
 export function courseFromCourseBlock (courseBlock) {
-  courseBlock = $(courseBlock)
+  courseBlock = $(courseBlock);
   return {
-    name: courseBlock.find('.course-content').text().replace(' - ', '') || unknown,
-    location: courseBlock.find('.location').text() || unknown
-  }
+    id: courseBlock.find('.course-content').text().replace(' - ', '') || unknown,
+    location: courseBlock.find('.location').text() || unknown,
+    color: colorFromCourseBlock(courseBlock),
+  };
 }
 
 export function courseFromPopup(popup) {
-  const content = $(popup).find('.popover')
-  let items = content.find('em')
-  let instructorName = content.find('[data-visible="instr"]').find('em').text().trim()
-  let instructorId = instructorName.replace(/\s/g,'').replace(',','').toUpperCase()
-  let course = {
+  const content = $(popup).find('.popover');
+  const items = content.find('em');
+  const instructorName = content.find('[data-visible="instr"]').find('em').text().trim();
+  const instructorId = instructorName.replace(/\s/g, '').replace(',', '').toUpperCase();
+  const course = {
     title: content.find('.title').text().trim() || unknown,
-    refNumber: items[0].innerText.trim() || unknown,
+    ref: items[0].innerText.trim() || unknown,
     section: items[1].innerText.trim() || unknown,
-    creditHours: items[2].innerText.trim() || unknown,
+    credits: items[2].innerText.trim() || unknown,
     instructor: instructorName || unknown,
     instructorId,
-    location: content.find('[data-visible="location"]').find('em').text().trim() || unknown
-  }
-  return course
+    location: content.find('[data-visible="location"]').find('em').text().trim() || unknown,
+  };
+  return course;
 }
 
 export function colorFromCourseInfoContainer(container) {
-  container = $(container)
-  let color = container.css('border-left-color')
-  return RGBtoRGBA(color, '0.15')
+  container = $(container);
+  const color = container.css('border-left-color');
+  return RGBtoRGBA(color, '0.15');
 }
 
 export function colorFromCourseBlock(block) {
-  let color = $(block).css('backgroundColor')
-  return color
+  const color = $(block).css('backgroundColor');
+  return color;
 }

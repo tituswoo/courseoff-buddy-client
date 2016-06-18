@@ -63,7 +63,7 @@ onCourseBlockAdded((courseBlock) => {
 function onPageLoaded(callback) {
   const checkInterval = setInterval(() => {
     const coursesLoaded = !!document.querySelector('.course-info-container');
-    const footerLoaded = !!document.querySelector('.calendar-panel .noprint').outerText;
+    const footerLoaded = !!document.querySelector('.calendar-panel .noprint');
 
     if (coursesLoaded && footerLoaded) {
       clearInterval(checkInterval);
