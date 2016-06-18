@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import Courseoff from 'shared/Courseoff';
-import AverageMarksTable from 'content/components/AverageMarksTable';
 import AverageMarksTableForCourseList from 'content/components/AverageMarksTableForCourseList';
 import { get } from 'shared/dirtyRest';
 import rootReducer from 'content/reducers';
@@ -50,7 +49,6 @@ function hydrateCourseInCourseList(course) {
 }
 
 Courseoff.on('courseAdded', course => {
-  console.log('COURSE ADDED');
   hydrateCourseInCourseList(course);
 });
 
