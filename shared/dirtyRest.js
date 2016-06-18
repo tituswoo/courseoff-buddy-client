@@ -1,21 +1,21 @@
-import $ from 'jquery'
+import $ from 'jquery';
 
 export function get(url) {
-  let deferred = $.Deferred()
+  const deferred = $.Deferred();
 
-  let cached = sessionStorage.getItem(url)
+  const cached = sessionStorage.getItem(url);
 
   if (cached) {
-    return deferred.resolve(JSON.parse(cached))
+    return deferred.resolve(JSON.parse(cached));
   }
 
   chrome.runtime.sendMessage({ command: 'mget', url }, resp => {
     if (resp.success) {
-      sessionStorage.setItem(url, JSON.stringify(resp.resp))
-      deferred.resolve(resp.resp)
+      sessionStorage.setItem(url, JSON.stringify(resp.resp));
+      deferred.resolve(resp.resp);
     }
-    return deferred.reject(resp.resp)
-  })
+    return deferred.reject(resp.resp);
+  });
 
-  return deferred.promise()
+  return deferred.promise();
 }

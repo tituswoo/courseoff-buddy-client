@@ -4,26 +4,6 @@ function on(topic, cb) {
   return PubSub.subscribe(topic, (msg, data) => cb(data));
 }
 
-onPageLoaded(() => {
-  PubSub.publish('pageLoaded');
-});
-
-onPopupAdded((popup) => {
-	PubSub.publish('popupAdded', popup);
-});
-
-onCourseAdded((course) => {
-  PubSub.publish('courseAdded', course);
-});
-
-onWorkspaceChanged(() => {
-  PubSub.publish('workspaceChanged');
-});
-
-onCourseBlockAdded((courseBlock) => {
-  PubSub.publish('courseBlockAdded', courseBlock);
-});
-
 // let observer = new MutationObserver(mutations => {
 // 	mutations.forEach( ( mutation ) => {
 // 		// console.log(target)
@@ -79,15 +59,9 @@ function onPopupAdded(callback) {
         if (mutation.addedNodes.length > 0) {
           const node = mutation.addedNodes[0];
           if (node && node.classList && node.classList.contains('popover')) {
-            // console.info(mutation.addedNodes[0], mutation.removedNodes[0]);
             callback(node);
           }
         }
-        // if (mutation.addedNodes.length > 0) {
-        // 	if ($(mutation.addedNodes[0]).is('.popover.tip')) {
-        // 		callback(mutation.addedNodes[0])
-        // 	}
-        // }
       });
     });
     const target = document.body;
@@ -161,6 +135,26 @@ function onCourseBlockAdded(callback) {
     });
   });
 }
+
+onPageLoaded(() => {
+  PubSub.publish('pageLoaded');
+});
+
+onPopupAdded((popup) => {
+  PubSub.publish('popupAdded', popup);
+});
+
+onCourseAdded((course) => {
+  PubSub.publish('courseAdded', course);
+});
+
+onWorkspaceChanged(() => {
+  PubSub.publish('workspaceChanged');
+});
+
+onCourseBlockAdded((courseBlock) => {
+  PubSub.publish('courseBlockAdded', courseBlock);
+});
 
 export default {
   on,
