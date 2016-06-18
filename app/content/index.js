@@ -52,6 +52,10 @@ Courseoff.on('courseAdded', course => {
   hydrateCourseInCourseList(course);
 });
 
+Courseoff.on('popupAdded', () => {
+  console.log('popup added!');
+});
+
 Courseoff.on('workspaceChanged', () => {
   let courses = document.querySelectorAll('.schedule-panel .course-list .course-info-container');
   courses = [...courses];

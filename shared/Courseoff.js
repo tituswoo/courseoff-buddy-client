@@ -7,11 +7,11 @@ function on(topic, cb) {
 onPageLoaded(() => {
   PubSub.publish('pageLoaded');
 });
-//
-// onPopupAdded((popup) => {
-// 	PubSub.publish('popupAdded', popup)
-// })
-//
+
+onPopupAdded((popup) => {
+	PubSub.publish('popupAdded', popup);
+});
+
 onCourseAdded((course) => {
   PubSub.publish('courseAdded', course);
 });
@@ -69,31 +69,32 @@ function onPageLoaded(callback) {
     }
   }, 500);
 }
-//
-// function onPopupAdded(callback) {
-// 	on('pageLoaded', () => {
-// 		let observer = new MutationObserver(mutations => {
-// 			mutations.forEach(mutation => {
-// 				if (mutation.addedNodes.length > 0) {
-// 					if ($(mutation.addedNodes[0]).is('.popover')) {
-// 						console.info(mutation.addedNodes[0], mutation.removedNodes[0])
-// 						callback(mutation.addedNodes[0])
-// 					}
-// 				}
-// 				// if (mutation.addedNodes.length > 0) {
-// 				// 	if ($(mutation.addedNodes[0]).is('.popover.tip')) {
-// 				// 		callback(mutation.addedNodes[0])
-// 				// 	}
-// 				// }
-// 			})
-// 		})
-// 		const target = $('body')[0]
-// 		const config = { childList: true, subtree: true }
-//
-// 		observer.observe(target, config)
-// 	})
-// }
-//
+
+function onPopupAdded(callback) {
+  on('pageLoaded', () => {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.addedNodes.length > 0) {
+          const node = mutation.addedNodes[0];
+          if (node && node.classList && node.classList.contains('popover')) {
+            // console.info(mutation.addedNodes[0], mutation.removedNodes[0]);
+            callback(node);
+          }
+        }
+        // if (mutation.addedNodes.length > 0) {
+        // 	if ($(mutation.addedNodes[0]).is('.popover.tip')) {
+        // 		callback(mutation.addedNodes[0])
+        // 	}
+        // }
+      });
+    });
+    const target = document.body;
+    const config = { childList: true, subtree: true };
+
+    observer.observe(target, config);
+  });
+}
+
 function onCourseAdded(callback) {
   on('pageLoaded', () => {
     const observer = new MutationObserver(mutations => {
