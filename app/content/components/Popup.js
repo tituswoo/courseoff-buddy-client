@@ -4,12 +4,18 @@ import styles from 'content/components/popup.css';
 import AverageMarksTable from 'content/components/AverageMarksTable';
 
 const Popup = (props) => {
-  const { course, distributions } = props;
+  const { course, distributions, x, y } = props;
 
   const courseDistribution = distributions.filter(c => c.id === course.id)[0];
 
   return (
-    <div className={styles.popup}>
+    <div
+      className={styles.popup}
+      style={{
+        top: y,
+        left: x,
+      }}
+    >
       <div className={styles.content}>
         <div
           className={styles.title}
@@ -67,6 +73,8 @@ const Popup = (props) => {
 Popup.propTypes = {
   course: PropTypes.object,
   distributions: PropTypes.array,
+  x: PropTypes.number,
+  y: PropTypes.number,
 };
 
 export default Popup;

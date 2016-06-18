@@ -9,6 +9,8 @@ export function courseFromCourseBlock (courseBlock) {
     id: courseBlock.find('.course-content').text().replace(' - ', '') || unknown,
     location: courseBlock.find('.location').text() || unknown,
     color: colorFromCourseBlock(courseBlock),
+    x: courseBlock[0].getBoundingClientRect().left + courseBlock.width(),
+    y: courseBlock[0].getBoundingClientRect().top,
   };
 }
 
