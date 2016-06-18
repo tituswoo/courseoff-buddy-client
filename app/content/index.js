@@ -7,6 +7,7 @@ import Popup from 'content/components/Popup';
 import { get } from 'shared/dirtyRest';
 import rootReducer from 'content/reducers';
 import { courseFromPopup, courseFromCourseBlock } from 'shared/Extract';
+import Credits from 'content/components/Credits';
 
 import 'content/main.css';
 
@@ -109,10 +110,12 @@ Courseoff.on('pageLoaded', () => {
   });
 });
 
-// // Courseoff.on('pageLoaded', () => {
-// //   onHoverOverCourseInList()
-// //   $('.calendar-panel > .noprint').append(credits)
-// // })
+Courseoff.on('pageLoaded', () => {
+  const footer = document.querySelector('.calendar-panel > .noprint');
+  const span = document.createElement('span');
+  footer.appendChild(span);
+  ReactDOM.render(<Credits />, span);
+})
 
 // // Courseoff.on('courseBlockAdded', courseBlock => {
 // //   $(courseBlock).on('mouseenter', e => {
