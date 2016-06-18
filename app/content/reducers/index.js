@@ -68,6 +68,7 @@ const popup = (state = {}, action) => {
         state,
         action
       );
+    case 'REMOVE_POPUP':
     default:
       return {
         visible: false,

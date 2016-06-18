@@ -13,8 +13,6 @@ import 'content/main.css';
 
 const store = createStore(rootReducer);
 
-store.subscribe(() => console.log(store.getState()));
-
 function hydrateCourseInCourseList(course) {
   const title = course.querySelector('.name').innerText.trim();
   const color = course.style.borderLeftColor;
@@ -79,6 +77,11 @@ Courseoff.on('courseBlockAdded', (courseBlock) => {
         }
       )
     );
+  });
+  courseBlock.addEventListener('mouseleave', () => {
+    store.dispatch({
+      type: 'REMOVE_POPUP'
+    });
   });
 });
 
