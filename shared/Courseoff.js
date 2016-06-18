@@ -105,10 +105,11 @@ function onCourseAdded(callback) {
       });
     });
 
-    const target = document.querySelector('.course-list');
-    const config = { childList: true };
-
-    observer.observe(target, config);
+    on('workspaceChanged', () => {
+      const target = document.querySelector('.course-list');
+      const config = { childList: true };
+      observer.observe(target, config);
+    });
   });
 }
 
