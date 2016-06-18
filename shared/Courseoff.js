@@ -1,4 +1,3 @@
-import $ from 'jQuery';
 import PubSub from 'pubsub-js';
 
 function on(topic, cb) {
@@ -61,8 +60,8 @@ onWorkspaceChanged(() => PubSub.publish('workspaceChanged'));
 //
 function onPageLoaded(callback) {
   const checkInterval = setInterval(() => {
-    const coursesLoaded = !!$('.course-info-container').html();
-    const footerLoaded = !!$('.calendar-panel > .noprint').text();
+    const coursesLoaded = !!document.querySelector('.course-info-container');
+    const footerLoaded = !!document.querySelector('.calendar-panel .noprint').outerText;
 
     if (coursesLoaded && footerLoaded) {
       clearInterval(checkInterval);
