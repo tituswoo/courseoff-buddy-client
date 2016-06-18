@@ -4,13 +4,13 @@ import { RGBtoRGBA } from 'shared/ColorUtilities';
 const unknown = '?';
 
 export function courseFromCourseBlock (courseBlock) {
-  courseBlock = $(courseBlock);
+  const block = $(courseBlock);
   return {
-    id: courseBlock.find('.course-content').text().replace(' - ', '') || unknown,
-    location: courseBlock.find('.location').text() || unknown,
-    color: colorFromCourseBlock(courseBlock),
-    x: courseBlock[0].getBoundingClientRect().left + courseBlock.width(),
-    y: courseBlock[0].getBoundingClientRect().top,
+    id: block.find('.course-content').text().replace(' - ', '') || unknown,
+    location: block.find('.location').text() || unknown,
+    color: colorFromCourseBlock(block),
+    x: block.offset().left + block.width(),
+    y: block.offset().top,
   };
 }
 
