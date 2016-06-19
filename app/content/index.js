@@ -8,6 +8,7 @@ import { get } from 'shared/dirtyRest';
 import rootReducer from 'content/reducers';
 import { courseFromPopup, courseFromCourseBlock } from 'shared/Extract';
 import Credits from 'content/components/Credits';
+import Badge from 'content/components/Badge';
 
 import 'content/main.css';
 
@@ -21,6 +22,24 @@ function hydrateCourseInCourseList(course) {
   store.dispatch({
     type: 'ADD_COURSE',
     title, color, id,
+  });
+
+  const header = course.querySelector('.header');
+  header.style.position = 'relative';
+  const gpaBadge = document.createElement('div');
+  gpaBadge.style.position = 'absolute';
+  gpaBadge.style.top = '3px';
+  gpaBadge.style.bottom = '3px';
+  gpaBadge.style.display = 'flex';
+  gpaBadge.style.alignItems = 'center';
+  gpaBadge.style.right = '25px';
+  header.appendChild(gpaBadge);
+
+  store.subscribe(() => {
+    const distribution = store.getState().distributions.filter(c => c.id === id)[0];
+    if (distribution) {
+      ReactDOM.render(<Badge value={distribution.gpa} />, gpaBadge);
+    }
   });
 
   const parentElement = course.querySelector('.course-table-container');
