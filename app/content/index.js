@@ -87,6 +87,14 @@ Courseoff.on('popupAdded', (popup) => {
   ));
 });
 
+Courseoff.on('courseBlockAdded', () => {
+  const courses = getAllPinnedCourses();
+  store.dispatch({
+    type: 'COURSES_TO_TAKE',
+    courses
+  });
+});
+
 Courseoff.on('courseBlockAdded', (courseBlock) => {
   courseBlock.addEventListener('mouseenter', () => {
     const block = courseFromCourseBlock(courseBlock);
@@ -128,10 +136,7 @@ function getAllPinnedCourses() {
       course: course.querySelector('.name').outerText,
     };
   });
-  store.dispatch({
-    type: 'COURSES_TO_TAKE',
-    courses
-  });
+  return courses;
 }
 
 Courseoff.on('workspaceChanged', () => {
@@ -143,7 +148,11 @@ Courseoff.on('workspaceChanged', () => {
   });
 
   setTimeout(() => {
-    getAllPinnedCourses();
+    const courses = getAllPinnedCourses();
+    store.dispatch({
+      type: 'COURSES_TO_TAKE',
+      courses
+    });
   }, 0);
 
   const courseList = document.querySelector('#course-list .course-list');
