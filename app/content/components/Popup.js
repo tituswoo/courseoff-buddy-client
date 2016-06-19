@@ -4,7 +4,7 @@ import styles from 'content/components/popup.css';
 import AverageMarksTable from 'content/components/AverageMarksTable';
 
 class Popup extends Component {
-  componentDidUpdate() {
+  componentWillReceiveProps() {
     const popup = this.popupContainer;
     if (popup) {
       const yTopPos = popup.getBoundingClientRect().top;
@@ -51,7 +51,7 @@ class Popup extends Component {
           <div>
             <div className={styles.details__row}>
               <span>INFO</span>
-              <p>{course.details}</p>
+              <p>{courseDistribution.description || 'Error loading description 😭'}</p>
             </div>
             <div className={styles.details}>
               <div className={styles.details__row}>

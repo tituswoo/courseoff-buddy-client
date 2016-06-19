@@ -36,6 +36,7 @@ const distribution = (state = {}, action) => {
         d: action.d,
         f: action.f,
         gpa: action.gpa,
+        description: action.description,
       };
     case 'ADD_DISTRIBUTION_ERROR':
       return {

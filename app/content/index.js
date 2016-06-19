@@ -40,6 +40,7 @@ function hydrateCourseInCourseList(course) {
     .done(course => {
       store.dispatch({
         type: 'ADD_DISTRIBUTION',
+        description: course.details,
         id,
         ...course.averageMarks,
       });
@@ -48,7 +49,7 @@ function hydrateCourseInCourseList(course) {
       store.dispatch({
         type: 'ADD_DISTRIBUTION_ERROR',
         id,
-        errorMessage: 'No data available for this course :('
+        errorMessage: 'No data available for this course 😤'
       });
     });
 }
