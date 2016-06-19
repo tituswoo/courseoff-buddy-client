@@ -59,7 +59,9 @@ Courseoff.on('courseAdded', course => {
 
 Courseoff.on('popupAdded', (popup) => {
   const data = courseFromPopup(popup);
-  store.dispatch(Object.assign({}, data, { type: 'UPDATE_POPUP' }));
+  store.dispatch(Object.assign(
+    {}, data, { type: 'UPDATE_POPUP' }
+  ));
 });
 
 Courseoff.on('courseBlockAdded', (courseBlock) => {
@@ -107,6 +109,7 @@ Courseoff.on('pageLoaded', () => {
         distributions={distributions}
         x={popup.x}
         y={popup.y}
+        dispatch={store.dispatch}
       />,
       popupContainer
     );

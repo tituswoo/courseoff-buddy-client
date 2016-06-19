@@ -3,14 +3,17 @@ import { RGBtoRGBA } from 'shared/ColorUtilities';
 
 const unknown = '?';
 
-export function courseFromCourseBlock (courseBlock) {
+export function courseFromCourseBlock(courseBlock) {
   const block = $(courseBlock);
+
+  const y = block.offset().top;
+
   return {
     id: block.find('.course-content').text().replace(' - ', '') || unknown,
     location: block.find('.location').text() || unknown,
     color: colorFromCourseBlock(block),
     x: block.offset().left + block.width(),
-    y: block.offset().top,
+    y,
   };
 }
 
