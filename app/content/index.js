@@ -9,10 +9,13 @@ import rootReducer from 'content/reducers';
 import { courseFromPopup, courseFromCourseBlock } from 'shared/Extract';
 import Credits from 'content/components/Credits';
 import Badge from 'content/components/Badge';
+import SanityCheck from 'content/components/SanityCheck';
 
 import 'content/main.css';
 
 const store = createStore(rootReducer);
+
+store.subscribe(() => console.info(store.getState()));
 
 function hydrateCourseInCourseList(course) {
   const title = course.querySelector('.name').innerText.trim();
@@ -107,12 +110,51 @@ Courseoff.on('courseBlockAdded', (courseBlock) => {
   });
 });
 
+function getAllPinnedCourses() {
+  const pinnedCourses = [...document.querySelectorAll([
+    '.schedule-panel .course-list > .course-info-container > ',
+    '.course-table-container > .table tr.section > td[width="2px"] > ',
+    'div:not(.unpinned)'
+  ].join(''))];
+  const courses = pinnedCourses.map(c => {
+    let instructor = c.parentNode.parentNode.previousSibling;
+    const course = instructor.parentNode.parentNode.parentNode.previousSibling;
+    while (instructor.previousSibling.classList.contains('section')) {
+      instructor = instructor.previousSibling;
+    }
+    instructor = instructor.parentElement;
+    return {
+      instructor: instructor.querySelector('.instructor').outerText,
+      course: course.querySelector('.name').outerText,
+    };
+  });
+  store.dispatch({
+    type: 'COURSES_TO_TAKE',
+    courses
+  });
+}
+
 Courseoff.on('workspaceChanged', () => {
   let courses = document.querySelectorAll('.schedule-panel .course-list .course-info-container');
   courses = [...courses];
 
   courses.forEach(course => {
     hydrateCourseInCourseList(course);
+  });
+
+  setTimeout(() => {
+    getAllPinnedCourses();
+  }, 0);
+
+  const courseList = document.querySelector('#course-list .course-list');
+  const sanityCheckContainer = document.createElement('div');
+  sanityCheckContainer.style.borderLeft = 'none';
+  courseList.insertBefore(sanityCheckContainer, courseList.firstChild);
+
+  ReactDOM.render(<SanityCheck />, sanityCheckContainer);
+
+  store.subscribe(() => {
+    ReactDOM.render(<SanityCheck />, sanityCheckContainer);
   });
 });
 

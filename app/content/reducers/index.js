@@ -77,10 +77,37 @@ const popup = (state = {}, action) => {
   }
 };
 
+const courseToTake = (state = {}, action) => {
+  switch (action.type) {
+    case 'COURSES_TO_TAKE':
+      return {
+        instructor: action.instructor,
+        courseId: action.course.split('-')[0].replace(/\s/, '').trim(),
+      };
+    default:
+      return state;
+  }
+};
+
+const coursesToTake = (state = [], action) => {
+  switch (action.type) {
+    case 'COURSES_TO_TAKE':
+      return action.courses.map(c => {
+        return courseToTake(undefined, {
+          type: action.type,
+          ...c
+        });
+      });
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   courses,
   distributions,
   popup,
+  coursesToTake,
 });
 
 export default rootReducer;
