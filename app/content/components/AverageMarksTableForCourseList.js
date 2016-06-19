@@ -8,11 +8,10 @@ const AverageMarksTableForCourseList = (props) => {
     <div
       style={{
         padding: '2px',
+        paddingLeft: '27px',
         backgroundColor: RGBtoRGBA(color, 0.2),
         borderTop: '1px solid #ddd',
-        color: 'gray',
         fontSize: '11px',
-        fontFamily: 'monospace',
       }}
     >
       <AverageMarksTable distribution={distribution} />
