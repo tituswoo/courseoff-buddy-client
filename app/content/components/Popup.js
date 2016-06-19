@@ -4,7 +4,7 @@ import styles from 'content/components/popup.css';
 import AverageMarksTable from 'content/components/AverageMarksTable';
 
 class Popup extends Component {
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     const popup = this.popupContainer;
     if (popup) {
       const yTopPos = popup.getBoundingClientRect().top;
@@ -12,7 +12,7 @@ class Popup extends Component {
 
       if (yBottomPos > window.innerHeight) {
         const delta = yBottomPos - window.innerHeight;
-        const yTopPosFinal = yTopPos - delta;
+        const yTopPosFinal = Math.round(yTopPos - delta);
         this.props.dispatch({ type: 'UPDATE_POPUP', y: yTopPosFinal });
       }
     }
