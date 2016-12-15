@@ -71,6 +71,7 @@ function onPopupAdded(callback) {
   });
 }
 
+// TODO: make an onCourseRemoved event. Need it to update pinned courses stuff. 
 function onCourseAdded(callback) {
   on('pageLoaded', () => {
     const observer = new MutationObserver(mutations => {

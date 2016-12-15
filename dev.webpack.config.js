@@ -32,7 +32,10 @@ module.exports = {
         loader: 'babel',
         query: {
           presets: ['es2015'],
-          plugins: ['transform-object-rest-spread']
+          plugins: [
+            'transform-object-rest-spread',
+            'transform-react-jsx'
+          ]
         },
         exclude: /(node_modules)/
       },
