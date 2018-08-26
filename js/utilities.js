@@ -206,12 +206,22 @@ function retrieve(command, params, callback) {
 function LoadingScreen(element) {
 	var id = 'loading-screen';
 
-	var overlay = $('<div/>').attr('id', id).css({
-		paddingTop: (element.height() / 2) - 50
-	});
-	overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/page-action-icon.png')));
-	overlay.append($('<h2/>').html('Loading enhancements...'));
-	overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/spinner.gif')));
+	var overlay = $('<div/>').attr('id', id);
+	overlay.css({
+		backgroundColor: '#09aef3',
+		padding: '5px 10px',
+		borderRadius: '3px 3px 0 0',
+		color: 'white'
+	})
+	overlay.append($('<img/>')
+		.attr('src', chrome.extension.getURL('/images/page-action-icon.png'))
+		.attr('width', '25px')
+	);
+	overlay.append($('<p/>').html('Loading enhancements...').css({
+		margin: 0,
+		paddingLeft: '10px'
+	}));
+	// overlay.append($('<img/>').attr('src', chrome.extension.getURL('/images/spinner.gif')));
 
 	this.show = function () {
 		overlay.appendTo(element);
