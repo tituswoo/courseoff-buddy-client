@@ -4,11 +4,13 @@
   "description": "Course buddy for Gatech Courseoff",
   "main": "main.js",
   "scripts": {
+    "build": "rm -rf prod && gulp",
+    "clean": "rm -rf prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:tituswoo/course-buddy-extension.git"
+    "url": "git@github.com:tituswoo/courseoff-buddy-client.git"
   },
   "author": "Titus K. Woo",
   "license": "4-clause BSD",
