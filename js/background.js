@@ -1,21 +1,21 @@
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.command === 'search') {
-			$.getJSON('http://courseoffbuddy.tk/search/' + request.params.query.trim())
+			$.getJSON('http://courseoffbuddy.tkw.im/search/' + request.params.query.trim())
 				.done(function (data) {
 					sendResponse(data);
 				}).fail(function (message) {
 					sendResponse(message);
 				});
 		} else if (request.command === 'prof') {
-			$.getJSON('http://courseoffbuddy.tk/prof/' + request.params.id)
+			$.getJSON('http://courseoffbuddy.tkw.im/prof/' + request.params.id)
 				.done(function (data) {
 					sendResponse(data);
 				}).fail(function (message) {
 					sendResponse(message);
 				});;
 		} else if (request.command === 'course') {
-			$.getJSON('http://courseoffbuddy.tk/course/' + request.params.id)
+			$.getJSON('http://courseoffbuddy.tkw.im/course/' + request.params.id)
 				.done(function (data) {
 					sendResponse(data);
 				}).fail(function (message) {
