@@ -78,15 +78,13 @@ span.name {
 }
 
 #loading-screen {
-	opacity: 0.75;
-	background-color: lightgray;
-	position: absolute;
-	top: 0;
-	right: 0;
+	position: fixed;
 	bottom: 0;
-	left: 0;
-	z-index: 9999;
-	text-align: center;
+	left: 10px;
+	z-index: -1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 hr {
