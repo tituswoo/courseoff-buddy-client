@@ -1,7 +1,9 @@
 # courseoff-buddy-client
-Browser extension that adds features and improvements to Courseoff for Georgia Tech users
+Browser extension that adds features and improvements to Courseoff for Georgia Tech users.
 
-For the courseoff-buddy-server, please see: https://github.com/tituswoo/courseoff-buddy-server
+The official Chrome Extension is available here: [Courseoff Buddy for Georgia Tech - Chrome Web Store](https://chrome.google.com/webstore/detail/courseoff-buddy-for-georg/hiiomkfdlmhbdfbjboldgnkdhcboifhe?hl=en-US)
+
+This extension gets its information from the [courseoff-buddy-server](https://github.com/tituswoo/courseoff-buddy-server).
 
 ## Getting started
 
